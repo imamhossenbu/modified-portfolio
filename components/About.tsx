@@ -10,22 +10,22 @@ gsap.registerPlugin(ScrollTrigger);
 const education = [
   {
     degree: "B.Sc. in Computer Science & Engineering",
-    institute: "Your University Name",
-    year: "2021 - 2025",
+    institute: "University of Barishal",
+    year: "2022 - Present",
     details:
       "Focused on web development, software engineering, database systems, and modern application development.",
   },
   {
     degree: "Higher Secondary Certificate",
-    institute: "Your College Name",
-    year: "2018 - 2020",
+    institute: "Gachbaria Government College",
+    year: "2019 - 2021",
     details:
       "Completed higher secondary education with a strong foundation in science, mathematics, and technology.",
   },
   {
     degree: "Secondary School Certificate",
-    institute: "Your School Name",
-    year: "2016 - 2018",
+    institute: "Chamball High School",
+    year: "2017 - 2019",
     details:
       "Built early academic foundation and interest in computer technology, logic, and problem solving.",
   },

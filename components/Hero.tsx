@@ -92,7 +92,7 @@ export default function Hero() {
         <section
             id="home"
             ref={heroRef}
-            className="hero-section relative flex min-h-[100svh] items-center overflow-visible px-5 py-28 md:px-10 lg:px-16"
+            className="hero-section relative flex min-h-[100svh] items-center overflow-visible px-5 py-28 md:px-10 lg:px-12"
         >
             <div className="hero-bg-orb hero-orb-one" />
             <div className="hero-bg-orb hero-orb-two" />
@@ -199,10 +199,10 @@ export default function Hero() {
                     </div>
                 </div>
                 <div ref={cardRef} className="z-10">
-                    <div className="soft-card rounded-[2rem] p-6">
-                        <div className="mb-5 h-1 w-14 rounded-full bg-gradient-to-r from-[#ff9494] to-[#ffd1d1]" />
+                    <div className="soft-card rounded-4xl p-6">
+                        <div className="mb-5 h-1 w-14 rounded-full bg-linear-to-r from-[#ff9494] to-[#ffd1d1]" />
 
-                        <h3 className="mb-4 text-2xl font-bold text-[var(--foreground)]">
+                        <h3 className="mb-4 text-2xl font-bold text-(--foreground)">
                             Available for Projects
                         </h3>
 
@@ -230,6 +230,7 @@ export default function Hero() {
 
                         <a
                             href="/resume.pdf"
+                            download="Imam-Hossen-CV.pdf"
                             className="mt-7 inline-flex w-full items-center justify-center gap-2 rounded-full bg-[#ff9494] px-6 py-3 text-sm font-bold text-white shadow-[0_14px_35px_rgba(255,148,148,0.4)] transition hover:-translate-y-1 hover:bg-[#ff7f7f]"
                         >
                             <Download size={18} />
