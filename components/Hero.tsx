@@ -5,7 +5,7 @@ import Image from "next/image";
 import gsap from "gsap";
 import { ReactTyped } from "react-typed";
 import { Mail, Download } from "lucide-react";
-import { FaGithub, FaLinkedinIn } from "react-icons/fa";
+import { FaGithub, FaLinkedinIn, FaFacebook } from "react-icons/fa";
 
 export default function Hero() {
     const heroRef = useRef<HTMLElement | null>(null);
@@ -103,14 +103,15 @@ export default function Hero() {
                         Full Stack Developer
                     </p>
 
-                    <h1 className="mb-5 text-5xl font-bold leading-tight text-[var(--foreground)] md:text-6xl xl:text-7xl">
+                    <h1 className="mb-5 text-4xl font-bold leading-tight text-(--foreground) md:text-5xl ">
                         Hi, I&apos;m <br />
                         <span className="gradient-text">Imam Hossen</span>
                     </h1>
 
-                    <h2 className="hero-subtitle mb-6 text-2xl font-semibold md:text-3xl">
-                        I build{" "}
-                        <span className="hero-typed-text">
+                    <h2 className="hero-subtitle hero-typed-heading mb-6 text-2xl font-semibold md:text-3xl">
+                        <span>I build </span>
+
+                        <span className="hero-typed-text hero-typed-fixed">
                             <ReactTyped
                                 strings={[
                                     "Modern Websites",
@@ -151,20 +152,31 @@ export default function Hero() {
                         ref={socialsRef}
                         className="mt-10 flex justify-center gap-4 lg:justify-start"
                     >
-                        <a href="#" className="hero-social-link" aria-label="Github">
+                        <a href="https://github.com/imamhossenbu"
+                            target="_blank" className="hero-social-link" aria-label="Github">
                             <FaGithub size={18} />
                         </a>
 
-                        <a href="#" className="hero-social-link" aria-label="LinkedIn">
+                        <a href="https://www.linkedin.com/in/imam-hossen-ub"
+                            target="_blank" className="hero-social-link" aria-label="LinkedIn">
                             <FaLinkedinIn size={18} />
                         </a>
 
                         <a
-                            href="mailto:imam@example.com"
+                            href="mailto:imam62310@gmail.com"
+                            target="_blank"
                             className="hero-social-link"
                             aria-label="Email"
                         >
                             <Mail size={18} />
+                        </a>
+                        <a
+                            href="https://www.facebook.com/imamhossainbu"
+                            target="_blank"
+                            className="hero-social-link"
+                            aria-label="Facebook"
+                        >
+                            <FaFacebook size={18} />
                         </a>
                     </div>
                 </div>
@@ -187,7 +199,7 @@ export default function Hero() {
                     </div>
                 </div>
                 <div ref={cardRef} className="z-10">
-                    <div className="soft-card rounded-[2rem] p-7 md:p-8">
+                    <div className="soft-card rounded-[2rem] p-6">
                         <div className="mb-5 h-1 w-14 rounded-full bg-gradient-to-r from-[#ff9494] to-[#ffd1d1]" />
 
                         <h3 className="mb-4 text-2xl font-bold text-[var(--foreground)]">

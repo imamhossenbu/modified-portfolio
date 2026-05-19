@@ -32,7 +32,6 @@
 }
 
 html {
-  scroll-behavior: smooth;
   min-height: 100%;
 }
 
@@ -327,6 +326,32 @@ pre,
 .hero-typed-text {
   color: #ff7474;
   font-weight: 800;
+}
+
+.hero-typed-heading {
+  min-height: 44px;
+  line-height: 1.25;
+}
+
+.hero-typed-fixed {
+  display: inline-block;
+  min-width: 360px;
+  white-space: nowrap;
+  text-align: left;
+  vertical-align: baseline;
+}
+
+@media (max-width: 640px) {
+  .hero-typed-heading {
+    min-height: 78px;
+  }
+
+  .hero-typed-fixed {
+    display: block;
+    min-width: 100%;
+    text-align: center;
+    margin-top: 6px;
+  }
 }
 
 .dark .hero-typed-text {

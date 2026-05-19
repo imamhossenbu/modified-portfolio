@@ -6,6 +6,7 @@ import Footer from "@/components/Footer";
 import ThemeProvider from "@/provider/ThemeProvider";
 import CustomCursor from "@/components/CustomCursor";
 import BackgroundParticles from "@/components/BackgroundParticles";
+import SmoothScroll from "@/components/SmoothScroll";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -41,11 +42,13 @@ export default function RootLayout({
     >
       <body className="min-h-full">
         <ThemeProvider>
-          <CustomCursor />
-          <Navbar />
-          <BackgroundParticles />
-          {children}
-          <Footer />
+          <SmoothScroll>
+            <CustomCursor />
+            <Navbar />
+            <BackgroundParticles />
+            {children}
+            <Footer />
+          </SmoothScroll>
         </ThemeProvider>
       </body>
     </html>

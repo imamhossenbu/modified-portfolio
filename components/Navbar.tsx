@@ -1,19 +1,20 @@
 /* eslint-disable react-hooks/set-state-in-effect */
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type MouseEvent } from "react";
 import gsap from "gsap";
 import { Menu, X, Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
+import { useLenis } from "lenis/react";
 
 const navLinks = [
-  { name: "Home", href: "#home" },
-  { name: "About", href: "#about" },
-  { name: "Skills", href: "#skills" },
-  { name: "Projects", href: "#projects" },
-  { name: "Experience", href: "#experience" },
-  { name: "Clients", href: "#clients" },
-  { name: "Insights", href: "#insights" },
+    { name: "Home", href: "#home" },
+    { name: "About", href: "#about" },
+    { name: "Skills", href: "#skills" },
+    { name: "Projects", href: "#projects" },
+    { name: "Experience", href: "#experience" },
+    { name: "Clients", href: "#clients" },
+    { name: "Insights", href: "#insights" },
 ];
 
 export default function Navbar() {
@@ -29,6 +30,28 @@ export default function Navbar() {
     const [mounted, setMounted] = useState(false);
 
     const { theme, setTheme } = useTheme();
+    const lenis = useLenis();
+
+    const handleSmoothScroll = (
+        e: MouseEvent<HTMLAnchorElement>,
+        href: string
+    ) => {
+        e.preventDefault();
+        setIsOpen(false);
+        setActiveLink(href);
+
+        if (lenis) {
+            lenis.scrollTo(href, {
+                offset: -110,
+                duration: 1.2,
+            });
+        } else {
+            const section = document.querySelector(href);
+            section?.scrollIntoView({ behavior: "smooth" });
+        }
+
+        window.history.pushState(null, "", href);
+    };
 
     useEffect(() => {
         setMounted(true);
@@ -192,6 +215,7 @@ export default function Navbar() {
                 <a
                     ref={logoRef}
                     href="#home"
+                    onClick={(e) => handleSmoothScroll(e, "#home")}
                     className="logo-gradient text-xl font-bold tracking-tight md:text-2xl"
                 >
                     Imam<span className="text-[#ff9494]">.</span>
@@ -205,6 +229,7 @@ export default function Navbar() {
                             ref={(el) => {
                                 if (el) linksRef.current[index] = el;
                             }}
+                            onClick={(e) => handleSmoothScroll(e, link.href)}
                             onMouseEnter={(e) => handleHover(e.currentTarget)}
                             onMouseLeave={(e) => handleLeave(e.currentTarget)}
                             className={`nav-link ${activeLink === link.href ? "active" : ""}`}
@@ -217,6 +242,7 @@ export default function Navbar() {
                 <div className="flex items-center gap-3">
                     <a
                         href="#contact"
+                        onClick={(e) => handleSmoothScroll(e, "#contact")}
                         className="hidden rounded-full bg-[#ff9494] px-5 py-2.5 text-sm font-semibold text-white shadow-[0_12px_30px_rgba(255,148,148,0.45)] transition hover:-translate-y-0.5 hover:bg-[#ff7f7f] md:inline-flex"
                     >
                         Hire Me
@@ -250,7 +276,7 @@ export default function Navbar() {
                             <a
                                 key={link.href}
                                 href={link.href}
-                                onClick={() => setIsOpen(false)}
+                                onClick={(e) => handleSmoothScroll(e, link.href)}
                                 className={`mobile-nav-link ${activeLink === link.href ? "active" : ""
                                     }`}
                             >
@@ -260,7 +286,7 @@ export default function Navbar() {
 
                         <a
                             href="#contact"
-                            onClick={() => setIsOpen(false)}
+                            onClick={(e) => handleSmoothScroll(e, "#contact")}
                             className="mt-2 rounded-full bg-[#ff9494] px-5 py-3 text-center text-sm font-semibold text-white shadow-[0_12px_30px_rgba(255,148,148,0.4)]"
                         >
                             Hire Me
