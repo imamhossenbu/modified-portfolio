@@ -92,7 +92,7 @@ export default function Hero() {
         <section
             id="home"
             ref={heroRef}
-            className="hero-section relative flex min-h-[100svh] items-center overflow-visible px-5 py-28 md:px-10 lg:px-12"
+            className="hero-section relative flex  items-center overflow-visible px-5 py-28 md:px-10 lg:px-12"
         >
             <div className="hero-bg-orb hero-orb-one" />
             <div className="hero-bg-orb hero-orb-two" />

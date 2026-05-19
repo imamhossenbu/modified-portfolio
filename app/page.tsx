@@ -12,31 +12,31 @@ export default function Home() {
     <main>
       <Hero />
 
-      <section id="about" className="min-h-screen">
+      <section id="about" >
         <About />
       </section>
 
-      <section id="skills" className="min-h-screen">
+      <section id="skills" >
         <Skills />
       </section>
 
-      <section id="projects" className="min-h-screen">
+      <section id="projects" >
         <Projects />
       </section>
 
-      <section id="experience" className="min-h-screen">
+      <section id="experience" >
         <Experience />
       </section>
 
-      <section id="clients" className="min-h-screen">
+      <section id="clients">
         <Testimonials />
       </section>
 
-      <section id="insights" className="min-h-screen">
+      <section id="insights" >
         <Insights />
       </section>
 
-      <section id="contact" className="min-h-screen">
+      <section id="contact" >
         < Contact />
       </section>
     </main>
