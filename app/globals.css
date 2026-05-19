@@ -857,6 +857,11 @@ pre,
   animation-duration: 40s;
 }
 
+
+.skills-marquee:hover .skills-marquee-track {
+  animation-play-state: paused;
+}
+
 .skills-marquee-item {
   white-space: nowrap;
   border-radius: 999px;

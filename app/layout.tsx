@@ -7,6 +7,7 @@ import ThemeProvider from "@/provider/ThemeProvider";
 import CustomCursor from "@/components/CustomCursor";
 import BackgroundParticles from "@/components/BackgroundParticles";
 import SmoothScroll from "@/components/SmoothScroll";
+import ScrollProgress from "@/components/ScrollProgress";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -43,6 +44,7 @@ export default function RootLayout({
       <body className="min-h-full">
         <ThemeProvider>
           <SmoothScroll>
+            <ScrollProgress />
             <CustomCursor />
             <Navbar />
             <BackgroundParticles />
