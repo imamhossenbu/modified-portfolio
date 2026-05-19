@@ -110,7 +110,7 @@ export default function About() {
             About Me
           </p>
 
-          <h2 className="text-3xl font-bold text-[var(--foreground)] md:text-4xl">
+          <h2 className="text-3xl font-bold text-(--foreground) md:text-4xl">
             Building clean, modern and useful web experiences
           </h2>
         </div>

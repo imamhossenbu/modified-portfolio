@@ -213,7 +213,7 @@ export default function Skills() {
                         My Skills
                     </p>
 
-                    <h2 className="text-4xl font-bold text-[var(--foreground)] md:text-5xl">
+                    <h2 className="text-3xl font-bold text-(--foreground) md:text-4xl">
                         Technologies I work with
                     </h2>
 
@@ -262,7 +262,7 @@ export default function Skills() {
                                         <CategoryIcon size={24} />
                                     </div>
 
-                                    <h3 className="text-xl font-bold text-[var(--foreground)]">
+                                    <h3 className="text-xl font-bold text-(--foreground)">
                                         {category.title}
                                     </h3>
                                 </div>

@@ -66,11 +66,11 @@ export default function Projects() {
                         My Projects
                     </p>
 
-                    <h2 className="text-4xl font-bold text-[var(--foreground)] md:text-5xl">
+                    <h2 className="text-3xl font-bold text-(--foreground) md:text-4xl">
                         Selected work by category
                     </h2>
 
-                    <p className="hero-description mx-auto mt-5 max-w-2xl leading-8">
+                    <p className="hero-description mx-auto mt-5 max-w-3xl leading-8">
                         Here are some projects organized by frontend, full stack, landing
                         page, and AI-based work.
                     </p>

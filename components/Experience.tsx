@@ -98,7 +98,7 @@ export default function Experience() {
                         Experience
                     </p>
 
-                    <h2 className="text-4xl font-bold text-[var(--foreground)] md:text-5xl">
+                    <h2 className="text-3xl font-bold text-(--foreground) md:text-4xl">
                         My working journey
                     </h2>
 

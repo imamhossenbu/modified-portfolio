@@ -42,10 +42,10 @@ export default function ScrollProgress() {
     }, []);
 
     return (
-        <div className="fixed left-0 top-0 z-[99999] h-[5px] w-full overflow-hidden bg-transparent">
+        <div className="fixed left-0 top-0 z-99999 h-0.75 w-full overflow-hidden bg-transparent">
             <div
                 ref={progressRef}
-                className="h-full w-full origin-left scale-x-0 bg-gradient-to-r from-[#ff9494] via-[#ff7474] to-[#ffd1d1] shadow-[0_0_18px_rgba(255,148,148,0.9)]"
+                className="h-full w-full origin-left scale-x-0 bg-linear-to-r from-[#ff9494] via-[#ff7474] to-[#ffd1d1] shadow-[0_0_18px_rgba(255,148,148,0.9)]"
             />
 
             <div

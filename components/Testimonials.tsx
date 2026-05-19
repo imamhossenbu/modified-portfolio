@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import gsap from "gsap";
-import { Star, ArrowLeft, ArrowRight } from "lucide-react";
+import { Star, ArrowLeft, ArrowRight, Quote } from "lucide-react";
 
 const testimonials = [
     {
@@ -98,7 +98,7 @@ export default function Testimonials() {
                         Testimonials
                     </p>
 
-                    <h2 className="text-4xl font-bold text-[var(--foreground)] md:text-5xl">
+                    <h2 className="text-3xl font-bold text-[var(--foreground)] md:text-4xl">
                         What clients say
                     </h2>
 
@@ -148,9 +148,13 @@ export default function Testimonials() {
                             ))}
                         </div>
 
-                        <p className="mb-8 text-xl font-semibold leading-9 text-[var(--foreground)] md:text-2xl">
-                            “{item.feedback}”
-                        </p>
+                        <blockquote className="testimonial-feedback">
+                            <div className="testimonial-quote-icon">
+                                <Quote size={24} strokeWidth={2.4} />
+                            </div>
+
+                            <p>{item.feedback}</p>
+                        </blockquote>
 
                         <div className="flex flex-wrap items-center justify-between gap-5">
                             <div>
