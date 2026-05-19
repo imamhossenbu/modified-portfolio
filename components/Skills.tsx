@@ -2,10 +2,12 @@
 
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Code2, Database, Server, Wrench, Brain, TestTube2 } from "lucide-react";
 import {
     SiNextdotjs,
     SiReact,
+    SiRedis,
     SiTypescript,
     SiJavascript,
     SiTailwindcss,
@@ -29,7 +31,17 @@ import {
     SiJest,
     SiDocker,
     SiTestinglibrary,
+    SiPython,
+    SiOpenjdk,
+    SiPhp,
+    SiC,
+    SiCplusplus,
+    SiPandas,
+    SiGooglecolab,
 } from "react-icons/si";
+
+gsap.registerPlugin(ScrollTrigger);
+
 const skillCategories = [
     {
         title: "Frontend",
@@ -56,13 +68,37 @@ const skillCategories = [
         ],
     },
     {
-        title: "Database & ORM",
+        title: "Programming Languages",
+        icon: Code2,
+        skills: [
+            { name: "Python", icon: SiPython },
+            { name: "Java", icon: SiOpenjdk },
+            { name: "PHP", icon: SiPhp },
+            { name: "C", icon: SiC },
+            { name: "C++", icon: SiCplusplus },
+            { name: "JavaScript", icon: SiJavascript },
+            { name: "TypeScript", icon: SiTypescript },
+        ],
+    },
+    {
+        title: "Database, Cache & ORM",
         icon: Database,
         skills: [
             { name: "MongoDB", icon: SiMongodb },
             { name: "PostgreSQL", icon: SiPostgresql },
             { name: "MySQL", icon: SiMysql },
+            { name: "Redis", icon: SiRedis },
             { name: "Prisma", icon: SiPrisma },
+        ],
+    },
+    {
+        title: "Data & AI Tools",
+        icon: Brain,
+        skills: [
+            { name: "Python", icon: SiPython },
+            { name: "Pandas", icon: SiPandas },
+            { name: "Google Colab", icon: SiGooglecolab },
+            { name: "Generative AI", icon: Brain },
         ],
     },
     {
@@ -87,11 +123,10 @@ const skillCategories = [
         ],
     },
     {
-        title: "CMS & AI",
+        title: "CMS",
         icon: Brain,
         skills: [
             { name: "WordPress", icon: SiWordpress },
-            { name: "Generative AI", icon: Brain },
         ],
     },
 ];
@@ -107,22 +142,34 @@ const marqueeSkills = [
     "Node.js",
     "Express.js",
     "NestJS",
+    "REST API",
+    "Python",
+    "Java",
+    "PHP",
+    "C",
+    "C++",
     "Prisma",
     "MongoDB",
     "PostgreSQL",
     "MySQL",
+    "Redis",
     "Firebase",
+    "Pandas",
+    "Google Colab",
     "Jest",
     "React Testing Library",
     "SonarQube",
     "Docker",
     "Git",
     "GitHub",
+    "GitHub Actions",
     "Vercel",
     "Figma",
     "WordPress",
     "Generative AI",
 ];
+
+const reversedMarqueeSkills = [...marqueeSkills].reverse();
 
 export default function Skills() {
     const sectionRef = useRef<HTMLElement | null>(null);
@@ -171,8 +218,9 @@ export default function Skills() {
                     </h2>
 
                     <p className="hero-description mx-auto mt-5 max-w-2xl leading-8">
-                        I use modern frontend, backend, database, and deployment tools to
-                        build clean, scalable, and production-ready web applications.
+                        I use modern frontend, backend, programming, database, data, and
+                        deployment tools to build clean, scalable, and production-ready web
+                        applications.
                     </p>
                 </div>
 
@@ -180,7 +228,7 @@ export default function Skills() {
                     <div className="skills-marquee">
                         <div className="skills-marquee-track">
                             {[...marqueeSkills, ...marqueeSkills].map((skill, index) => (
-                                <span key={index} className="skills-marquee-item">
+                                <span key={`${skill}-top-${index}`} className="skills-marquee-item">
                                     {skill}
                                 </span>
                             ))}
@@ -189,9 +237,12 @@ export default function Skills() {
 
                     <div className="skills-marquee reverse">
                         <div className="skills-marquee-track">
-                            {[...marqueeSkills.reverse(), ...marqueeSkills].map(
+                            {[...reversedMarqueeSkills, ...reversedMarqueeSkills].map(
                                 (skill, index) => (
-                                    <span key={index} className="skills-marquee-item">
+                                    <span
+                                        key={`${skill}-bottom-${index}`}
+                                        className="skills-marquee-item"
+                                    >
                                         {skill}
                                     </span>
                                 )
@@ -205,10 +256,7 @@ export default function Skills() {
                         const CategoryIcon = category.icon;
 
                         return (
-                            <div
-                                key={index}
-                                className="skills-animate skill-category-card"
-                            >
+                            <div key={index} className="skills-animate skill-category-card">
                                 <div className="mb-6 flex items-center gap-3">
                                     <div className="skill-category-icon">
                                         <CategoryIcon size={24} />

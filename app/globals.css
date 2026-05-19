@@ -849,12 +849,12 @@ pre,
   display: flex;
   width: max-content;
   gap: 14px;
-  animation: marqueeMove 24s linear infinite;
+  animation: marqueeMove 36s linear infinite;
 }
 
 .skills-marquee.reverse .skills-marquee-track {
   animation-direction: reverse;
-  animation-duration: 28s;
+  animation-duration: 40s;
 }
 
 .skills-marquee-item {
