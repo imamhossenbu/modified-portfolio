@@ -13,6 +13,7 @@ import CustomCursor from "@/components/CustomCursor";
 import BackgroundParticles from "@/components/BackgroundParticles";
 import SmoothScroll from "@/components/SmoothScroll";
 import ScrollProgress from "@/components/ScrollProgress";
+import FloatingCTA from "@/components/FloatingCTA";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -60,6 +61,7 @@ export default function RootLayout({
             <CustomCursor />
             <Navbar />
             <BackgroundParticles />
+            <FloatingCTA/>
             {children}
             <Footer />
           </SmoothScroll>

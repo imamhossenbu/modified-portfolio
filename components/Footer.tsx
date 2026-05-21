@@ -1,5 +1,5 @@
 import { Mail } from "lucide-react";
-import { FaGithub, FaLinkedinIn } from "react-icons/fa";
+import { FaFacebook, FaGithub, FaLinkedinIn } from "react-icons/fa";
 
 export default function Footer() {
     return (
@@ -17,25 +17,50 @@ export default function Footer() {
                     </div>
 
                     <div className="flex items-center gap-3">
-                        <a href="#" className="footer-social-link" aria-label="Github">
-                            <FaGithub size={18} />
-                        </a>
-
-                        <a href="#" className="footer-social-link" aria-label="LinkedIn">
-                            <FaLinkedinIn size={18} />
-                        </a>
-
-                        <a
-                            href="mailto:imam@example.com"
-                            className="footer-social-link"
-                            aria-label="Email"
-                        >
-                            <Mail size={18} />
-                        </a>
+                         <a
+                                        href="https://github.com/imamhossenbu"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        aria-label="Github"
+                                        className="contact-social-link"
+                                      >
+                                        <FaGithub size={19} />
+                                      </a>
+                        
+                                      {/* LinkedIn */}
+                                      <a
+                                        href="https://linkedin.com/in/imam-hossen-ub"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        aria-label="LinkedIn"
+                                        className="contact-social-link"
+                                      >
+                                        <FaLinkedinIn size={19} />
+                                      </a>
+                        
+                                      {/* Email */}
+                                      <a
+                                        href="mailto:ihossen22.cse@bu.ac.bd"
+                                        aria-label="Email"
+                                        className="contact-social-link"
+                                      >
+                                        <Mail size={19} />
+                                      </a>
+                        
+                                      {/* Facebook */}
+                                      <a
+                                        href="https://facebook.com/imamhossainbu"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        aria-label="Facebook"
+                                        className="contact-social-link"
+                                      >
+                                        <FaFacebook size={19} />
+                                      </a>
                     </div>
                 </div>
 
-                <p className="mt-6 text-center text-sm font-semibold text-black/50 dark:text-white/50">
+                <p className="right mt-6 text-center text-sm font-semibold">
                     © {new Date().getFullYear()} Imam Hossen. All rights reserved.
                 </p>
             </div>

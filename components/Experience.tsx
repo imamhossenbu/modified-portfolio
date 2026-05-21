@@ -2,194 +2,198 @@
 
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import {
-    BriefcaseBusiness,
-    CalendarDays,
-    CheckCircle2,
-    Code2,
-    Sparkles,
-
+  BriefcaseBusiness,
+  CalendarDays,
+  CheckCircle2,
+  Code2,
+  Layers,
 } from "lucide-react";
 
+gsap.registerPlugin(ScrollTrigger);
+
 const experience = {
-    role: "Full Stack Developer",
-    company: "Freelance / Personal Projects",
-    duration: "2024 - Present",
-    type: "Remote / Project Based",
-    description:
-        "I work on modern web applications using Next.js, TypeScript, Tailwind CSS, backend APIs, databases, and smooth UI animations. My focus is to build clean, responsive, and user-friendly digital products.",
-    points: [
-        "Developed modern frontend interfaces with React, Next.js, and Tailwind CSS.",
-        "Built reusable components with clean structure and responsive layouts.",
-        "Worked with backend APIs, database flow, authentication, and deployment.",
-        "Added smooth user experience using GSAP animations and modern UI effects.",
-    ],
-    stats: [
-        { label: "Role", value: "Full Stack" },
-        { label: "Focus", value: "Web Apps" },
-        { label: "Status", value: "Open" },
-    ],
+  role: "Full Stack Developer",
+  company: "Adsfixter",
+  duration: "Feb 2026 - Present",
+  type: "Full-Time",
+  description:
+    "Building scalable e-commerce SaaS solutions and high-converting web applications. Focused on engineering production-ready web products, real-time features, secure backend flows, and optimized frontend architecture.",
+  points: [
+    "Developing a modern e-commerce SaaS platform focusing on feature scalability, dashboard metrics, and interactive controls.",
+    "Engineered full-featured digital e-commerce web systems with secure database workflows and dynamic management panels.",
+    "Designed and optimized core corporate websites for company presence and marketing deployment.",
+    "Crafted premium fluid animations and reusable UI component architectures using Next.js, Tailwind, and GSAP.",
+  ],
+  stats: [
+    { label: "Role", value: "Full Stack" },
+    { label: "Core", value: "SaaS Product" },
+    { label: "Status", value: "Active" },
+  ],
 };
 
 export default function Experience() {
-    const sectionRef = useRef<HTMLElement | null>(null);
-    const cardRef = useRef<HTMLDivElement | null>(null);
+  const sectionRef = useRef<HTMLElement | null>(null);
+  const cardRef = useRef<HTMLDivElement | null>(null);
 
-    useEffect(() => {
-        const ctx = gsap.context(() => {
-            gsap.fromTo(
-                ".experience-animate",
-                {
-                    y: 70,
-                    opacity: 0,
-                    filter: "blur(10px)",
-                },
-                {
-                    y: 0,
-                    opacity: 1,
-                    filter: "blur(0px)",
-                    duration: 0.9,
-                    stagger: 0.14,
-                    ease: "power3.out",
-                    scrollTrigger: {
-                        trigger: sectionRef.current,
-                        start: "top 75%",
-                    },
-                }
-            );
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        ".experience-animate",
+        {
+          y: 70,
+          opacity: 0,
+          filter: "blur(10px)",
+        },
+        {
+          y: 0,
+          opacity: 1,
+          filter: "blur(0px)",
+          duration: 0.9,
+          stagger: 0.14,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top 75%",
+          },
+        },
+      );
 
-            gsap.to(".experience-floating-icon", {
-                y: -14,
-                duration: 2.4,
-                repeat: -1,
-                yoyo: true,
-                ease: "sine.inOut",
-                stagger: 0.25,
-            });
-        }, sectionRef);
+      gsap.to(".experience-floating-icon", {
+        y: -14,
+        duration: 2.4,
+        repeat: -1,
+        yoyo: true,
+        ease: "sine.inOut",
+        stagger: 0.25,
+      });
+    }, sectionRef);
 
-        return () => ctx.revert();
-    }, []);
+    return () => ctx.revert();
+  }, []);
 
-    const handleMouseMove = (event: React.MouseEvent<HTMLDivElement>) => {
-        if (!cardRef.current) return;
+  const handleMouseMove = (event: React.MouseEvent<HTMLDivElement>) => {
+    if (!cardRef.current) return;
 
-        const rect = cardRef.current.getBoundingClientRect();
-        const x = event.clientX - rect.left;
-        const y = event.clientY - rect.top;
+    const rect = cardRef.current.getBoundingClientRect();
+    const x = event.clientX - rect.left;
+    const y = event.clientY - rect.top;
 
-        gsap.to(cardRef.current, {
-            "--mouse-x": `${x}px`,
-            "--mouse-y": `${y}px`,
-            duration: 0.3,
-            ease: "power2.out",
-        });
-    };
+    gsap.to(cardRef.current, {
+      "--mouse-x": `${x}px`,
+      "--mouse-y": `${y}px`,
+      duration: 0.3,
+      ease: "power2.out",
+    });
+  };
 
-    return (
-        <section
-            id="experience"
-            ref={sectionRef}
-            className="section-padding relative overflow-hidden"
+  return (
+    <section
+      id="experience"
+      ref={sectionRef}
+      className="section-padding relative overflow-hidden"
+    >
+      <div className="mx-auto max-w-7xl">
+        <div className="experience-animate mb-14 text-center">
+          <p className="mono-text mb-3 text-sm font-semibold uppercase tracking-[0.25em] text-[#ff7474]">
+            Experience
+          </p>
+
+          <h2 className="text-3xl font-bold text-(--foreground) md:text-4xl">
+            My working journey
+          </h2>
+
+          <p className="hero-description mx-auto mt-5 max-w-2xl leading-8">
+            A focused overview of my hands-on development work, production SaaS
+            experience, and technical contribution at Adsfixter.
+          </p>
+        </div>
+
+        <div
+          ref={cardRef}
+          onMouseMove={handleMouseMove}
+          className="experience-animate experience-modern-card !shadow-none border border-neutral-200 dark:border-neutral-800"
         >
-            <div className="mx-auto max-w-7xl">
-                <div className="experience-animate mb-14 text-center">
-                    <p className="mono-text mb-3 text-sm font-semibold uppercase tracking-[0.25em] text-[#ff7474]">
-                        Experience
-                    </p>
+          {/* Subtle background glow effects without harsh shadows */}
+          <div className="experience-glow-orb experience-orb-one opacity-40" />
+          <div className="experience-glow-orb experience-orb-two opacity-40" />
 
-                    <h2 className="text-3xl font-bold text-(--foreground) md:text-4xl">
-                        My working journey
-                    </h2>
+          <div className="experience-floating-icon experience-float-one">
+            <Code2 size={22} />
+          </div>
 
-                    <p className="hero-description mx-auto mt-5 max-w-2xl leading-8">
-                        A focused overview of my hands-on development work, project
-                        experience, and technical growth as a full stack developer.
-                    </p>
-                </div>
+          <div className="grid items-center gap-10 lg:grid-cols-[0.9fr_1.1fr]">
+            <div className="relative z-10">
+              <div className="mb-6 inline-flex rounded-3xl bg-[#ff9494]/15 p-5 text-[#ff7474]">
+                <BriefcaseBusiness size={34} />
+              </div>
 
-                <div
-                    ref={cardRef}
-                    onMouseMove={handleMouseMove}
-                    className="experience-animate experience-modern-card"
-                >
-                    <div className="experience-glow-orb experience-orb-one" />
-                    <div className="experience-glow-orb experience-orb-two" />
+              <p className="mono-text mb-3 text-sm font-semibold uppercase tracking-[0.22em] text-[#ff7474]">
+                {experience.type}
+              </p>
 
-                    <div className="experience-floating-icon experience-float-one">
-                        <Code2 size={22} />
-                    </div>
+              <h3 className="mb-3 text-3xl font-bold text-[var(--foreground)] md:text-4xl">
+                {experience.role}
+              </h3>
 
+              <p className="mb-5 text-lg font-semibold text-[#ff7474]">
+                {experience.company}
+              </p>
 
+              <div className="mb-8 inline-flex items-center gap-2 rounded-full bg-[#ff9494]/12 px-4 py-2 text-sm font-bold text-[#ff7474]">
+                <CalendarDays size={16} />
+                {experience.duration}
+              </div>
 
-                    <div className="grid items-center gap-10 lg:grid-cols-[0.9fr_1.1fr]">
-                        <div className="relative z-10">
-                            <div className="mb-6 inline-flex rounded-3xl bg-[#ff9494]/15 p-5 text-[#ff7474] shadow-[0_18px_40px_rgba(255,148,148,0.18)]">
-                                <BriefcaseBusiness size={34} />
-                            </div>
+              <p className="hero-description max-w-xl leading-8">
+                {experience.description}
+              </p>
 
-                            <p className="mono-text mb-3 text-sm font-semibold uppercase tracking-[0.22em] text-[#ff7474]">
-                                {experience.type}
-                            </p>
-
-                            <h3 className="mb-3 text-3xl font-bold text-[var(--foreground)] md:text-4xl">
-                                {experience.role}
-                            </h3>
-
-                            <p className="mb-5 text-lg font-semibold text-[#ff7474]">
-                                {experience.company}
-                            </p>
-
-                            <div className="mb-8 inline-flex items-center gap-2 rounded-full bg-[#ff9494]/12 px-4 py-2 text-sm font-bold text-[#ff7474]">
-                                <CalendarDays size={16} />
-                                {experience.duration}
-                            </div>
-
-                            <p className="hero-description max-w-xl leading-8">
-                                {experience.description}
-                            </p>
-
-                            <div className="mt-8 grid gap-4 sm:grid-cols-3">
-                                {experience.stats.map((item) => (
-                                    <div key={item.label} className="experience-stat-card">
-                                        <span>{item.label}</span>
-                                        <strong>{item.value}</strong>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-
-                        <div className="relative z-10">
-                            <div className="mb-6 flex items-center gap-3">
-                                <div className="rounded-2xl bg-[#ff9494]/15 p-3 text-[#ff7474]">
-                                    <Sparkles size={24} />
-                                </div>
-
-                                <h4 className="text-2xl font-bold text-[var(--foreground)]">
-                                    What I worked on
-                                </h4>
-                            </div>
-
-                            <div className="space-y-4">
-                                {experience.points.map((point) => (
-                                    <div key={point} className="experience-modern-point">
-                                        <CheckCircle2 size={19} />
-                                        <span>{point}</span>
-                                    </div>
-                                ))}
-                            </div>
-
-                            <div className="mt-8 rounded-3xl border border-[#ff9494]/20 bg-white/45 p-5 shadow-[0_14px_35px_rgba(255,148,148,0.12)] backdrop-blur-md dark:bg-white/5">
-                                <p className="hero-description text-sm leading-7">
-                                    Currently improving my skills in scalable full stack
-                                    architecture, clean UI systems, testing, deployment, and
-                                    AI-powered web applications.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+              <div className="mt-8 grid gap-4 sm:grid-cols-3">
+                {experience.stats.map((item) => (
+                  <div
+                    key={item.label}
+                    className="experience-stat-card !shadow-none border border-neutral-200/60 dark:border-neutral-800/60"
+                  >
+                    <span>{item.label}</span>
+                    <strong>{item.value}</strong>
+                  </div>
+                ))}
+              </div>
             </div>
-        </section>
-    );
+
+            <div className="relative z-10">
+              <div className="mb-6 flex items-center gap-3">
+                <div className="rounded-2xl bg-[#ff9494]/15 p-3 text-[#ff7474]">
+                  <Layers size={24} />
+                </div>
+
+                <h4 className="text-2xl font-bold text-[var(--foreground)]">
+                  What I worked on
+                </h4>
+              </div>
+
+              <div className="space-y-4">
+                {experience.points.map((point) => (
+                  <div key={point} className="experience-modern-point">
+                    <CheckCircle2 size={19} />
+                    <span>{point}</span>
+                  </div>
+                ))}
+              </div>
+
+              <div className="mt-8 rounded-3xl border border-[#ff9494]/20 bg-white/45 p-5 !shadow-none backdrop-blur-md dark:bg-white/5">
+                <p className="hero-description text-sm leading-7">
+                  Currently focusing on scaling the SaaS platform, improving
+                  system security with proper server architecture, real-time
+                  sync systems, and standard automated testing workflows.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
 }

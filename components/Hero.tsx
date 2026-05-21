@@ -99,7 +99,7 @@ export default function Hero() {
 
       <div className="mx-auto grid w-full max-w-7xl items-center gap-12 lg:grid-cols-[1fr_1.05fr_0.9fr]">
         <div ref={titleRef} className="z-10 text-center lg:text-left">
-          <p className="mono-text mb-4 inline-flex rounded-full border border-[#ff9494]/30 bg-white/60 px-4 py-2 text-sm font-semibold text-[#ff7474] shadow-[0_10px_30px_rgba(255,148,148,0.18)] backdrop-blur-md dark:bg-white/5">
+          <p className="mono-text mb-4 inline-flex rounded-full border border-[#ff9494]/30 bg-white/60 px-4 py-2 text-sm font-semibold text-[#ff7474] backdrop-blur-md dark:bg-white/5">
             Full Stack Developer
           </p>
 
@@ -238,7 +238,7 @@ export default function Hero() {
             <a
               href="/resume.pdf"
               download="Imam-Hossen-CV.pdf"
-              className="mt-7 inline-flex w-full items-center justify-center gap-2 rounded-full bg-[#ff9494] px-6 py-3 text-sm font-bold text-white shadow-[0_14px_35px_rgba(255,148,148,0.4)] transition hover:-translate-y-1 hover:bg-[#ff7f7f]"
+              className="mt-7 inline-flex w-full items-center justify-center gap-2 rounded-full bg-[#ff9494] px-6 py-3 text-sm font-bold text-white  transition hover:-translate-y-1 hover:bg-[#ff7f7f]"
             >
               <Download size={18} />
               Download CV

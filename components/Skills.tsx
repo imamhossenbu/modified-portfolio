@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Code2, Database, Server, Wrench, Brain, TestTube2 } from "lucide-react";
+import { Code2, Database, Server, Wrench, Brain, TestTube2,Zap } from "lucide-react";
 import {
     SiNextdotjs,
     SiReact,
@@ -63,6 +63,7 @@ const skillCategories = [
             { name: "Node.js", icon: SiNodedotjs },
             { name: "Express.js", icon: SiExpress },
             { name: "NestJS", icon: SiNestjs },
+            { name: "Socket.io", icon: Zap }, 
             { name: "REST API", icon: Server },
             { name: "Firebase", icon: SiFirebase },
         ],

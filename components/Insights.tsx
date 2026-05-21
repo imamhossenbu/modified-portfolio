@@ -19,7 +19,7 @@ const insights = [
         icon: Clock,
     },
     {
-        value: 10,
+        value: 15,
         suffix: "+",
         label: "Technologies Used",
         icon: Code2,
