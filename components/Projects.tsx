@@ -1,158 +1,178 @@
+/* eslint-disable react-hooks/set-state-in-render */
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 import gsap from "gsap";
-import { ExternalLink, Layers } from "lucide-react";
+import { ExternalLink } from "lucide-react";
 import { projectCategories, projects } from "@/data/projects";
 
 export default function Projects() {
-    const sectionRef = useRef<HTMLElement | null>(null);
-    const [activeCategory, setActiveCategory] = useState("all");
+  const router = useRouter();
+  const sectionRef = useRef<HTMLElement | null>(null);
+  const [activeCategory, setActiveCategory] = useState("all");
+  const [visibleCount, setVisibleCount] = useState(6);
 
-    const filteredProjects = useMemo(() => {
-        if (activeCategory === "all") return projects;
-        return projects.filter((project) => project.category === activeCategory);
-    }, [activeCategory]);
+  // Filter projects based on active category
+  const filteredProjects = useMemo(() => {
+    setVisibleCount(6);
+    if (activeCategory === "all") return projects;
+    return projects.filter((project) => project.category === activeCategory);
+  }, [activeCategory]);
 
-    useEffect(() => {
-        const ctx = gsap.context(() => {
-            gsap.fromTo(
-                ".project-animate",
-                { y: 70, opacity: 0, filter: "blur(10px)" },
-                {
-                    y: 0,
-                    opacity: 1,
-                    filter: "blur(0px)",
-                    duration: 0.9,
-                    stagger: 0.14,
-                    ease: "power3.out",
-                    scrollTrigger: {
-                        trigger: sectionRef.current,
-                        start: "top 75%",
-                    },
-                }
-            );
-        }, sectionRef);
+  // Handle pagination/visible limit
+  const displayedProjects = useMemo(() => {
+    return filteredProjects.slice(0, visibleCount);
+  }, [filteredProjects, visibleCount]);
 
-        return () => ctx.revert();
-    }, []);
+  // Initial GSAP scroll animation for the section layout
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        ".project-animate",
+        { y: 50, opacity: 0, filter: "blur(8px)" },
+        {
+          y: 0,
+          opacity: 1,
+          filter: "blur(0px)",
+          duration: 0.8,
+          stagger: 0.1,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top 78%",
+          },
+        },
+      );
+    }, sectionRef);
 
-    useEffect(() => {
-        gsap.fromTo(
-            ".project-card",
-            { y: 30, opacity: 0, scale: 0.97 },
-            {
-                y: 0,
-                opacity: 1,
-                scale: 1,
-                duration: 0.45,
-                stagger: 0.08,
-                ease: "power3.out",
-            }
-        );
-    }, [activeCategory]);
+    return () => ctx.revert();
+  }, []);
 
-    return (
-        <section
-            id="projects"
-            ref={sectionRef}
-            className="section-padding relative overflow-hidden"
-        >
-            <div className="mx-auto max-w-7xl">
-                <div className="project-animate mb-12 text-center">
-                    <p className="mono-text mb-3 text-sm font-semibold uppercase tracking-[0.25em] text-[#ff7474]">
-                        My Projects
-                    </p>
-
-                    <h2 className="text-3xl font-bold text-(--foreground) md:text-4xl">
-                        Selected work by category
-                    </h2>
-
-                    <p className="hero-description mx-auto mt-5 max-w-3xl leading-8">
-                        Here are some projects organized by frontend, full stack, landing
-                        page, and AI-based work.
-                    </p>
-                </div>
-
-                <div className="project-animate mb-10 flex flex-wrap justify-center gap-3">
-                    {projectCategories.map((category) => (
-                        <button
-                            key={category.value}
-                            onClick={() => setActiveCategory(category.value)}
-                            className={`project-filter-btn ${activeCategory === category.value ? "active" : ""
-                                }`}
-                        >
-                            {category.label}
-                        </button>
-                    ))}
-                </div>
-
-                <div className="grid gap-7 md:grid-cols-2 xl:grid-cols-3">
-                    {filteredProjects.map((project) => (
-                        <div key={project.id} className="project-card">
-                            <div className="project-image-wrap">
-                                <Image
-                                    src={project.image}
-                                    alt={project.title}
-                                    fill
-                                    className="object-cover transition duration-500"
-                                />
-
-                                {project.featured && (
-                                    <span className="project-featured">Featured</span>
-                                )}
-                            </div>
-
-                            <div className="p-6">
-                                <div className="mb-5 flex items-center justify-between gap-4">
-                                    <div className="project-icon">
-                                        <Layers size={22} />
-                                    </div>
-
-                                    <span className="project-type">{project.type}</span>
-                                </div>
-
-                                <h3 className="mb-3 text-2xl font-bold text-[var(--foreground)]">
-                                    {project.title}
-                                </h3>
-
-                                <p className="hero-description mb-5 text-sm leading-7">
-                                    {project.shortDescription}
-                                </p>
-
-                                <div className="mb-6 flex flex-wrap gap-2">
-                                    {project.tech.slice(0, 4).map((item) => (
-                                        <span key={item} className="project-tech">
-                                            {item}
-                                        </span>
-                                    ))}
-                                </div>
-
-                                <div className="flex gap-3">
-                                    <Link
-                                        href={`/projects/${project.slug}`}
-                                        className="project-link"
-                                    >
-                                        Details
-                                    </Link>
-
-                                    <a
-                                        href={project.live}
-                                        className="project-link secondary"
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                    >
-                                        <ExternalLink size={17} />
-                                        Live
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    ))}
-                </div>
-            </div>
-        </section>
+  // GSAP animation triggered when changing filters or loading more items
+  useEffect(() => {
+    gsap.fromTo(
+      ".project-card",
+      { y: 25, opacity: 0, scale: 0.98 },
+      {
+        y: 0,
+        opacity: 1,
+        scale: 1,
+        duration: 0.4,
+        stagger: 0.06,
+        ease: "power2.out",
+      },
     );
+  }, [activeCategory, visibleCount]);
+
+  const handleLoadMore = () => {
+    setVisibleCount((prev) => prev + 6);
+  };
+
+  return (
+    <section
+      id="projects"
+      ref={sectionRef}
+      className="section-padding relative overflow-hidden transition-colors duration-300"
+    >
+      <div className="mx-auto max-w-7xl">
+        {/* Header Section */}
+        <div className="project-animate mb-12 text-center">
+          <p className="mono-text mb-3 text-sm font-semibold uppercase tracking-[0.25em] text-[#ff7474]">
+            My Projects
+          </p>
+          <h2 className="project-section-title text-3xl font-bold text-neutral-900 dark:text-white md:text-4xl">
+            Selected work by category
+          </h2>
+          <p className="hero-description mx-auto mt-4 max-w-2xl text-base text-neutral-600 dark:text-neutral-400 leading-7">
+            Here are some projects organized by frontend, full stack, landing
+            page, and AI-based work.
+          </p>
+        </div>
+
+        {/* Filter Buttons */}
+        <div className="project-animate mb-12 flex flex-wrap justify-center gap-3">
+          {projectCategories.map((category) => (
+            <button
+              key={category.value}
+              onClick={() => setActiveCategory(category.value)}
+              className={`project-filter-btn ${
+                activeCategory === category.value ? "active" : ""
+              }`}
+            >
+              {category.label}
+            </button>
+          ))}
+        </div>
+
+        {/* Projects Grid */}
+        <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+          {displayedProjects.map((project) => (
+            <div
+              key={project.id}
+              className="project-card group"
+              onClick={() => router.push(`/projects/${project.slug}`)}
+            >
+              {/* Image Container - Stays fixed size, does not scale up with card */}
+              <div className="project-image-wrap">
+                <Image
+                  src={project.image}
+                  alt={project.title}
+                  fill
+                  sizes="(max-w-768px) 100vw, (max-w-1200px) 50vw, 33vw"
+                  className="object-cover transition-transform duration-500"
+                  priority={project.id <= 3}
+                />
+              </div>
+
+              {/* Bottom Content Area - Reveals smoothly as card grows */}
+              <div className="project-card-content">
+                <h3 className="mb-1 text-lg font-bold text-neutral-900 dark:text-white truncate">
+                  {project.title}
+                </h3>
+                <p className="mb-4 text-xs text-neutral-500 dark:text-neutral-400 line-clamp-1">
+                  {project.shortDescription}
+                </p>
+
+                {/* Added wrapper class to sync smoothly with the new CSS stagger delays */}
+                <div
+                  className="project-action-row"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <button
+                    onClick={() => router.push(`/projects/${project.slug}`)}
+                    className="project-hover-link"
+                  >
+                    Details
+                  </button>
+                  <a
+                    href={project.live}
+                    className="project-hover-link secondary "
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <ExternalLink size={13} />
+                    Live
+                  </a>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Load More Trigger */}
+        {filteredProjects.length > visibleCount && (
+          <div className="mt-14 text-center">
+            <button
+              onClick={handleLoadMore}
+              className="project-back-link font-bold px-8 py-3.5"
+            >
+              View More
+            </button>
+          </div>
+        )}
+      </div>
+    </section>
+  );
 }
