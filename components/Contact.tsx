@@ -1,12 +1,20 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Mail, MapPin, Send, Phone } from "lucide-react";
 import { FaFacebook, FaGithub, FaLinkedinIn } from "react-icons/fa";
 
+gsap.registerPlugin(ScrollTrigger);
+
 export default function Contact() {
   const sectionRef = useRef<HTMLElement | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [status, setStatus] = useState("");
+
+  const GOOGLE_SCRIPT_URL =
+    "https://script.google.com/macros/s/AKfycbzvU1CT9uVu-19r_S6hdW9ALqOlBMehklIT6tzx61Mfy0NynM6hrxDJB8eyDGsm2wd8bQ/exec";
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -24,12 +32,37 @@ export default function Contact() {
             trigger: sectionRef.current,
             start: "top 75%",
           },
-        },
+        }
       );
     }, sectionRef);
 
     return () => ctx.revert();
   }, []);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    setLoading(true);
+    setStatus("");
+
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+
+    try {
+      await fetch(GOOGLE_SCRIPT_URL, {
+        method: "POST",
+        body: formData,
+        mode: "no-cors",
+      });
+
+      setStatus("Message sent successfully!");
+      form.reset();
+    } catch (error) {
+      setStatus("Something went wrong. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <section
@@ -77,7 +110,6 @@ export default function Contact() {
             </div>
 
             <div className="mt-8 flex items-center gap-3">
-              {/* Github */}
               <a
                 href="https://github.com/imamhossenbu"
                 target="_blank"
@@ -88,7 +120,6 @@ export default function Contact() {
                 <FaGithub size={19} />
               </a>
 
-              {/* LinkedIn */}
               <a
                 href="https://linkedin.com/in/imam-hossen-ub"
                 target="_blank"
@@ -99,7 +130,6 @@ export default function Contact() {
                 <FaLinkedinIn size={19} />
               </a>
 
-              {/* Email */}
               <a
                 href="mailto:ihossen22.cse@bu.ac.bd"
                 aria-label="Email"
@@ -108,7 +138,6 @@ export default function Contact() {
                 <Mail size={19} />
               </a>
 
-              {/* Facebook */}
               <a
                 href="https://facebook.com/imamhossainbu"
                 target="_blank"
@@ -121,37 +150,51 @@ export default function Contact() {
             </div>
           </div>
 
-          <form className="contact-animate contact-form-card">
+          <form onSubmit={handleSubmit} className="contact-animate contact-form-card">
             <div className="grid gap-5 md:grid-cols-2">
               <input
                 type="text"
+                name="name"
                 placeholder="Your Name"
                 className="contact-input"
+                required
               />
 
               <input
                 type="email"
+                name="email"
                 placeholder="Your Email"
                 className="contact-input"
+                required
               />
             </div>
 
             <input
               type="text"
+              name="subject"
               placeholder="Subject"
               className="contact-input"
+              required
             />
 
             <textarea
+              name="message"
               placeholder="Tell me about your project..."
               rows={6}
               className="contact-input resize-none"
+              required
             />
 
-            <button type="submit" className="contact-submit-btn">
-              Send Message
+            <button type="submit" className="contact-submit-btn" disabled={loading}>
+              {loading ? "Sending..." : "Send Message"}
               <Send size={18} />
             </button>
+
+            {status && (
+              <p className="mt-4 text-sm font-medium text-[#ff7474]">
+                {status}
+              </p>
+            )}
           </form>
         </div>
       </div>
