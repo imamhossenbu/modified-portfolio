@@ -1078,7 +1078,7 @@ pre,
 .project-image-wrap {
   position: relative;
   width: 100%;
-  aspect-ratio: 16 / 10; 
+  aspect-ratio: 16 / 10;
   overflow: hidden;
   background: #fcfcfc;
   transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
@@ -1087,7 +1087,7 @@ pre,
 .project-image-wrap img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   transition:
     transform 0.6s cubic-bezier(0.25, 1, 0.5, 1),
     filter 0.6s ease;
@@ -1398,8 +1398,12 @@ pre,
   border-color: rgba(255, 255, 255, 0.1);
 }
 
-.dark .project-link.secondary:hover {
+.dark .project-link.secondary:hover { 
   background: rgba(255, 255, 255, 0.12);
+}
+
+.dark #github {
+  background-color: rgba(0, 0, 0, 0.807);
 }
 
 /* --- Additional Details Page Helpers --- */

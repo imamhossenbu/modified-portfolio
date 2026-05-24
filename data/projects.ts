@@ -1,5 +1,11 @@
 export type ProjectCategory = "frontend" | "fullstack" | "landing" | "ai";
 
+export type ProjectGithub = {
+  frontend?: string;
+  backend?: string;
+  socket?: string;
+};
+
 export type Project = {
   id: number;
   slug: string;
@@ -9,10 +15,10 @@ export type Project = {
   shortDescription: string;
   description: string;
   image: string;
-  tech: string[];
+  tech: string[]; 
   features: string[];
   live: string;
-  github: string;
+  github: ProjectGithub;
   featured?: boolean;
 };
 
@@ -27,25 +33,39 @@ export const projectCategories = [
 export const projects: Project[] = [
   {
     id: 1,
-    slug: "personal-portfolio",
-    title: "Personal Portfolio",
-    category: "frontend",
-    type: "Frontend Website",
+    slug: "sell-point",
+    title: "Sell Point",
+    category: "fullstack",
+    type: "Full Stack Website",
     shortDescription:
-      "Modern personal portfolio with animations and theme system.",
+      "Modern house selling website with animations and theme system.",
     description:
-      "A modern personal portfolio website built with Next.js, TypeScript, Tailwind CSS, GSAP animation, dark/light theme, responsive layout, and clean reusable components.",
+      "SellPoint is a modern full-stack e-commerce management platform where the admin can manage products, users, and orders through a powerful dashboard. The website includes real-time chat using Socket.io for instant communication, subscription management for premium services, authentication, and an intuitive user interface for seamless buying and selling experiences.",
     image: "/images/projects/sell1.png",
-    tech: ["Next.js", "TypeScript", "Tailwind CSS", "GSAP"],
-    features: [
-      "Responsive hero section",
-      "Dark and light theme",
-      "GSAP scroll animations",
-      "Category based project section",
-      "Modern glassmorphism UI",
+    tech: [
+      "Next.js",
+      "MongoDB",
+      "Tailwind CSS",
+      "GSAP",
+      "Socket.io",
+      "Node.js",
+      "Express.js",
+      "Mongoose",
+      "JWT",
     ],
-    live: "#",
-    github: "#",
+ features: [
+  "Comprehensive Multi-Vendor Ecosystem featuring dedicated and secure dashboards tailored for both Buyers and Sellers.",
+  "Real-time Instant Messaging framework engineered using Socket.io for continuous, low-latency communication between users.",
+  "Live Persistent Notification engine delivering instantaneous, non-blocking updates for order actions and new messages.",
+  "Highly Responsive UI/UX crafted with Next.js and Tailwind CSS, maintaining consistent performance across all screen scales.",
+  "Secure JWT-based Authentication system integrated with centralized state management for protected route validation."
+],
+    live: "https://sell-point.netlify.app",
+    github: {
+      frontend: "https://github.com/imamhossenbu/sellpoint-frontend",
+      backend: "https://github.com/imamhossenbu/sellpoint-server",
+      socket: "https://github.com/imamhossenbu/sellpoint-socket",
+    },
     featured: true,
   },
   {
@@ -58,7 +78,14 @@ export const projects: Project[] = [
     description:
       "A complete admin dashboard application with authentication, protected routes, analytics cards, user management, database integration, and clean dashboard UI.",
     image: "/images/projects/dashboard.png",
-    tech: ["Next.js", "Node.js", "Prisma", "PostgreSQL"],
+    tech: [
+      "Next.js",
+      "Node.js",
+      "Prisma",
+      "PostgreSQL",
+      "Tailwind CSS",
+      "Express.js",
+    ],
     features: [
       "Authentication system",
       "Protected dashboard routes",
@@ -67,7 +94,10 @@ export const projects: Project[] = [
       "Database integration with Prisma",
     ],
     live: "#",
-    github: "#",
+    github: {
+      frontend: "https://github.com/yourusername/admin-dashboard-frontend",
+      backend: "https://github.com/yourusername/admin-dashboard-backend",
+    },
     featured: true,
   },
   {
@@ -80,7 +110,7 @@ export const projects: Project[] = [
     description:
       "A responsive e-commerce platform with product listing, cart system, checkout flow, admin panel, and order management functionality.",
     image: "/images/projects/ecommerce.png",
-    tech: ["Next.js", "MongoDB", "Express.js", "Tailwind CSS"],
+    tech: ["Next.js", "MongoDB", "Express.js", "Tailwind CSS", "Node.js"],
     features: [
       "Product listing page",
       "Cart system",
@@ -89,7 +119,10 @@ export const projects: Project[] = [
       "Order management",
     ],
     live: "#",
-    github: "#",
+    github: {
+      frontend: "https://github.com/yourusername/ecommerce-frontend",
+      backend: "https://github.com/yourusername/ecommerce-backend",
+    },
   },
   {
     id: 4,
@@ -110,7 +143,9 @@ export const projects: Project[] = [
       "CTA section",
     ],
     live: "#",
-    github: "#",
+    github: {
+      frontend: "https://github.com/yourusername/saas-landing",
+    },
   },
   {
     id: 5,
@@ -131,7 +166,9 @@ export const projects: Project[] = [
       "Contact CTA",
     ],
     live: "#",
-    github: "#",
+    github: {
+      frontend: "https://github.com/yourusername/agency-website",
+    },
   },
   {
     id: 6,
@@ -143,7 +180,7 @@ export const projects: Project[] = [
     description:
       "An AI-powered content generation tool where users can create text content from prompts using a clean dashboard-style interface.",
     image: "/images/projects/ai-content.png",
-    tech: ["Next.js", "Generative AI", "API", "Tailwind CSS"],
+    tech: ["Next.js", "Generative AI", "API", "Tailwind CSS", "Node.js"],
     features: [
       "Prompt input system",
       "AI generated responses",
@@ -152,7 +189,10 @@ export const projects: Project[] = [
       "Responsive layout",
     ],
     live: "#",
-    github: "#",
+    github: {
+      frontend: "https://github.com/yourusername/ai-generator-frontend",
+      backend: "https://github.com/yourusername/ai-generator-backend",
+    },
     featured: true,
   },
   {
@@ -165,7 +205,14 @@ export const projects: Project[] = [
     description:
       "A chatbot-style web application with prompt handling, response display, conversation layout, and modern user experience.",
     image: "/images/projects/ai-chat.png",
-    tech: ["React", "Node.js", "Generative AI", "MongoDB"],
+    tech: [
+      "React",
+      "Node.js",
+      "Generative AI",
+      "MongoDB",
+      "Tailwind CSS",
+      "Express.js",
+    ],
     features: [
       "Chat interface",
       "Prompt and response flow",
@@ -174,7 +221,10 @@ export const projects: Project[] = [
       "Message history support",
     ],
     live: "#",
-    github: "#",
+    github: {
+      frontend: "https://github.com/yourusername/ai-chat-frontend",
+      backend: "https://github.com/yourusername/ai-chat-backend",
+    },
   },
   {
     id: 8,
@@ -195,6 +245,8 @@ export const projects: Project[] = [
       "Mobile-friendly design",
     ],
     live: "#",
-    github: "#",
+    github: {
+      frontend: "https://github.com/yourusername/product-showcase",
+    },
   },
 ];
