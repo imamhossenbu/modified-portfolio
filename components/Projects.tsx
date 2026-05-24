@@ -98,8 +98,9 @@ export default function Projects() {
             <button
               key={category.value}
               onClick={() => setActiveCategory(category.value)}
-              className={`project-filter-btn ${activeCategory === category.value ? "active" : ""
-                }`}
+              className={`project-filter-btn ${
+                activeCategory === category.value ? "active" : ""
+              }`}
             >
               {category.label}
             </button>
@@ -111,22 +112,22 @@ export default function Projects() {
           {displayedProjects.map((project) => (
             <div
               key={project.id}
-              className="project-card group"
+              className="project-card group cursor-pointer"
               onClick={() => router.push(`/projects/${project.slug}`)}
             >
-              {/* Image Container - Stays fixed size, does not scale up with card */}
+              {/* Image Container - Fixed Aspect Ratio */}
               <div className="project-image-wrap">
                 <Image
                   src={project.image}
                   alt={project.title}
                   fill
                   sizes="(max-w-768px) 100vw, (max-w-1200px) 50vw, 33vw"
-                  className="object-cover transition-transform duration-500"
+                  className="object-contain transition-transform duration-500"
                   priority={project.id <= 3}
                 />
               </div>
 
-              {/* Bottom Content Area - Reveals smoothly as card grows */}
+              {/* Bottom Content Area - Handles Mobile vs Desktop layout via CSS */}
               <div className="project-card-content">
                 <h3 className="mb-1 text-lg font-bold text-neutral-900 dark:text-white truncate">
                   {project.title}
@@ -135,22 +136,16 @@ export default function Projects() {
                   {project.shortDescription}
                 </p>
 
-                {/* Added wrapper class to sync smoothly with the new CSS stagger delays */}
                 <div
                   className="project-action-row"
                   onClick={(e) => e.stopPropagation()}
                 >
-                  <Link href={`/projects/${project.slug}`} >
-                    <button
-                      onClick={() => router.push(`/projects/${project.slug}`)}
-                      className="project-hover-link"
-                    >
-                      Details
-                    </button>
+                  <Link href={`/projects/${project.slug}`}>
+                    <button className="project-hover-link">Details</button>
                   </Link>
                   <a
                     href={project.live}
-                    className="project-hover-link secondary "
+                    className="project-hover-link secondary"
                     target="_blank"
                     rel="noopener noreferrer"
                   >

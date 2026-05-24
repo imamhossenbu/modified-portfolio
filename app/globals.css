@@ -322,8 +322,7 @@ pre,
    HERO SECTION
 ========================= */
 
-
-.dark .designation-text{
+.dark .designation-text {
   background-color: rgba(240, 240, 240, 0.947);
 }
 
@@ -1053,28 +1052,20 @@ pre,
   box-shadow: 0 8px 20px rgba(255, 116, 116, 0.25);
 }
 
-/* --- Project Card Styles (Fixed Height Mechanism) --- */
+/* --- Project Card Styles (Mobile Friendly Default) --- */
 .project-card {
   position: relative;
   overflow: hidden;
   border-radius: 16px;
-  /* Modern slightly softer corners */
   background: linear-gradient(180deg, #ffffff 0%, #fff9f9 100%);
   border: 1px solid rgba(255, 116, 116, 0.12);
-  height: 300px;
-  /* Kept strictly fixed */
+  display: flex;
+  flex-direction: column;
   isolation: isolate;
-  /* Creates a clean stacking context */
   transition:
     transform 0.5s cubic-bezier(0.25, 1, 0.5, 1),
     border-color 0.5s ease,
     box-shadow 0.5s ease;
-}
-
-.project-card:hover {
-  transform: translateY(-6px);
-  border-color: rgba(255, 116, 116, 0.4);
-  box-shadow: 0 20px 38px rgba(255, 116, 116, 0.06);
 }
 
 /* Dark Mode Card */
@@ -1083,29 +1074,20 @@ pre,
   border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-.dark .project-card:hover {
-  border-color: rgba(255, 116, 116, 0.5);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
-}
-
-/* --- Image Wrapper Styles (Cinematic Zoom & Slide) --- */
+/* --- Image Wrapper (Mobile-First Setup) --- */
 .project-image-wrap {
-  position: absolute;
-  inset: 0;
-  /* Fully covers the card bounds */
+  position: relative;
   width: 100%;
-  height: 100%;
-  z-index: 1;
+  aspect-ratio: 16 / 10; 
   overflow: hidden;
   background: #fcfcfc;
   transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
-/* Sub-target actual img if present to handle clean zoom scaling */
 .project-image-wrap img {
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  object-fit: cover;
   transition:
     transform 0.6s cubic-bezier(0.25, 1, 0.5, 1),
     filter 0.6s ease;
@@ -1113,22 +1095,6 @@ pre,
 
 .dark .project-image-wrap {
   background: #121212;
-}
-
-/* Cinematic movement: Slides up and gently scales up the image asset inside */
-.project-card:hover .project-image-wrap {
-  transform: translateY(-12%);
-}
-
-.project-card:hover .project-image-wrap img {
-  transform: scale(1.08);
-  filter: brightness(0.85);
-  /* Slightly dims for light mode contrast */
-}
-
-.dark .project-card:hover .project-image-wrap img {
-  filter: brightness(0.5) contrast(1.1);
-  /* Darkens deeper in dark mode for pop */
 }
 
 /* --- Featured Badge --- */
@@ -1151,90 +1117,135 @@ pre,
     transform 0.35s ease;
 }
 
-.project-card:hover .project-featured {
-  opacity: 0;
-  transform: translateY(-4px);
-}
-
-/* --- Project Content Container (Glassmorphism Overlay) --- */
+/* --- Project Content Container (Mobile Friendly Default) --- */
 .project-card-content {
-  position: absolute;
-  bottom: 0;
-  left: 0;
   width: 100%;
-  height: 100%;
-  /* Spans full height for absolute positioning control */
-  padding: 24px;
+  padding: 20px;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
+  background: #ffffff;
   z-index: 2;
-  opacity: 0;
-
-  /* Premium frosted glass setup */
-  background: linear-gradient(
-    180deg,
-    rgba(255, 245, 245, 0) 0%,
-    rgba(255, 255, 255, 0.85) 45%,
-    #ffffff 100%
-  );
-  backdrop-filter: blur(0px);
-
-  transition:
-    opacity 0.45s ease,
-    backdrop-filter 0.45s ease;
 }
 
 .dark .project-card-content {
-  background: linear-gradient(
-    180deg,
-    rgba(13, 13, 13, 0) 0%,
-    rgba(20, 20, 20, 0.8) 40%,
-    #0d0d0d 100%
-  );
+  background: #141414;
 }
 
-/* Triggers glass blur and full overlay reveal */
-.project-card:hover .project-card-content {
-  opacity: 1;
-  backdrop-filter: blur(6px);
-}
-
-/* Staggered entrance animations for internal typography elements */
-.project-card-content h3,
-.project-card-content p,
-.project-action-row {
-  transform: translateY(20px);
-  opacity: 0;
-  transition:
-    transform 0.5s cubic-bezier(0.25, 1, 0.5, 1),
-    opacity 0.5s ease;
-}
-
-.project-card:hover .project-card-content h3 {
-  opacity: 1;
-  transform: translateY(0);
-  transition-delay: 0.05s;
-}
-
-.project-card:hover .project-card-content p {
-  opacity: 1;
-  transform: translateY(0);
-  transition-delay: 0.1s;
-}
-
-.project-card:hover .project-action-row {
-  opacity: 1;
-  transform: translateY(0);
-  transition-delay: 0.15s;
-}
-
-/* Wrap your links inside a container like <div class="project-action-row"> to link up alignment */
+/* Action row configuration */
 .project-action-row {
   display: flex;
   align-items: center;
   gap: 12px;
   margin-top: 14px;
+}
+
+/* ===================================================
+   DESKTOP ONLY EFFECTS (Hover & Cinematic Animations)
+   =================================================== */
+@media (min-width: 768px) {
+  .project-card {
+    height: 300px; /* ডেস্কটপে আপনার সেই ফিক্সড হাইট মেকানিজম */
+  }
+
+  .project-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(255, 116, 116, 0.4);
+    box-shadow: 0 20px 38px rgba(255, 116, 116, 0.06);
+  }
+
+  .dark .project-card:hover {
+    border-color: rgba(255, 116, 116, 0.5);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+  }
+
+  /* ইমেজ র্যাপার ডেস্কটপে অ্যাবসোলিউট হবে যেন ওভারলে নিচে কাজ করতে পারে */
+  .project-image-wrap {
+    position: absolute;
+    inset: 0;
+    height: 100%;
+  }
+
+  .project-card:hover .project-image-wrap {
+    transform: translateY(-12%);
+  }
+
+  .project-card:hover .project-image-wrap img {
+    transform: scale(1.08);
+    filter: brightness(0.85);
+  }
+
+  .dark .project-card:hover .project-image-wrap img {
+    filter: brightness(0.5) contrast(1.1);
+  }
+
+  .project-card:hover .project-featured {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+
+  /* প্রিমিয়াম ফ্রোস্টেড গ্লাস ওভারলে সেটিংস */
+  .project-card-content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 100%;
+    justify-content: flex-end;
+    opacity: 0;
+    padding: 24px;
+    background: linear-gradient(
+      180deg,
+      rgba(255, 245, 245, 0) 0%,
+      rgba(255, 255, 255, 0.85) 45%,
+      #ffffff 100%
+    );
+    backdrop-filter: blur(0px);
+    transition:
+      opacity 0.45s ease,
+      backdrop-filter 0.45s ease;
+  }
+
+  .dark .project-card-content {
+    background: linear-gradient(
+      180deg,
+      rgba(13, 13, 13, 0) 0%,
+      rgba(20, 20, 20, 0.8) 40%,
+      #0d0d0d 100%
+    );
+  }
+
+  .project-card:hover .project-card-content {
+    opacity: 1;
+    backdrop-filter: blur(6px);
+  }
+
+  /* স্টেগার্ড টেক্সট অ্যানিমেশন */
+  .project-card-content h3,
+  .project-card-content p,
+  .project-action-row {
+    transform: translateY(20px);
+    opacity: 0;
+    transition:
+      transform 0.5s cubic-bezier(0.25, 1, 0.5, 1),
+      opacity 0.5s ease;
+  }
+
+  .project-card:hover .project-card-content h3 {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: 0.05s;
+  }
+
+  .project-card:hover .project-card-content p {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: 0.1s;
+  }
+
+  .project-card:hover .project-action-row {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: 0.15s;
+  }
 }
 
 /* --- Action Link Buttons --- */
@@ -1402,7 +1413,6 @@ pre,
   border-color: rgba(255, 255, 255, 0.08) !important;
 }
 
-/* Clear Clean Text Configs for Features */
 .feature-text {
   color: #4a4747;
 }
@@ -1591,7 +1601,7 @@ pre,
   }
 }
 
-.dark .experience-description{
+.dark .experience-description {
   background-color: #111111;
 }
 
