@@ -1,73 +1,116 @@
+/* eslint-disable react-hooks/refs */
 "use client";
 
 import { useEffect, useRef } from "react";
-import gsap from "gsap";
 
 export default function CustomCursor() {
-  const dotRef = useRef<HTMLDivElement | null>(null);
-  const glowRef = useRef<HTMLDivElement | null>(null);
   const trailRefs = useRef<HTMLDivElement[]>([]);
+  const mouse = useRef({ x: 0, y: 0 });
+  const trails = useRef(
+    Array.from({ length: 12 }, () => ({
+      x: 0,
+      y: 0,
+    }))
+  );
 
   useEffect(() => {
-    const dot = dotRef.current;
-    const glow = glowRef.current;
+    const isTouchDevice =
+      "ontouchstart" in window || navigator.maxTouchPoints > 0;
 
-    if (!dot || !glow) return;
+    if (isTouchDevice) return;
 
-    gsap.set([dot, glow, ...trailRefs.current], {
-      xPercent: -50,
-      yPercent: -50,
-      opacity: 1,
-    });
+    let firstMove = true;
+    let animationFrame: number;
 
-    const moveCursor = (event: MouseEvent) => {
-      const { clientX, clientY } = event;
+    const handleMouseMove = (e: MouseEvent) => {
+      mouse.current.x = e.clientX;
+      mouse.current.y = e.clientY;
 
-      gsap.to(dot, {
-        x: clientX,
-        y: clientY,
-        duration: 0.04,
-        ease: "power2.out",
-      });
-
-      gsap.to(glow, {
-        x: clientX,
-        y: clientY,
-        duration: 0.22,
-        ease: "power3.out",
-      });
-
-      trailRefs.current.forEach((trail, index) => {
-        gsap.to(trail, {
-          x: clientX,
-          y: clientY,
-          duration: 0.18 + index * 0.08,
-          ease: "power3.out",
+      if (firstMove) {
+        trails.current.forEach((trail) => {
+          trail.x = e.clientX;
+          trail.y = e.clientY;
         });
-      });
+
+        trailRefs.current.forEach((el) => {
+          if (el) {
+            el.style.opacity = "1";
+          }
+        });
+
+        firstMove = false;
+      }
     };
 
-    window.addEventListener("mousemove", moveCursor);
+    const animateTrail = () => {
+      let x = mouse.current.x;
+      let y = mouse.current.y;
+
+      trails.current.forEach((trail, index) => {
+        trail.x += (x - trail.x) * 0.35;
+        trail.y += (y - trail.y) * 0.35;
+
+        x = trail.x;
+        y = trail.y;
+
+        const el = trailRefs.current[index];
+
+        if (el) {
+          el.style.transform = `translate3d(${trail.x}px, ${trail.y}px, 0) translate(-50%, -50%)`;
+        }
+      });
+
+      animationFrame = requestAnimationFrame(animateTrail);
+    };
+
+    window.addEventListener("mousemove", handleMouseMove);
+    animateTrail();
 
     return () => {
-      window.removeEventListener("mousemove", moveCursor);
+      window.removeEventListener("mousemove", handleMouseMove);
+      cancelAnimationFrame(animationFrame);
     };
   }, []);
 
   return (
-    <>
-      {[...Array(7)].map((_, index) => (
-        <div
-          key={index}
-          ref={(el) => {
-            if (el) trailRefs.current[index] = el;
-          }}
-          className={`custom-cursor-trail trail-${index + 1}`}
-        />
-      ))}
+    <div
+      aria-hidden="true"
+      style={{
+        position: "fixed",
+        inset: 0,
+        zIndex: 999999,
+        pointerEvents: "none",
+        overflow: "hidden",
+      }}
+    >
+      {trails.current.map((_, index) => {
+        const size = Math.max(4, 15 - index);
+        const opacity = Math.max(0.12, 0.75 - index * 0.055);
 
-      <div ref={glowRef} className="custom-cursor-glow" />
-      <div ref={dotRef} className="custom-cursor-dot" />
-    </>
+        return (
+          <div
+            key={index}
+            ref={(el) => {
+              if (el) trailRefs.current[index] = el;
+            }}
+            style={{
+              position: "fixed",
+              top: 0,
+              left: 0,
+              width: `${size}px`,
+              height: `${size}px`,
+              borderRadius: "9999px",
+              background: "#ff7474",
+              boxShadow: "0 0 18px rgba(255, 116, 116, 0.75)",
+              pointerEvents: "none",
+              opacity: 0,
+              willChange: "transform",
+              transform: "translate3d(0, 0, 0)",
+              filter: `blur(${index > 6 ? 1 : 0}px)`,
+            }}
+          />
+        );
+      })}
+    </div>
   );
 }

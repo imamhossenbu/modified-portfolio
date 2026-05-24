@@ -31,8 +31,10 @@
   --nav-hover: #ffb3b3;
 }
 
-html {
+html,
+body {
   min-height: 100%;
+  overflow-x: hidden;
 }
 
 body {
@@ -44,6 +46,7 @@ body {
   transition:
     background 0.4s ease,
     color 0.4s ease;
+
 }
 
 body::before {
@@ -2028,12 +2031,45 @@ pre,
 
 
 
-.right{
-   color: black;
-   opacity: 0.5;
+.right {
+  color: black;
+  opacity: 0.5;
 }
 
-.dark .right{
+.dark .right {
   color: white;
   opacity: 0.6;
+}
+
+
+
+
+
+
+
+/* custom cursor */
+.cursor-tail-wrapper {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  pointer-events: none;
+  overflow: hidden;
+  contain: layout style paint;
+}
+
+.cursor-tail-dot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  border-radius: 9999px;
+  pointer-events: none;
+  background: #ff7474;
+  box-shadow: 0 0 14px rgba(255, 116, 116, 0.55);
+  will-change: transform;
+}
+
+@media (max-width: 768px) {
+  .cursor-tail-wrapper {
+    display: none;
+  }
 }
