@@ -56,26 +56,33 @@ body::before {
   z-index: -1;
   pointer-events: none;
   background:
-    radial-gradient(circle at top left, rgba(255, 227, 225, 0.75), transparent 35%),
-    radial-gradient(circle at bottom right, rgba(255, 209, 209, 0.55), transparent 35%),
-    linear-gradient(135deg,
-      #ffffff 0%,
-      #fffaf3 35%,
-      #fff5e4 65%,
-      #ffe3e1 100%);
+    radial-gradient(
+      circle at top left,
+      rgba(255, 227, 225, 0.75),
+      transparent 35%
+    ),
+    radial-gradient(
+      circle at bottom right,
+      rgba(255, 209, 209, 0.55),
+      transparent 35%
+    ),
+    linear-gradient(135deg, #ffffff 0%, #fffaf3 35%, #fff5e4 65%, #ffe3e1 100%);
 }
 
 .dark body::before {
   background:
-    radial-gradient(circle at top left, rgba(255, 148, 148, 0.16), transparent 35%),
-    radial-gradient(circle at bottom right, rgba(255, 209, 209, 0.08), transparent 35%),
-    linear-gradient(135deg,
-      #130f13 0%,
-      #1d171f 38%,
-      #261b22 70%,
-      #301e25 100%);
+    radial-gradient(
+      circle at top left,
+      rgba(255, 148, 148, 0.16),
+      transparent 35%
+    ),
+    radial-gradient(
+      circle at bottom right,
+      rgba(255, 209, 209, 0.08),
+      transparent 35%
+    ),
+    linear-gradient(135deg, #130f13 0%, #1d171f 38%, #261b22 70%, #301e25 100%);
 }
-
 
 h1,
 h2,
@@ -84,14 +91,11 @@ h3,
   font-family: var(--font-space-grotesk), Arial, Helvetica, sans-serif;
 }
 
-
 code,
 pre,
 .mono-text {
   font-family: var(--font-jetbrains-mono), monospace;
 }
-
-
 
 /* =========================
    NAVBAR GLASS EFFECT
@@ -170,9 +174,11 @@ pre,
 }
 
 .dark .nav-link::before {
-  background: linear-gradient(135deg,
-      rgba(255, 148, 148, 0.16),
-      rgba(255, 209, 209, 0.12));
+  background: linear-gradient(
+    135deg,
+    rgba(255, 148, 148, 0.16),
+    rgba(255, 209, 209, 0.12)
+  );
 }
 
 .nav-link::after {
@@ -312,7 +318,6 @@ pre,
   background: #ff9494;
   color: #ffffff;
 }
-
 
 /* =========================
    HERO SECTION
@@ -483,12 +488,13 @@ pre,
   box-shadow: 0 18px 38px rgba(255, 148, 148, 0.38);
 }
 
-
 .hero-image-card {
-  background: linear-gradient(180deg,
-      rgba(255, 255, 255, 0.72),
-      rgba(255, 227, 225, 0.45),
-      rgba(255, 148, 148, 0.18));
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.72),
+    rgba(255, 227, 225, 0.45),
+    rgba(255, 148, 148, 0.18)
+  );
   border: 1px solid rgba(255, 148, 148, 0.28);
   box-shadow:
     0 30px 80px rgba(255, 148, 148, 0.28),
@@ -498,13 +504,13 @@ pre,
 }
 
 .dark .hero-image-card {
-  background: linear-gradient(180deg,
-      rgba(30, 24, 31, 0.8),
-      rgba(255, 148, 148, 0.12));
+  background: linear-gradient(
+    180deg,
+    rgba(30, 24, 31, 0.8),
+    rgba(255, 148, 148, 0.12)
+  );
   border: 1px solid rgba(255, 148, 148, 0.22);
 }
-
-
 
 .hero-image-wrapper {
   position: relative;
@@ -704,7 +710,6 @@ pre,
   }
 }
 
-
 /* =========================
    ABOUT SECTION
 ========================= */
@@ -828,9 +833,6 @@ pre,
   }
 }
 
-
-
-
 /* =========================
    SKILLS SECTION
 ========================= */
@@ -881,7 +883,6 @@ pre,
   animation-direction: reverse;
   animation-duration: 40s;
 }
-
 
 .skills-marquee:hover .skills-marquee-track {
   animation-play-state: paused;
@@ -988,7 +989,6 @@ pre,
 }
 
 @media (max-width: 640px) {
-
   .skills-marquee::before,
   .skills-marquee::after {
     width: 60px;
@@ -999,197 +999,339 @@ pre,
   }
 }
 
-
-
-
-
 /* =========================
    PROJECTS SECTION
 ========================= */
 
+/* --- Filter Buttons Styles (Minimal & No-Shadow) --- */
 .project-filter-btn {
   border-radius: 999px;
-  padding: 11px 20px;
-  color: #ff7474;
+  padding: 10px 22px;
+  color: #666666;
   font-size: 14px;
-  font-weight: 800;
-  background: rgba(255, 255, 255, 0.58);
-  border: 1px solid rgba(255, 148, 148, 0.24);
-  box-shadow: 0 12px 28px rgba(255, 148, 148, 0.12);
-  transition: all 0.3s ease;
+  font-weight: 600;
+  background: rgba(0, 0, 0, 0.03);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  transition: all 0.25s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 .project-filter-btn:hover {
-  transform: translateY(-3px);
-  background: rgba(255, 148, 148, 0.12);
+  transform: translateY(-2px);
+  color: #ff7474;
+  border-color: rgba(255, 116, 116, 0.3);
+  background: rgba(255, 116, 116, 0.03);
 }
 
 .project-filter-btn.active {
   color: #ffffff;
-  background: linear-gradient(135deg, #ff9494, #ff7474);
-  box-shadow: 0 16px 38px rgba(255, 148, 148, 0.35);
+  background: #ff7474;
+  border-color: #ff7474;
+  box-shadow: 0 8px 20px rgba(255, 116, 116, 0.2);
 }
 
+/* Dark Mode Filter Buttons */
 .dark .project-filter-btn {
-  background: rgba(255, 255, 255, 0.06);
+  color: #b3b3b3;
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.08);
 }
 
+.dark .project-filter-btn:hover {
+  color: #ff7474;
+  border-color: rgba(255, 116, 116, 0.4);
+  background: rgba(255, 116, 116, 0.05);
+}
+
+.dark .project-filter-btn.active {
+  color: #ffffff;
+  background: #ff7474;
+  border-color: #ff7474;
+  box-shadow: 0 8px 20px rgba(255, 116, 116, 0.25);
+}
+
+/* --- Project Card Styles (Fixed Height Mechanism) --- */
 .project-card {
+  position: relative;
   overflow: hidden;
-  border-radius: 30px;
-  background: rgba(255, 255, 255, 0.64);
-  border: 1px solid rgba(255, 148, 148, 0.22);
-  box-shadow: 0 18px 45px rgba(255, 148, 148, 0.14);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  border-radius: 16px; /* Modern slightly softer corners */
+  background: linear-gradient(180deg, #ffffff 0%, #fff9f9 100%);
+  border: 1px solid rgba(255, 116, 116, 0.12);
+  height: 300px; /* Kept strictly fixed */
+  isolation: isolate; /* Creates a clean stacking context */
   transition:
-    transform 0.35s ease,
-    box-shadow 0.35s ease,
-    border 0.35s ease;
+    transform 0.5s cubic-bezier(0.25, 1, 0.5, 1),
+    border-color 0.5s ease,
+    box-shadow 0.5s ease;
 }
 
 .project-card:hover {
-  transform: translateY(-10px);
-  border-color: rgba(255, 148, 148, 0.42);
-  box-shadow: 0 26px 65px rgba(255, 148, 148, 0.24);
+  transform: translateY(-6px);
+  border-color: rgba(255, 116, 116, 0.4);
+  box-shadow: 0 20px 38px rgba(255, 116, 116, 0.06);
 }
 
+/* Dark Mode Card */
 .dark .project-card {
-  background: rgba(255, 255, 255, 0.06);
+  background: linear-gradient(180deg, #141414 0%, #0c0c0c 100%);
+  border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
+.dark .project-card:hover {
+  border-color: rgba(255, 116, 116, 0.5);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+}
+
+/* --- Image Wrapper Styles (Cinematic Zoom & Slide) --- */
 .project-image-wrap {
-  position: relative;
-  height: 220px;
-  overflow: hidden;
-  background: linear-gradient(135deg, #fff5e4, #ffe3e1, #ffd1d1);
-}
-
-.project-image-wrap::after {
-  content: "";
   position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg,
-      transparent,
-      rgba(255, 148, 148, 0.18));
+  inset: 0; /* Fully covers the card bounds */
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  overflow: hidden;
+  background: #fcfcfc;
+  transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
+/* Sub-target actual img if present to handle clean zoom scaling */
+.project-image-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition:
+    transform 0.6s cubic-bezier(0.25, 1, 0.5, 1),
+    filter 0.6s ease;
+}
+
+.dark .project-image-wrap {
+  background: #121212;
+}
+
+/* Cinematic movement: Slides up and gently scales up the image asset inside */
+.project-card:hover .project-image-wrap {
+  transform: translateY(-12%);
+}
+.project-card:hover .project-image-wrap img {
+  transform: scale(1.08);
+  filter: brightness(0.85); /* Slightly dims for light mode contrast */
+}
+
+.dark .project-card:hover .project-image-wrap img {
+  filter: brightness(0.5) contrast(1.1); /* Darkens deeper in dark mode for pop */
+}
+
+/* --- Featured Badge --- */
 .project-featured {
   position: absolute;
-  left: 18px;
-  top: 18px;
-  z-index: 3;
+  left: 16px;
+  top: 16px;
+  z-index: 10;
   border-radius: 999px;
-  padding: 7px 14px;
+  padding: 6px 14px;
   color: #ffffff;
-  font-size: 12px;
-  font-weight: 800;
-  background: #ff9494;
-  box-shadow: 0 12px 28px rgba(255, 148, 148, 0.35);
+  font-size: 11px;
+  font-weight: 700;
+  background: #ff7474;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  box-shadow: 0 4px 12px rgba(255, 116, 116, 0.25);
+  transition:
+    opacity 0.35s cubic-bezier(0.25, 1, 0.5, 1),
+    transform 0.35s ease;
 }
 
-.project-icon {
+.project-card:hover .project-featured {
+  opacity: 0;
+  transform: translateY(-4px);
+}
+
+/* --- Project Content Container (Glassmorphism Overlay) --- */
+.project-card-content {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%; /* Spans full height for absolute positioning control */
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  z-index: 2;
+  opacity: 0;
+
+  /* Premium frosted glass setup */
+  background: linear-gradient(
+    180deg,
+    rgba(255, 245, 245, 0) 0%,
+    rgba(255, 255, 255, 0.85) 45%,
+    #ffffff 100%
+  );
+  backdrop-filter: blur(0px);
+
+  transition:
+    opacity 0.45s ease,
+    backdrop-filter 0.45s ease;
+}
+
+.dark .project-card-content {
+  background: linear-gradient(
+    180deg,
+    rgba(13, 13, 13, 0) 0%,
+    rgba(20, 20, 20, 0.8) 40%,
+    #0d0d0d 100%
+  );
+}
+
+/* Triggers glass blur and full overlay reveal */
+.project-card:hover .project-card-content {
+  opacity: 1;
+  backdrop-filter: blur(6px);
+}
+
+/* Staggered entrance animations for internal typography elements */
+.project-card-content h3,
+.project-card-content p,
+.project-action-row {
+  transform: translateY(20px);
+  opacity: 0;
+  transition:
+    transform 0.5s cubic-bezier(0.25, 1, 0.5, 1),
+    opacity 0.5s ease;
+}
+
+.project-card:hover .project-card-content h3 {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.05s;
+}
+
+.project-card:hover .project-card-content p {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.1s;
+}
+
+.project-card:hover .project-action-row {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.15s;
+}
+
+/* Wrap your links inside a container like <div class="project-action-row"> to link up alignment */
+.project-action-row {
   display: flex;
   align-items: center;
-  justify-content: center;
-  width: 50px;
-  height: 50px;
-  border-radius: 18px;
-  color: #ff7474;
-  background: rgba(255, 148, 148, 0.14);
-  box-shadow: 0 12px 28px rgba(255, 148, 148, 0.16);
+  gap: 12px;
+  margin-top: 14px;
 }
 
-.project-type {
-  border-radius: 999px;
-  padding: 7px 14px;
-  color: #ff7474;
-  font-size: 13px;
-  font-weight: 800;
-  background: rgba(255, 148, 148, 0.13);
-  border: 1px solid rgba(255, 148, 148, 0.18);
-}
-
-.project-tech {
-  border-radius: 999px;
-  padding: 8px 13px;
-  color: #ff7474;
-  font-size: 13px;
-  font-weight: 800;
-  background: rgba(255, 148, 148, 0.12);
-  border: 1px solid rgba(255, 148, 148, 0.18);
-}
-
-.project-link {
+/* --- Action Link Buttons --- */
+.project-hover-link {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: 6px;
   border-radius: 999px;
-  padding: 11px 18px;
+  padding: 9px 20px;
   color: #ffffff;
-  font-size: 14px;
-  font-weight: 800;
-  background: #ff9494;
-  box-shadow: 0 14px 35px rgba(255, 148, 148, 0.34);
-  transition: all 0.3s ease;
-}
-
-.project-link:hover {
-  transform: translateY(-3px);
+  font-size: 13px;
+  font-weight: 700;
   background: #ff7474;
+  box-shadow: 0 4px 15px rgba(255, 116, 116, 0.15);
+  transition: all 0.25s ease;
+  cursor: pointer;
 }
 
-.project-link.secondary {
-  color: #ff7474;
-  background: rgba(255, 255, 255, 0.55);
-  border: 1px solid rgba(255, 148, 148, 0.28);
+.project-hover-link:hover {
+  transform: translateY(-2px);
+  background: #e56262;
+  box-shadow: 0 6px 20px rgba(255, 116, 116, 0.3);
 }
 
-.dark .project-link.secondary {
-  background: rgba(255, 255, 255, 0.07);
+.project-hover-link.secondary {
+  color: #444444;
+  background: rgba(0, 0, 0, 0.04);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  box-shadow: none;
 }
 
+.dark .project-hover-link.secondary {
+  color: #dddddd;
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.08);
+}
 
+.project-hover-link.secondary:hover {
+  background: rgba(0, 0, 0, 0.08);
+  color: #000000;
+}
 
+.dark .project-hover-link.secondary:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+}
 
+/* --- View More Global Footer Button --- */
 .project-back-link {
   display: inline-flex;
   align-items: center;
   gap: 8px;
   border-radius: 999px;
-  padding: 11px 18px;
-  color: #ff7474;
+  padding: 10px 24px;
+  color: #666666;
   font-size: 14px;
-  font-weight: 800;
-  background: rgba(255, 255, 255, 0.58);
-  border: 1px solid rgba(255, 148, 148, 0.24);
-  box-shadow: 0 12px 28px rgba(255, 148, 148, 0.12);
-  transition: all 0.3s ease;
+  font-weight: 700;
+  background: transparent;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  transition: all 0.25s ease;
+  cursor: pointer;
 }
 
 .project-back-link:hover {
-  transform: translateY(-3px);
-  background: rgba(255, 148, 148, 0.12);
+  transform: translateY(-2px);
+  border-color: #ff7474;
+  color: #ff7474;
+  background: rgba(255, 116, 116, 0.02);
 }
 
-.project-feature-item {
-  border-radius: 18px;
-  padding: 15px 17px;
-  color: var(--foreground);
-  font-size: 15px;
-  font-weight: 700;
-  background: rgba(255, 255, 255, 0.55);
-  border: 1px solid rgba(255, 148, 148, 0.18);
-  box-shadow: 0 12px 28px rgba(255, 148, 148, 0.1);
-}
-
-.dark .project-feature-item,
 .dark .project-back-link {
-  background: rgba(255, 255, 255, 0.06);
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.12);
 }
 
+.dark .project-back-link:hover {
+  border-color: #ff7474;
+  color: #ff7474;
+  background: rgba(255, 116, 116, 0.04);
+}
 
+/* --- Typography Base Fixes --- */
+.project-card-content h3 {
+  font-size: 18px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0 0 6px 0;
+}
+
+.project-card-content p {
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: #555555;
+  margin: 0;
+}
+
+.dark .project-section-title {
+  color: #ffffff !important;
+}
+.dark .project-card-content h3 {
+  color: #ffffff !important;
+}
+.dark .project-card-content p {
+  color: #aaaaaa !important;
+}
+.dark .hero-description {
+  color: #aaaaaa !important;
+}
 
 /* =========================
    EXPERIENCE MODERN SECTION
@@ -1203,9 +1345,11 @@ pre,
   border-radius: 36px;
   padding: 34px;
   background:
-    radial-gradient(circle at var(--mouse-x) var(--mouse-y),
+    radial-gradient(
+      circle at var(--mouse-x) var(--mouse-y),
       rgba(255, 148, 148, 0.18),
-      transparent 34%),
+      transparent 34%
+    ),
     rgba(255, 255, 255, 0.64);
   border: 1px solid rgba(255, 148, 148, 0.24);
   box-shadow: 0 26px 70px rgba(255, 148, 148, 0.16);
@@ -1215,9 +1359,11 @@ pre,
 
 .dark .experience-modern-card {
   background:
-    radial-gradient(circle at var(--mouse-x) var(--mouse-y),
+    radial-gradient(
+      circle at var(--mouse-x) var(--mouse-y),
       rgba(255, 148, 148, 0.16),
-      transparent 34%),
+      transparent 34%
+    ),
     rgba(255, 255, 255, 0.06);
 }
 
@@ -1666,12 +1812,6 @@ pre,
   }
 }
 
-
-
-
-
-
-
 /* =========================
    INSIGHTS / STATS SECTION
 ========================= */
@@ -1801,7 +1941,6 @@ pre,
   }
 }
 
-
 /* =========================
    CONTACT SECTION
 ========================= */
@@ -1924,14 +2063,6 @@ pre,
   transform: translateY(-4px);
   box-shadow: 0 22px 50px rgba(255, 148, 148, 0.45);
 }
-
-
-
-
-
-
-
-
 
 /* =========================
    FOOTER
