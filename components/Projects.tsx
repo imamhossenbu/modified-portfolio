@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import gsap from "gsap";
 import { ExternalLink } from "lucide-react";
 import { projectCategories, projects } from "@/data/projects";
+import Link from "next/link";
 
 export default function Projects() {
   const router = useRouter();
@@ -97,9 +98,8 @@ export default function Projects() {
             <button
               key={category.value}
               onClick={() => setActiveCategory(category.value)}
-              className={`project-filter-btn ${
-                activeCategory === category.value ? "active" : ""
-              }`}
+              className={`project-filter-btn ${activeCategory === category.value ? "active" : ""
+                }`}
             >
               {category.label}
             </button>
@@ -140,12 +140,14 @@ export default function Projects() {
                   className="project-action-row"
                   onClick={(e) => e.stopPropagation()}
                 >
-                  <button
-                    onClick={() => router.push(`/projects/${project.slug}`)}
-                    className="project-hover-link"
-                  >
-                    Details
-                  </button>
+                  <Link href={`/projects/${project.slug}`} >
+                    <button
+                      onClick={() => router.push(`/projects/${project.slug}`)}
+                      className="project-hover-link"
+                    >
+                      Details
+                    </button>
+                  </Link>
                   <a
                     href={project.live}
                     className="project-hover-link secondary "

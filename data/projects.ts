@@ -35,7 +35,7 @@ export const projects: Project[] = [
       "Modern personal portfolio with animations and theme system.",
     description:
       "A modern personal portfolio website built with Next.js, TypeScript, Tailwind CSS, GSAP animation, dark/light theme, responsive layout, and clean reusable components.",
-    image: "/images/projects/portfolio.png",
+    image: "/images/projects/sellpoint.png",
     tech: ["Next.js", "TypeScript", "Tailwind CSS", "GSAP"],
     features: [
       "Responsive hero section",

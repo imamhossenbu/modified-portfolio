@@ -1,11 +1,19 @@
 /* eslint-disable react-hooks/set-state-in-effect */
 "use client";
 
-import { useEffect, useRef, useState, type MouseEvent } from "react";
+import {
+    useCallback,
+    useEffect,
+    useRef,
+    useState,
+    type MouseEvent,
+} from "react";
+import { usePathname, useRouter } from "next/navigation";
 import gsap from "gsap";
 import { Menu, X, Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useLenis } from "lenis/react";
+import Link from "next/link";
 
 const navLinks = [
     { name: "Home", href: "#home" },
@@ -31,31 +39,87 @@ export default function Navbar() {
 
     const { theme, setTheme } = useTheme();
     const lenis = useLenis();
+    const pathname = usePathname();
+    const router = useRouter();
+
+    const isHomePage = pathname === "/";
+    const isProjectDetailsPage =
+        pathname.startsWith("/projects") || pathname.startsWith("/project");
+
+    const scrollToSection = useCallback(
+        (href: string) => {
+            if (typeof window === "undefined") return;
+
+            const tryScroll = (attempt = 0) => {
+                const section = document.querySelector<HTMLElement>(href);
+
+                if (!section) {
+                    if (attempt < 25) {
+                        setTimeout(() => tryScroll(attempt + 1), 80);
+                    }
+                    return;
+                }
+
+                if (lenis) {
+                    lenis.scrollTo(section, {
+                        offset: -110,
+                        duration: 1.2,
+                    });
+                } else {
+                    window.scrollTo({
+                        top: section.offsetTop - 110,
+                        behavior: "smooth",
+                    });
+                }
+
+                window.history.replaceState(null, "", href);
+            };
+
+            setTimeout(() => tryScroll(), 120);
+        },
+        [lenis]
+    );
 
     const handleSmoothScroll = (
         e: MouseEvent<HTMLAnchorElement>,
         href: string
     ) => {
         e.preventDefault();
+
         setIsOpen(false);
         setActiveLink(href);
 
-        if (lenis) {
-            lenis.scrollTo(href, {
-                offset: -110,
-                duration: 1.2,
-            });
-        } else {
-            const section = document.querySelector(href);
-            section?.scrollIntoView({ behavior: "smooth" });
+        if (isHomePage) {
+            scrollToSection(href);
+            return;
         }
 
-        window.history.pushState(null, "", href);
+        sessionStorage.setItem("scrollTarget", href);
+        router.push("/");
     };
 
     useEffect(() => {
         setMounted(true);
     }, []);
+
+    useEffect(() => {
+        if (!isHomePage) {
+            if (isProjectDetailsPage) {
+                setActiveLink("#projects");
+            }
+            return;
+        }
+
+        const savedTarget = sessionStorage.getItem("scrollTarget");
+        const hashTarget = window.location.hash;
+        const target = savedTarget || hashTarget;
+
+        if (target) {
+            sessionStorage.removeItem("scrollTarget");
+            setActiveLink(target);
+            scrollToSection(target);
+        }
+    }, [pathname, isHomePage, isProjectDetailsPage, scrollToSection]);
 
     useEffect(() => {
         const ctx = gsap.context(() => {
@@ -114,14 +178,50 @@ export default function Navbar() {
         const handleScroll = () => {
             const currentScrollY = window.scrollY;
 
+            if (!isHomePage) {
+                if (isProjectDetailsPage) {
+                    setActiveLink("#projects");
+                }
+
+                if (!headerRef.current) return;
+
+                if (currentScrollY <= 20) {
+                    gsap.to(headerRef.current, {
+                        y: 0,
+                        opacity: 1,
+                        duration: 0.45,
+                        ease: "power3.out",
+                    });
+                } else if (currentScrollY > lastScrollY.current) {
+                    setIsOpen(false);
+
+                    gsap.to(headerRef.current, {
+                        y: -110,
+                        opacity: 0,
+                        duration: 0.45,
+                        ease: "power3.inOut",
+                    });
+                } else {
+                    gsap.to(headerRef.current, {
+                        y: 0,
+                        opacity: 1,
+                        duration: 0.45,
+                        ease: "power3.out",
+                    });
+                }
+
+                lastScrollY.current = currentScrollY;
+                return;
+            }
+
             const sections = navLinks
-                .map((link) => document.querySelector(link.href))
+                .map((link) => document.querySelector<HTMLElement>(link.href))
                 .filter(Boolean) as HTMLElement[];
 
             let current = "#home";
 
             sections.forEach((section) => {
-                const sectionTop = section.offsetTop - 140;
+                const sectionTop = section.offsetTop - 150;
 
                 if (currentScrollY >= sectionTop) {
                     current = `#${section.id}`;
@@ -164,7 +264,7 @@ export default function Navbar() {
         handleScroll();
 
         return () => window.removeEventListener("scroll", handleScroll);
-    }, []);
+    }, [isHomePage, isProjectDetailsPage, pathname]);
 
     useEffect(() => {
         if (!mobileMenuRef.current) return;
@@ -212,20 +312,20 @@ export default function Navbar() {
                 ref={navRef}
                 className="navbar-glass mx-auto flex max-w-6xl items-center justify-between rounded-full px-5 py-3 md:px-7"
             >
-                <a
+                <Link
                     ref={logoRef}
-                    href="#home"
+                    href="/#home"
                     onClick={(e) => handleSmoothScroll(e, "#home")}
                     className="logo-gradient text-xl font-bold tracking-tight md:text-2xl"
                 >
                     Imam<span className="text-[#ff9494]">.</span>
-                </a>
+                </Link>
 
                 <div className="hidden items-center gap-2 md:flex">
                     {navLinks.map((link, index) => (
                         <a
                             key={link.href}
-                            href={link.href}
+                            href={`/${link.href}`}
                             ref={(el) => {
                                 if (el) linksRef.current[index] = el;
                             }}
@@ -240,13 +340,13 @@ export default function Navbar() {
                 </div>
 
                 <div className="flex items-center gap-3">
-                    <a
-                        href="#contact"
+                    <Link
+                        href="/#contact"
                         onClick={(e) => handleSmoothScroll(e, "#contact")}
                         className="hidden rounded-full bg-[#ff9494] px-5 py-2.5 text-sm font-semibold text-white shadow-[0_12px_30px_rgba(255,148,148,0.45)] transition hover:-translate-y-0.5 hover:bg-[#ff7f7f] md:inline-flex"
                     >
                         Hire Me
-                    </a>
+                    </Link>
 
                     <button
                         onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
@@ -275,7 +375,7 @@ export default function Navbar() {
                         {navLinks.map((link) => (
                             <a
                                 key={link.href}
-                                href={link.href}
+                                href={`/${link.href}`}
                                 onClick={(e) => handleSmoothScroll(e, link.href)}
                                 className={`mobile-nav-link ${activeLink === link.href ? "active" : ""
                                     }`}
@@ -284,13 +384,13 @@ export default function Navbar() {
                             </a>
                         ))}
 
-                        <a
-                            href="#contact"
+                        <Link
+                            href="/#contact"
                             onClick={(e) => handleSmoothScroll(e, "#contact")}
                             className="mt-2 rounded-full bg-[#ff9494] px-5 py-3 text-center text-sm font-semibold text-white shadow-[0_12px_30px_rgba(255,148,148,0.4)]"
                         >
                             Hire Me
-                        </a>
+                        </Link>
                     </div>
                 </div>
             )}
