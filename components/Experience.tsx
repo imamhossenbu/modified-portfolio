@@ -184,7 +184,7 @@ export default function Experience() {
               </div>
 
               <div className="mt-8 rounded-3xl border border-[#ff9494]/20 bg-white/45 p-5 !shadow-none backdrop-blur-md dark:bg-white/5">
-                <p className="hero-description text-sm leading-7">
+                <p className="experience-description text-sm leading-7">
                   Currently focusing on scaling the SaaS platform, improving
                   system security with proper server architecture, real-time
                   sync systems, and standard automated testing workflows.

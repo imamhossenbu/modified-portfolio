@@ -46,7 +46,6 @@ body {
   transition:
     background 0.4s ease,
     color 0.4s ease;
-
 }
 
 body::before {
@@ -56,23 +55,31 @@ body::before {
   z-index: -1;
   pointer-events: none;
   background:
-    radial-gradient(circle at top left,
+    radial-gradient(
+      circle at top left,
       rgba(255, 227, 225, 0.75),
-      transparent 35%),
-    radial-gradient(circle at bottom right,
+      transparent 35%
+    ),
+    radial-gradient(
+      circle at bottom right,
       rgba(255, 209, 209, 0.55),
-      transparent 35%),
+      transparent 35%
+    ),
     linear-gradient(135deg, #ffffff 0%, #fffaf3 35%, #fff5e4 65%, #ffe3e1 100%);
 }
 
 .dark body::before {
   background:
-    radial-gradient(circle at top left,
+    radial-gradient(
+      circle at top left,
       rgba(255, 148, 148, 0.16),
-      transparent 35%),
-    radial-gradient(circle at bottom right,
+      transparent 35%
+    ),
+    radial-gradient(
+      circle at bottom right,
       rgba(255, 209, 209, 0.08),
-      transparent 35%),
+      transparent 35%
+    ),
     linear-gradient(135deg, #130f13 0%, #1d171f 38%, #261b22 70%, #301e25 100%);
 }
 
@@ -166,9 +173,11 @@ pre,
 }
 
 .dark .nav-link::before {
-  background: linear-gradient(135deg,
-      rgba(255, 148, 148, 0.16),
-      rgba(255, 209, 209, 0.12));
+  background: linear-gradient(
+    135deg,
+    rgba(255, 148, 148, 0.16),
+    rgba(255, 209, 209, 0.12)
+  );
 }
 
 .nav-link::after {
@@ -312,6 +321,11 @@ pre,
 /* =========================
    HERO SECTION
 ========================= */
+
+
+.dark .designation-text{
+  background-color: rgba(240, 240, 240, 0.947);
+}
 
 .hero-subtitle {
   color: rgba(43, 43, 43, 0.88);
@@ -479,10 +493,12 @@ pre,
 }
 
 .hero-image-card {
-  background: linear-gradient(180deg,
-      rgba(255, 255, 255, 0.72),
-      rgba(255, 227, 225, 0.45),
-      rgba(255, 148, 148, 0.18));
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.72),
+    rgba(255, 227, 225, 0.45),
+    rgba(255, 148, 148, 0.18)
+  );
   border: 1px solid rgba(255, 148, 148, 0.28);
   box-shadow:
     0 30px 80px rgba(255, 148, 148, 0.28),
@@ -492,9 +508,11 @@ pre,
 }
 
 .dark .hero-image-card {
-  background: linear-gradient(180deg,
-      rgba(30, 24, 31, 0.8),
-      rgba(255, 148, 148, 0.12));
+  background: linear-gradient(
+    180deg,
+    rgba(30, 24, 31, 0.8),
+    rgba(255, 148, 148, 0.12)
+  );
   border: 1px solid rgba(255, 148, 148, 0.22);
 }
 
@@ -975,7 +993,6 @@ pre,
 }
 
 @media (max-width: 640px) {
-
   .skills-marquee::before,
   .skills-marquee::after {
     width: 60px;
@@ -1155,10 +1172,12 @@ pre,
   opacity: 0;
 
   /* Premium frosted glass setup */
-  background: linear-gradient(180deg,
-      rgba(255, 245, 245, 0) 0%,
-      rgba(255, 255, 255, 0.85) 45%,
-      #ffffff 100%);
+  background: linear-gradient(
+    180deg,
+    rgba(255, 245, 245, 0) 0%,
+    rgba(255, 255, 255, 0.85) 45%,
+    #ffffff 100%
+  );
   backdrop-filter: blur(0px);
 
   transition:
@@ -1167,10 +1186,12 @@ pre,
 }
 
 .dark .project-card-content {
-  background: linear-gradient(180deg,
-      rgba(13, 13, 13, 0) 0%,
-      rgba(20, 20, 20, 0.8) 40%,
-      #0d0d0d 100%);
+  background: linear-gradient(
+    180deg,
+    rgba(13, 13, 13, 0) 0%,
+    rgba(20, 20, 20, 0.8) 40%,
+    #0d0d0d 100%
+  );
 }
 
 /* Triggers glass blur and full overlay reveal */
@@ -1296,7 +1317,7 @@ pre,
   background: rgba(255, 116, 116, 0.04);
 }
 
-/* --- Typography Base Fixes --- */
+/* --- Typography Base Fixes & Overrides --- */
 .project-card-content h3 {
   font-size: 18px;
   font-weight: 700;
@@ -1326,7 +1347,6 @@ pre,
 .dark .hero-description {
   color: #aaaaaa !important;
 }
-
 
 .project-link {
   display: inline-flex;
@@ -1371,8 +1391,23 @@ pre,
   background: rgba(255, 255, 255, 0.12);
 }
 
+/* --- Additional Details Page Helpers --- */
+.background-muted {
+  background: rgba(0, 0, 0, 0.02);
+  border-color: rgba(0, 0, 0, 0.08);
+}
 
- .feature-text {
+.dark .background-muted {
+  background: rgba(255, 255, 255, 0.03) !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+/* Clear Clean Text Configs for Features */
+.feature-text {
+  color: #4a4747;
+}
+
+.dark .feature-text {
   color: black !important;
 }
 
@@ -1388,9 +1423,11 @@ pre,
   border-radius: 36px;
   padding: 34px;
   background:
-    radial-gradient(circle at var(--mouse-x) var(--mouse-y),
+    radial-gradient(
+      circle at var(--mouse-x) var(--mouse-y),
       rgba(255, 148, 148, 0.18),
-      transparent 34%),
+      transparent 34%
+    ),
     rgba(255, 255, 255, 0.64);
   border: 1px solid rgba(255, 148, 148, 0.24);
   box-shadow: 0 26px 70px rgba(255, 148, 148, 0.16);
@@ -1400,9 +1437,11 @@ pre,
 
 .dark .experience-modern-card {
   background:
-    radial-gradient(circle at var(--mouse-x) var(--mouse-y),
+    radial-gradient(
+      circle at var(--mouse-x) var(--mouse-y),
       rgba(255, 148, 148, 0.16),
-      transparent 34%),
+      transparent 34%
+    ),
     rgba(255, 255, 255, 0.06);
 }
 
@@ -1550,6 +1589,10 @@ pre,
   .experience-floating-icon {
     display: none;
   }
+}
+
+.dark .experience-description{
+  background-color: #111111;
 }
 
 /* =========================
@@ -2199,8 +2242,6 @@ pre,
   }
 }
 
-
-
 .right {
   color: black;
   opacity: 0.5;
@@ -2210,12 +2251,6 @@ pre,
   color: white;
   opacity: 0.6;
 }
-
-
-
-
-
-
 
 /* custom cursor */
 .cursor-tail-wrapper {

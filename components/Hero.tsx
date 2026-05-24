@@ -99,7 +99,7 @@ export default function Hero() {
 
       <div className="mx-auto grid w-full max-w-7xl items-center gap-12 lg:grid-cols-[1fr_1.05fr_0.9fr]">
         <div ref={titleRef} className="z-10 text-center lg:text-left">
-          <p className="mono-text mb-4 inline-flex rounded-full border border-[#ff9494]/30 bg-white/60 px-4 py-2 text-sm font-semibold text-[#ff7474] backdrop-blur-md dark:bg-white/5">
+          <p className="mono-text designation-text mb-4 inline-flex rounded-full border border-[#ff9494]/30 bg-white/60 px-4 py-2 text-sm font-semibold text-[#ff7474] backdrop-blur-md dark:bg-white/5">
             Full Stack Developer
           </p>
 
