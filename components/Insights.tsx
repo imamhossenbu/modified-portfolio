@@ -93,13 +93,7 @@ export default function Insights() {
                 </div>
 
                 <div className="insight-animate insight-modern-panel">
-                    <div className="insight-floating-icon insight-float-one">
-                        <Sparkles size={22} />
-                    </div>
-
-                    <div className="insight-floating-icon insight-float-two">
-                        <Code2 size={22} />
-                    </div>
+                   
 
                     <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
                         {insights.map((item, index) => {
