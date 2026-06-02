@@ -942,12 +942,12 @@ pre,
   display: flex;
   width: max-content;
   gap: 12px;
-  animation: marqueeMove 36s linear infinite;
+  animation: marqueeMove 60s linear infinite;
 }
 
 .skills-marquee.reverse .skills-marquee-track {
   animation-direction: reverse;
-  animation-duration: 40s;
+  animation-duration: 60s;
 }
 
 .skills-marquee:hover .skills-marquee-track {
@@ -1064,7 +1064,7 @@ pre,
   }
 
   .skills-marquee-track {
-    animation-duration: 18s;
+    animation-duration: 60s;
   }
 }
 

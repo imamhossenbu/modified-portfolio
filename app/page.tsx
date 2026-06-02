@@ -9,11 +9,15 @@ import Contact from "@/components/Contact";
 
 export default function Home() {
   return (
-    <main>
+    <main className="space-y-10">
       <Hero />
 
       <section id="about" >
         <About />
+      </section>
+
+      <section id="experience" >
+        <Experience />
       </section>
 
       <section id="skills" >
@@ -24,9 +28,7 @@ export default function Home() {
         <Projects />
       </section>
 
-      <section id="experience" >
-        <Experience />
-      </section>
+      
 
       <section id="clients">
         <Testimonials />

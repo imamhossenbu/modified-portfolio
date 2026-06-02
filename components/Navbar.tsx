@@ -18,11 +18,9 @@ import Link from "next/link";
 const navLinks = [
     { name: "Home", href: "#home" },
     { name: "About", href: "#about" },
+    { name: "Experience", href: "#experience" },
     { name: "Skills", href: "#skills" },
     { name: "Projects", href: "#projects" },
-    { name: "Experience", href: "#experience" },
-    { name: "Clients", href: "#clients" },
-    { name: "Insights", href: "#insights" },
 ];
 
 export default function Navbar() {
@@ -214,21 +212,34 @@ export default function Navbar() {
                 return;
             }
 
+            // ================= অ্যাক্টিভ লিংক ডিটেকশনের ফিক্সড লজিক =================
             const sections = navLinks
                 .map((link) => document.querySelector<HTMLElement>(link.href))
                 .filter(Boolean) as HTMLElement[];
 
             let current = "#home";
+            const triggerPoint = window.innerHeight / 3; // স্ক্রিনের ৩ ভাগের ১ ভাগ অংশ থ্রেশহোল্ড
 
             sections.forEach((section) => {
-                const sectionTop = section.offsetTop - 150;
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.offsetHeight;
 
-                if (currentScrollY >= sectionTop) {
+                // চেক করা হচ্ছে স্ক্রোল পজিশনটি নির্দিষ্ট সেকশনের বাউন্ডারির ভেতরে আছে কিনা
+                if (
+                    currentScrollY >= sectionTop - triggerPoint &&
+                    currentScrollY < sectionTop + sectionHeight - triggerPoint
+                ) {
                     current = `#${section.id}`;
                 }
             });
 
+            // একদম ওপরে থাকলে যেন সবসময় হোম সিলেক্ট থাকে
+            if (currentScrollY < 100) {
+                current = "#home";
+            }
+
             setActiveLink(current);
+            // ====================================================================
 
             if (!headerRef.current) return;
 
