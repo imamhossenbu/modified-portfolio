@@ -8,17 +8,21 @@ export default function ScrollProgress() {
     const glowRef = useRef<HTMLDivElement | null>(null);
 
     useEffect(() => {
+        // scaleX এর জন্য GSAP-এর সুপার ফাস্ট কুইকঅপ্টিমাইজড মেথড
         const progressTo = gsap.quickTo(progressRef.current, "scaleX", {
-            duration: 0.25,
-            ease: "power3.out",
+            duration: 0.2,
+            ease: "power2.out",
         });
 
+        // গ্লো বা ডট-এর ডাইনামিক মুভমেন্টের জন্য (পার্সেন্টেজ বেসড)
         const glowTo = gsap.quickTo(glowRef.current, "left", {
-            duration: 0.25,
-            ease: "power3.out",
+            duration: 0.2,
+            ease: "power2.out",
         });
 
         const updateProgress = () => {
+            if (typeof window === "undefined") return;
+
             const scrollTop = window.scrollY;
             const docHeight =
                 document.documentElement.scrollHeight - window.innerHeight;
@@ -27,12 +31,14 @@ export default function ScrollProgress() {
             const progressPercent = Math.min(Math.max(progress, 0), 1);
 
             progressTo(progressPercent);
+            // x-অক্ষের পজিশনকে পার্সেন্টেজে কনভার্ট করে পাঠানো হচ্ছে
             glowTo(progressPercent * 100);
         };
 
+        // ইনিশিয়াল ক্যালকুলেশন
         updateProgress();
 
-        window.addEventListener("scroll", updateProgress);
+        window.addEventListener("scroll", updateProgress, { passive: true });
         window.addEventListener("resize", updateProgress);
 
         return () => {
@@ -42,15 +48,10 @@ export default function ScrollProgress() {
     }, []);
 
     return (
-        <div className="fixed left-0 top-0 z-99999 h-0.75 w-full overflow-hidden bg-transparent">
+        <div className="fixed left-0 top-0 z-[100] h-1 w-full overflow-hidden bg-transparent pointer-events-none">
             <div
                 ref={progressRef}
-                className="h-full w-full origin-left scale-x-0 bg-linear-to-r from-[#ff9494] via-[#ff7474] to-[#ffd1d1] shadow-[0_0_18px_rgba(255,148,148,0.9)]"
-            />
-
-            <div
-                ref={glowRef}
-                className="pointer-events-none absolute top-1/2 h-4 w-4 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#ff9494] opacity-90 shadow-[0_0_18px_rgba(255,148,148,1),0_0_35px_rgba(255,116,116,0.8)]"
+                className="h-full w-full origin-left scale-x-0 bg-gradient-to-r from-[#4f6ef7]/40 via-[#4f6ef7] to-[#8fa3f9] shadow-[0_0_12px_rgba(79,110,247,0.5)]"
             />
         </div>
     );
