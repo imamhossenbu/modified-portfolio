@@ -15,6 +15,7 @@ import SmoothScroll from "@/components/SmoothScroll";
 import ScrollProgress from "@/components/ScrollProgress";
 import FloatingCTA from "@/components/FloatingCTA";
 import AnimatedBackground from "@/components/AnimatedBackground";
+import { Toaster } from "react-hot-toast";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -64,6 +65,7 @@ export default function RootLayout({
             <BackgroundParticles />
             <FloatingCTA/>
             <AnimatedBackground />
+            <Toaster position="top-center" reverseOrder={false} />
             {children}
             <Footer />
           </SmoothScroll>

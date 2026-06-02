@@ -8,13 +8,11 @@ export default function ScrollProgress() {
     const glowRef = useRef<HTMLDivElement | null>(null);
 
     useEffect(() => {
-        // scaleX এর জন্য GSAP-এর সুপার ফাস্ট কুইকঅপ্টিমাইজড মেথড
         const progressTo = gsap.quickTo(progressRef.current, "scaleX", {
             duration: 0.2,
             ease: "power2.out",
         });
 
-        // গ্লো বা ডট-এর ডাইনামিক মুভমেন্টের জন্য (পার্সেন্টেজ বেসড)
         const glowTo = gsap.quickTo(glowRef.current, "left", {
             duration: 0.2,
             ease: "power2.out",
@@ -31,11 +29,11 @@ export default function ScrollProgress() {
             const progressPercent = Math.min(Math.max(progress, 0), 1);
 
             progressTo(progressPercent);
-            // x-অক্ষের পজিশনকে পার্সেন্টেজে কনভার্ট করে পাঠানো হচ্ছে
+   
             glowTo(progressPercent * 100);
         };
 
-        // ইনিশিয়াল ক্যালকুলেশন
+  
         updateProgress();
 
         window.addEventListener("scroll", updateProgress, { passive: true });

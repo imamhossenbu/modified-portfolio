@@ -5,13 +5,13 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Mail, MapPin, Send, Phone } from "lucide-react";
 import { FaFacebook, FaGithub, FaLinkedinIn } from "react-icons/fa";
+import toast from "react-hot-toast"; 
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default function Contact() {
   const sectionRef = useRef<HTMLElement | null>(null);
   const [loading, setLoading] = useState(false);
-  const [status, setStatus] = useState("");
 
   const GOOGLE_SCRIPT_URL =
     "https://script.google.com/macros/s/AKfycbzvU1CT9uVu-19r_S6hdW9ALqOlBMehklIT6tzx61Mfy0NynM6hrxDJB8eyDGsm2wd8bQ/exec";
@@ -32,7 +32,7 @@ export default function Contact() {
             trigger: sectionRef.current,
             start: "top 75%",
           },
-        }
+        },
       );
     }, sectionRef);
 
@@ -41,9 +41,7 @@ export default function Contact() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
     setLoading(true);
-    setStatus("");
 
     const form = e.currentTarget;
     const formData = new FormData(form);
@@ -55,10 +53,10 @@ export default function Contact() {
         mode: "no-cors",
       });
 
-      setStatus("Message sent successfully!");
+      toast.success("Message sent successfully!");
       form.reset();
     } catch (error) {
-      setStatus("Something went wrong. Please try again.");
+      toast.error("Something went wrong. Please try again later.");
     } finally {
       setLoading(false);
     }
@@ -87,6 +85,7 @@ export default function Contact() {
         </div>
 
         <div className="grid gap-8 lg:grid-cols-[0.85fr_1.15fr]">
+        
           <div className="contact-animate contact-info-card">
             <h3 className="mb-5 text-2xl font-bold text-[var(--foreground)]">
               Contact Information
@@ -150,7 +149,11 @@ export default function Contact() {
             </div>
           </div>
 
-          <form onSubmit={handleSubmit} className="contact-animate contact-form-card">
+          {/* ফর্ম কার্ড */}
+          <form
+            onSubmit={handleSubmit}
+            className="contact-animate contact-form-card"
+          >
             <div className="grid gap-5 md:grid-cols-2">
               <input
                 type="text"
@@ -185,16 +188,14 @@ export default function Contact() {
               required
             />
 
-            <button type="submit" className="contact-submit-btn" disabled={loading}>
+            <button
+              type="submit"
+              className="contact-submit-btn"
+              disabled={loading}
+            >
               {loading ? "Sending..." : "Send Message"}
               <Send size={18} />
             </button>
-
-            {status && (
-              <p className="mt-4 text-sm font-medium text-blue-main">
-                {status}
-              </p>
-            )}
           </form>
         </div>
       </div>
