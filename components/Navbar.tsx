@@ -318,7 +318,7 @@ export default function Navbar() {
                     onClick={(e) => handleSmoothScroll(e, "#home")}
                     className="logo-gradient text-xl font-bold tracking-tight md:text-2xl"
                 >
-                    Imam<span className="text-[#ff9494]">.</span>
+                    Imam<span className="text-accent">.</span>
                 </Link>
 
                 <div className="hidden items-center gap-2 md:flex">
@@ -343,7 +343,7 @@ export default function Navbar() {
                     <Link
                         href="/#contact"
                         onClick={(e) => handleSmoothScroll(e, "#contact")}
-                        className="hidden rounded-full bg-[#ff9494] px-5 py-2.5 text-sm font-semibold text-white shadow-[0_12px_30px_rgba(255,148,148,0.45)] transition hover:-translate-y-0.5 hover:bg-[#ff7f7f] md:inline-flex"
+                        className="hidden primary-btn rounded-full px-5 py-2.5 text-sm font-semibold md:inline-flex"
                     >
                         Hire Me
                     </Link>
@@ -387,7 +387,7 @@ export default function Navbar() {
                         <Link
                             href="/#contact"
                             onClick={(e) => handleSmoothScroll(e, "#contact")}
-                            className="mt-2 rounded-full bg-[#ff9494] px-5 py-3 text-center text-sm font-semibold text-white shadow-[0_12px_30px_rgba(255,148,148,0.4)]"
+                            className="mt-2 primary-btn rounded-full px-5 py-3 text-center text-sm font-semibold text-white"
                         >
                             Hire Me
                         </Link>

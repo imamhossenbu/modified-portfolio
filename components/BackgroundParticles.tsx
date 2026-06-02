@@ -14,7 +14,7 @@ export default function BackgroundParticles() {
         for (let i = 0; i < 25; i++) {
             const div = document.createElement("div");
             div.className =
-                "absolute w-3 h-3 rounded-full bg-[#ff9494]/30 blur-sm";
+                "absolute w-3 h-3 rounded-full bg-blue-main/20 blur-sm";
             container.appendChild(div);
             particles.push(div);
 

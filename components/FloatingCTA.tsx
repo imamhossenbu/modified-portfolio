@@ -24,8 +24,8 @@ const contactButtons = [
     name: "Call",
     href: "tel:+8801624994532",
     icon: Phone,
-    bg: "bg-[#ff7474]",
-    shadow: "shadow-[0_10px_30px_rgba(255,116,116,0.35)]",
+    bg: "bg-blue-main",
+    shadow: "shadow-[0_10px_30px_rgba(79,110,247,0.35)]",
   },
 ];
 
@@ -138,15 +138,15 @@ export default function FloatingCTA() {
         aria-label="Open contact options"
         className="
           group relative flex h-16 w-16 items-center justify-center overflow-hidden
-          rounded-full bg-gradient-to-br from-[#ff7474] to-[#ff4d6d]
-          text-white shadow-[0_16px_45px_rgba(255,116,116,0.45)]
+          rounded-full bg-gradient-to-br from-blue-main to-nav-hover
+          text-white shadow-[0_16px_45px_rgba(79,110,247,0.45)]
           transition-all duration-300 hover:scale-110 active:scale-95
         "
       >
         <span className="absolute inset-0 rounded-full bg-white/20 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
 
         {!open && (
-          <span className="absolute inset-0 rounded-full border border-[#ff7474]/40 animate-ping" />
+          <span className="absolute inset-0 rounded-full border border-blue-main/40 animate-ping" />
         )}
 
         <span className="relative z-10 flex h-12 w-12 items-center justify-center rounded-full bg-white/15 backdrop-blur-md">

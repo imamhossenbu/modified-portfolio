@@ -80,7 +80,7 @@ export default function Projects() {
       <div className="mx-auto max-w-7xl">
         {/* Header Section */}
         <div className="project-animate mb-12 text-center">
-          <p className="mono-text mb-3 text-sm font-semibold uppercase tracking-[0.25em] text-[#ff7474]">
+          <p className="mono-text mb-3 text-sm font-semibold uppercase tracking-[0.25em] text-blue-main">
             My Projects
           </p>
           <h2 className="project-section-title text-3xl font-bold text-neutral-900 dark:text-white md:text-4xl">

@@ -14,6 +14,7 @@ import BackgroundParticles from "@/components/BackgroundParticles";
 import SmoothScroll from "@/components/SmoothScroll";
 import ScrollProgress from "@/components/ScrollProgress";
 import FloatingCTA from "@/components/FloatingCTA";
+import AnimatedBackground from "@/components/AnimatedBackground";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -62,6 +63,7 @@ export default function RootLayout({
             <Navbar />
             <BackgroundParticles />
             <FloatingCTA/>
+            <AnimatedBackground />
             {children}
             <Footer />
           </SmoothScroll>

@@ -94,7 +94,7 @@ export default function Testimonials() {
         >
             <div className="mx-auto max-w-7xl">
                 <div className="testimonial-animate mb-14 text-center">
-                    <p className="mono-text mb-3 text-sm font-semibold uppercase tracking-[0.25em] text-[#ff7474]">
+                    <p className="mono-text mb-3 text-sm font-semibold uppercase tracking-[0.25em] text-blue-main">
                         Testimonials
                     </p>
 
@@ -143,7 +143,7 @@ export default function Testimonials() {
                                 <Star
                                     key={index}
                                     size={20}
-                                    className="fill-[#ff9494] text-[#ff9494]"
+                                    className="fill-accent text-accent"
                                 />
                             ))}
                         </div>
@@ -162,7 +162,7 @@ export default function Testimonials() {
                                     {item.name}
                                 </h3>
 
-                                <p className="mt-1 font-semibold text-[#ff7474]">
+                                <p className="mt-1 font-semibold text-blue-main">
                                     {item.role}
                                 </p>
                             </div>

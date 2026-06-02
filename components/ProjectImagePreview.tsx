@@ -51,10 +51,10 @@ export default function ProjectImagePreview({
                 aria-label={`Preview ${title}`}
                 className="
           group relative h-full w-full overflow-hidden rounded-[2rem]
-          border border-[#ff9494]/20 bg-white/70 text-left
-          shadow-[0_24px_70px_rgba(255,116,116,0.14)]
+          border border-glass-border bg-white/70 text-left
+          shadow-[0_24px_70px_rgba(79,110,247,0.12)]
           backdrop-blur-xl transition-all duration-500
-          hover:-translate-y-1 hover:border-[#ff7474]/40
+          hover:-translate-y-1 hover:border-blue-main/40
           dark:border-white/10 dark:bg-white/5
         "
             >
@@ -76,7 +76,7 @@ export default function ProjectImagePreview({
                             </span>
                         )}
 
-                        <span className="ml-auto flex h-11 w-11 items-center justify-center rounded-full border border-white/20 bg-white/15 text-white backdrop-blur-xl transition-all duration-300 group-hover:bg-[#ff7474]">
+                        <span className="ml-auto flex h-11 w-11 items-center justify-center rounded-full border border-white/20 bg-white/15 text-white backdrop-blur-xl transition-all duration-300 group-hover:bg-blue-main">
                             <Maximize2 size={18} />
                         </span>
                     </div>
@@ -101,7 +101,7 @@ export default function ProjectImagePreview({
                     {/* Header */}
                     <div className="mb-4 flex flex-wrap items-center justify-between gap-4">
                         <div>
-                            <p className="text-xs font-semibold uppercase tracking-[0.25em] text-[#ff7474]">
+                            <p className="text-xs font-semibold uppercase tracking-[0.25em] text-blue-main">
                                 Project Preview
                             </p>
                             <h2 className="mt-1 text-xl font-bold text-white md:text-2xl">
@@ -117,7 +117,7 @@ export default function ProjectImagePreview({
                                     className={`
                     flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold transition-all
                     ${view === "desktop"
-                                            ? "bg-[#ff7474] text-white"
+                                            ? "bg-blue-main text-white"
                                             : "text-white/70 hover:text-white"
                                         }
                   `}
@@ -132,7 +132,7 @@ export default function ProjectImagePreview({
                                     className={`
                     flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold transition-all
                     ${view === "mobile"
-                                            ? "bg-[#ff7474] text-white"
+                                            ? "bg-blue-main text-white"
                                             : "text-white/70 hover:text-white"
                                         }
                   `}
@@ -149,7 +149,7 @@ export default function ProjectImagePreview({
                                 className="
                   flex h-11 w-11 items-center justify-center rounded-full
                   border border-white/10 bg-white/10 text-white
-                  transition-all hover:bg-[#ff7474]
+                  transition-all hover:bg-blue-main
                 "
                             >
                                 <X size={20} />

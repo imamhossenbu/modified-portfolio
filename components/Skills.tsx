@@ -210,7 +210,7 @@ export default function Skills() {
         >
             <div className="mx-auto max-w-7xl">
                 <div className="skills-animate mb-14 text-center">
-                    <p className="mono-text mb-3 text-sm font-semibold uppercase tracking-[0.25em] text-[#ff7474]">
+                    <p className="mono-text mb-3 text-sm font-semibold uppercase tracking-[0.25em] text-blue-main">
                         My Skills
                     </p>
 

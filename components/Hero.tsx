@@ -99,7 +99,7 @@ export default function Hero() {
 
       <div className="mx-auto grid w-full max-w-7xl items-center gap-12 lg:grid-cols-[1fr_1.05fr_0.9fr]">
         <div ref={titleRef} className="z-10 text-center lg:text-left">
-          <p className="mono-text designation-text mb-4 inline-flex rounded-full border border-[#ff9494]/30 bg-white/60 px-4 py-2 text-sm font-semibold text-[#ff7474] backdrop-blur-md dark:bg-white/5">
+          <p className="mono-text designation-text mb-4 inline-flex rounded-full border border-blue-main/30 bg-white/60 px-4 py-2 text-sm font-semibold text-blue-main backdrop-blur-md dark:bg-white/5">
             Full Stack Developer
           </p>
 
@@ -200,14 +200,14 @@ export default function Hero() {
                 alt="Imam Hossen"
                 fill
                 priority
-                className="drop-shadow-[0_35px_55px_rgba(255,148,148,0.35)]"
+                className="drop-shadow-[0_35px_55px_rgba(79,110,247,0.25)]"
               />
             </div>
           </div>
         </div>
         <div ref={cardRef} className="z-10">
           <div className="soft-card rounded-4xl p-6">
-            <div className="mb-5 h-1 w-14 rounded-full bg-linear-to-r from-[#ff9494] to-[#ffd1d1]" />
+            <div className="mb-5 h-1 w-14 rounded-full bg-linear-to-r from-blue-main to-blue-soft" />
 
             <h3 className="mb-4 text-2xl font-bold text-(--foreground)">
               Available for Projects
@@ -231,14 +231,14 @@ export default function Hero() {
 
               <div className="hero-info-row">
                 <span>Status</span>
-                <strong className="text-[#ff7474]">Open to Work</strong>
+                <strong className="text-blue-main">Open to Work</strong>
               </div>
             </div>
 
             <a
               href="/resume.pdf"
               download="Imam-Hossen-CV.pdf"
-              className="mt-7 inline-flex w-full items-center justify-center gap-2 rounded-full bg-[#ff9494] px-6 py-3 text-sm font-bold text-white  transition hover:-translate-y-1 hover:bg-[#ff7f7f]"
+              className="mt-7 inline-flex w-full items-center justify-center gap-2 rounded-full primary-btn px-6 py-3 text-sm font-bold"
             >
               <Download size={18} />
               Download CV

@@ -72,7 +72,7 @@ export default function Contact() {
     >
       <div className="mx-auto max-w-7xl">
         <div className="contact-animate mb-14 text-center">
-          <p className="mono-text mb-3 text-sm font-semibold uppercase tracking-[0.25em] text-[#ff7474]">
+          <p className="mono-text mb-3 text-sm font-semibold uppercase tracking-[0.25em] text-blue-main">
             Contact
           </p>
 
@@ -191,7 +191,7 @@ export default function Contact() {
             </button>
 
             {status && (
-              <p className="mt-4 text-sm font-medium text-[#ff7474]">
+              <p className="mt-4 text-sm font-medium text-blue-main">
                 {status}
               </p>
             )}

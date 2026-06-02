@@ -106,7 +106,7 @@ export default function About() {
     >
       <div className="mx-auto max-w-7xl">
         <div className="about-animate mb-14 text-center">
-          <p className="mono-text mb-3 text-sm font-semibold uppercase tracking-[0.25em] text-[#ff7474]">
+          <p className="mono-text mb-3 text-sm font-semibold uppercase tracking-[0.25em] text-blue-main">
             About Me
           </p>
 
@@ -117,7 +117,7 @@ export default function About() {
 
         <div className="grid items-start gap-8 lg:grid-cols-[1.05fr_0.95fr]">
           <div className="about-animate soft-card self-start rounded-[2rem] p-7 md:p-9">
-            <div className="mb-6 inline-flex rounded-2xl bg-[#ff9494]/15 p-4 text-[#ff7474]">
+            <div className="mb-6 inline-flex rounded-2xl bg-blue-main/15 p-4 text-blue-main">
               <Code2 size={28} />
             </div>
 
@@ -158,12 +158,12 @@ export default function About() {
 
           <div className="about-animate soft-card rounded-[2rem] p-7 md:p-9">
             <div className="mb-8 flex items-center gap-3">
-              <div className="rounded-2xl bg-[#ff9494]/15 p-4 text-[#ff7474]">
+              <div className="rounded-2xl bg-blue-main/15 p-4 text-blue-main">
                 <GraduationCap size={28} />
               </div>
 
               <div>
-                <p className="mono-text text-sm font-semibold text-[#ff7474]">
+                <p className="mono-text text-sm font-semibold text-blue-main">
                   Education
                 </p>
 

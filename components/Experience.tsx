@@ -96,7 +96,7 @@ export default function Experience() {
     >
       <div className="mx-auto max-w-7xl">
         <div className="experience-animate mb-14 text-center">
-          <p className="mono-text mb-3 text-sm font-semibold uppercase tracking-[0.25em] text-[#ff7474]">
+          <p className="mono-text mb-3 text-sm font-semibold uppercase tracking-[0.25em] text-blue-main">
             Experience
           </p>
 
@@ -125,11 +125,11 @@ export default function Experience() {
 
           <div className="grid items-center gap-10 lg:grid-cols-[0.9fr_1.1fr]">
             <div className="relative z-10">
-              <div className="mb-6 inline-flex rounded-3xl bg-[#ff9494]/15 p-5 text-[#ff7474]">
+              <div className="mb-6 inline-flex rounded-3xl bg-blue-main/15 p-5 text-blue-main">
                 <BriefcaseBusiness size={34} />
               </div>
 
-              <p className="mono-text mb-3 text-sm font-semibold uppercase tracking-[0.22em] text-[#ff7474]">
+              <p className="mono-text mb-3 text-sm font-semibold uppercase tracking-[0.22em] text-blue-main">
                 {experience.type}
               </p>
 
@@ -137,11 +137,11 @@ export default function Experience() {
                 {experience.role}
               </h3>
 
-              <p className="mb-5 text-lg font-semibold text-[#ff7474]">
+              <p className="mb-5 text-lg font-semibold text-blue-main">
                 {experience.company}
               </p>
 
-              <div className="mb-8 inline-flex items-center gap-2 rounded-full bg-[#ff9494]/12 px-4 py-2 text-sm font-bold text-[#ff7474]">
+              <div className="mb-8 inline-flex items-center gap-2 rounded-full bg-blue-main/12 px-4 py-2 text-sm font-bold text-blue-main">
                 <CalendarDays size={16} />
                 {experience.duration}
               </div>
@@ -165,7 +165,7 @@ export default function Experience() {
 
             <div className="relative z-10">
               <div className="mb-6 flex items-center gap-3">
-                <div className="rounded-2xl bg-[#ff9494]/15 p-3 text-[#ff7474]">
+                <div className="rounded-2xl bg-blue-main/15 p-3 text-blue-main">
                   <Layers size={24} />
                 </div>
 
@@ -183,7 +183,7 @@ export default function Experience() {
                 ))}
               </div>
 
-              <div className="mt-8 rounded-3xl border border-[#ff9494]/20 bg-white/45 p-5 !shadow-none backdrop-blur-md dark:bg-white/5">
+              <div className="mt-8 rounded-3xl border border-blue-main/20 bg-white/45 p-5 !shadow-none backdrop-blur-md ">
                 <p className="experience-description text-sm leading-7">
                   Currently focusing on scaling the SaaS platform, improving
                   system security with proper server architecture, real-time

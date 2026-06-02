@@ -5,10 +5,10 @@ export default function Footer() {
     return (
         <footer className="footer-section">
             <div className="mx-auto max-w-7xl px-5 py-8 md:px-10 lg:px-16">
-                <div className="flex flex-col items-center justify-between gap-5 border-t border-[#ff9494]/20 pt-8 md:flex-row">
+                <div className="flex flex-col items-center justify-between gap-5 border-t border-glass-border pt-8 md:flex-row">
                     <div className="text-center md:text-left">
                         <h3 className="logo-gradient text-2xl font-bold">
-                            Imam<span className="text-[#ff9494]">.</span>
+                            Imam<span className="text-accent">.</span>
                         </h3>
 
                         <p className="hero-description mt-2 text-sm">
