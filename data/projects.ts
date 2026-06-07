@@ -33,6 +33,43 @@ export const projectCategories = [
 export const projects: Project[] = [
   {
     id: 1,
+    slug: "savory-nest",
+    title: "Savory Nest",
+    category: "fullstack",
+    type: "Full Stack Website",
+    shortDescription:
+      "Modern house selling website with animations and theme system.",
+    description:
+      "SellPoint is a modern full-stack e-commerce management platform where the admin can manage products, users, and orders through a powerful dashboard. The website includes real-time chat using Socket.io for instant communication, subscription management for premium services, authentication, and an intuitive user interface for seamless buying and selling experiences.",
+    image: "/images/projects/sell1.png",
+    tech: [
+      "Next.js",
+      "MongoDB",
+      "Tailwind CSS",
+      "GSAP",
+      "Socket.io",
+      "Node.js",
+      "Express.js",
+      "Mongoose",
+      "JWT",
+    ],
+ features: [
+  "Comprehensive Multi-Vendor Ecosystem featuring dedicated and secure dashboards tailored for both Buyers and Sellers.",
+  "Real-time Instant Messaging framework engineered using Socket.io for continuous, low-latency communication between users.",
+  "Live Persistent Notification engine delivering instantaneous, non-blocking updates for order actions and new messages.",
+  "Highly Responsive UI/UX crafted with Next.js and Tailwind CSS, maintaining consistent performance across all screen scales.",
+  "Secure JWT-based Authentication system integrated with centralized state management for protected route validation."
+],
+    live: "https://sell-point.netlify.app",
+    github: {
+      frontend: "https://github.com/imamhossenbu/sellpoint-frontend",
+      backend: "https://github.com/imamhossenbu/sellpoint-server",
+      socket: "https://github.com/imamhossenbu/sellpoint-socket",
+    },
+    featured: true,
+  },
+  {
+    id: 2,
     slug: "sell-point",
     title: "Sell Point",
     category: "fullstack",
