@@ -703,4 +703,31 @@ export const projects: Project[] = [
     },
     featured: false,
   },
+  {
+    id: 19,
+    slug: "biker-zone",
+    title: "Biker Zone",
+    category: "landing",
+    type: "Landing Page",
+    shortDescription:
+      "A motorcycle landing page with featured bikes, news, testimonials, and FAQ.",
+    description:
+      "Biker Zone is a responsive motorcycle landing page built with HTML, Tailwind CSS, and DaisyUI. It showcases featured bikes in a carousel, latest news articles, customer testimonials with star ratings, and an FAQ accordion — all wrapped in a sleek dark-themed layout.",
+    image: "/images/projects/biker-zone.png",
+    tech: ["HTML", "Tailwind CSS", "DaisyUI", "Font Awesome"],
+    features: [
+      "Hero section featuring Honda CBR 300R with Purchase CTA",
+      "Featured bikes carousel with multiple models",
+      "Latest news section — Ducati, Scooters, Honda CBR500R",
+      "Customer testimonials with star ratings",
+      "FAQ accordion with bike safety and maintenance questions",
+      "App download links — iOS and Android",
+      "Fully responsive design for mobile and desktop",
+    ],
+    live: "https://imamhossenbu.github.io/biker-zone",
+    github: {
+      frontend: "https://github.com/imamhossenbu/biker-zone",
+    },
+    featured: false,
+  },
 ];
