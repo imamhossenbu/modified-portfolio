@@ -114,7 +114,7 @@ export const projects: Project[] = [
     shortDescription: "Dashboard with auth, analytics, users and database.",
     description:
       "A complete admin dashboard application with authentication, protected routes, analytics cards, user management, database integration, and clean dashboard UI.",
-    image: "/images/projects/dashboard.png",
+    image: "/images/projects/peddycare.png",
     tech: [
       "Next.js",
       "Node.js",
