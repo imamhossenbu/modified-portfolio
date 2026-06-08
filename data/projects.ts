@@ -759,4 +759,60 @@ export const projects: Project[] = [
     },
     featured: false,
   },
+  {
+    id: 21,
+    slug: "g3-architects",
+    title: "G3 Architects",
+    category: "landing",
+    type: "Landing Page",
+    shortDescription:
+      "A professional architecture firm landing page with stats, features, and sponsors.",
+    description:
+      "G3 Architects is a clean and professional landing page for an architecture firm. Built with HTML and CSS, it highlights the firm's team, key features, achievement stats, and sponsor logos with a modern and structured layout.",
+    image: "/images/projects/g3-architects.png",
+    tech: ["HTML", "CSS"],
+    features: [
+      "Hero section with firm tagline and Explore More CTA",
+      "Team showcase with member photos",
+      "Features section — Desktop & Mobile, Drag & Drop, Modern Design, Easy to Edit",
+      "10+ Years Experience badge with architect image",
+      "Achievement stats — 54 Awards, 1458 Projects, 590 Clients, 22578 Emails",
+      "Sponsors section — Spotify, Amazon, Google, Telerama, Figma",
+      "Fully responsive design for mobile and desktop",
+    ],
+    live: "https://imamhossenbu.github.io/g3-architects",
+    github: {
+      frontend: "https://github.com/imamhossenbu/g3-architects",
+    },
+    featured: false,
+  },
+  {
+    id: 22,
+    slug: "tea-house",
+    title: "Tea House",
+    category: "landing",
+    type: "Landing Page",
+    shortDescription:
+      "A tea shop landing page with featured products, testimonials, and news.",
+    description:
+      "Tea House is a warm and elegant landing page for a tea brand built with HTML, Tailwind CSS, and JavaScript. It showcases featured tea products, highlights freshness and quality, features stacked client testimonials, and includes a news section and newsletter subscription.",
+    image: "/images/projects/tea-house.png",
+    tech: ["HTML", "Tailwind CSS", "JavaScript", "Font Awesome"],
+    features: [
+      "Hero section with 5.00 Trust Pilot rating badge and Explore More CTA",
+      "Featured products — Milk Tea, Green Tea, Black Tea, Lemon Tea",
+      "Great Tea freshness section with Unique Taste and Premium Quality highlights",
+      "Meet Our Clients section with stacked testimonial cards",
+      "News & Events section with dated article cards",
+      "Footer with Quick Links, Services, Newsletter subscription, and social icons",
+      "Get Started CTA button with JavaScript interaction",
+      "Fully responsive design for mobile and desktop",
+    ],
+    live: "https://imamhossenbu.github.io/tea-house",
+    github: {
+      frontend: "https://github.com/imamhossenbu/tea-house",
+    },
+    featured: false,
+  },
+  
 ];
