@@ -38,10 +38,10 @@ export const projects: Project[] = [
     category: "fullstack",
     type: "Full Stack Website",
     shortDescription:
-      "Modern house selling website with animations and theme system.",
+      "Stellar Way — E-Commerce & Delivery Platform",
     description:
-      "SellPoint is a modern full-stack e-commerce management platform where the admin can manage products, users, and orders through a powerful dashboard. The website includes real-time chat using Socket.io for instant communication, subscription management for premium services, authentication, and an intuitive user interface for seamless buying and selling experiences.",
-    image: "/images/projects/sell1.png",
+      "A full-featured e-commerce and delivery management platform built with **Next.js 16**, featuring real-time order tracking, live rider messaging, rider application management, and a comprehensive admin dashboard.",
+    image: "/images/projects/stellar-way.png",
     tech: [
       "Next.js",
       "MongoDB",
