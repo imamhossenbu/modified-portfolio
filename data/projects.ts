@@ -228,7 +228,7 @@ export const projects: Project[] = [
     description:
       "A clean and professional company website for CyberFixter, a cybersecurity services firm. Built with Next.js and TypeScript, it showcases the company's services, expertise, team, and client testimonials with a sleek dark-themed UI.",
     image: "/images/projects/cyberfixter.png",
-    tech: ["Next.js", "TypeScript", "Tailwind CSS"],
+    tech: ["Next.js", "TypeScript", "Tailwind CSS","GSAP"],
     features: [
       "Hero section with company tagline and CTA",
       "Services section showcasing cybersecurity offerings",
@@ -244,7 +244,7 @@ export const projects: Project[] = [
     featured: false,
   },
   {
-    id: 5,
+    id: 6,
     slug: "agency-website",
     title: "Agency Website",
     category: "landing",
