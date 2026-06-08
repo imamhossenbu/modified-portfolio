@@ -518,4 +518,30 @@ export const projects: Project[] = [
     },
     featured: false,
   },
+  {
+    id: 14,
+    slug: "peddy",
+    title: "Peddy",
+    category: "frontend",
+    type: "Frontend Website",
+    shortDescription:
+      "A responsive pet adoption platform with category filtering and adoption flow.",
+    description:
+      "Peddy is an intuitive pet adoption platform where users can browse, filter, and adopt pets of various categories. It fetches live pet data from an API, displays detailed pet cards, and guides users through an adoption confirmation flow with a countdown modal.",
+    image: "/images/projects/peddy.png",
+    tech: ["HTML", "Tailwind CSS", "DaisyUI", "JavaScript", "REST API"],
+    features: [
+      "Dynamic pet listings fetched from external API",
+      "Category-based filtering for different pet types",
+      "Pet detail modal with name, breed, age, gender, and price",
+      "Adopt button with countdown confirmation modal",
+      "Price-based sorting in descending order",
+      "Fully responsive design for desktop and mobile",
+    ],
+    live: "https://b10-a6-pet-adoption.surge.sh",
+    github: {
+      frontend: "https://github.com/imamhossenbu/pat-adoption-website",
+    },
+    featured: false,
+  },
 ];
