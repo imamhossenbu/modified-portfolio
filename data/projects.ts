@@ -676,31 +676,5 @@ export const projects: Project[] = [
     },
     featured: false,
   },
-  {
-    id: 18,
-    slug: "dream11",
-    title: "BPL Dream 11",
-    category: "frontend",
-    type: "Frontend Website",
-    shortDescription:
-      "A coin-based cricket team selector for building your BPL Dream 11 lineup.",
-    description:
-      "BPL Dream 11 Team Selector is a React-based web app where cricket fans can build their dream team within a coin budget. Users can browse available players, select up to six, toggle between available and selected views, and receive real-time toast notifications for every action.",
-    image: "/images/projects/dream11.png",
-    tech: ["React", "Vite", "Tailwind CSS", "React Toastify", "React Icons"],
-    features: [
-      "Browse available cricket players with details",
-      "Select up to 6 players within a coin budget",
-      "Toggle between Available Players and Selected Players views",
-      "Coin balance check — notifies if budget is insufficient",
-      "Add coins to increase selection budget",
-      "Toast notifications for all selection actions",
-      "Fully responsive design for mobile and desktop",
-    ],
-    live: "https://b10-a7.surge.sh",
-    github: {
-      frontend: "https://github.com/imamhossenbu/dream11-website/tree/main/my-project",
-    },
-    featured: false,
-  },
+
 ];
