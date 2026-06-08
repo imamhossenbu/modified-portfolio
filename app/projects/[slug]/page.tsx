@@ -130,13 +130,13 @@ export default async function ProjectDetailsPage({
             </div>
 
             {/* Standard Next.js Image Container Canvas */}
-            <div className="relative h-[280px] sm:h-[360px] lg:h-[420px] w-full flex items-center justify-center rounded-[1.5rem] border border-neutral-200/60 bg-gradient-to-br from-blue-light/15 via-white to-cream/15 dark:border-neutral-800/40 dark:from-neutral-950 dark:via-neutral-900 dark:to-neutral-950 p-4 overflow-hidden">
+            <div className="project-image-wrapper">
               <Image
                 src={project.image}
                 alt={project.title}
                 fill
                 priority
-                sizes="(max-w-1024px) 100vw, 50vw"
+                sizes="(max-width: 1024px) 100vw, 50vw"
                 className="object-contain p-4 drop-shadow-md transition-transform duration-500 hover:scale-[1.02]"
               />
             </div>
