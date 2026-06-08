@@ -15,7 +15,7 @@ export type Project = {
   shortDescription: string;
   description: string;
   image: string;
-  tech: string[]; 
+  tech: string[];
   features: string[];
   live: string;
   github: ProjectGithub;
@@ -37,8 +37,7 @@ export const projects: Project[] = [
     title: "Savory Nest",
     category: "fullstack",
     type: "Full Stack Website",
-    shortDescription:
-      "Stellar Way — E-Commerce & Delivery Platform",
+    shortDescription: "Stellar Way — E-Commerce & Delivery Platform",
     description:
       "A full-featured e-commerce and delivery management platform built with **Next.js 16**, featuring real-time order tracking, live rider messaging, rider application management, and a comprehensive admin dashboard.",
     image: "/images/projects/stellar-way.png",
@@ -52,19 +51,35 @@ export const projects: Project[] = [
       "Express.js",
       "Mongoose",
       "JWT",
+      "TypwScript",
+      "NextAuth",
+      "Tanstack Query",
+      "Axios",
+      "Recharts",
+      "Leaflet",
+      "React Hook Form ",
+      "Swiper",
+      "jsPDF",
+      "cloudinary",
+      "Multer",
+      "Nodemailer",
+      "Stripe",
+      "SSLCommerz",
     ],
- features: [
-  "Comprehensive Multi-Vendor Ecosystem featuring dedicated and secure dashboards tailored for both Buyers and Sellers.",
-  "Real-time Instant Messaging framework engineered using Socket.io for continuous, low-latency communication between users.",
-  "Live Persistent Notification engine delivering instantaneous, non-blocking updates for order actions and new messages.",
-  "Highly Responsive UI/UX crafted with Next.js and Tailwind CSS, maintaining consistent performance across all screen scales.",
-  "Secure JWT-based Authentication system integrated with centralized state management for protected route validation."
-],
-    live: "https://sell-point.netlify.app",
+    features: [
+      "Browse products and place orders",
+      "Real-time order tracking with live map view",
+      "Live chat with assigned delivery rider",
+      "QR code support for orders",
+      "Apply to become a delivery rider",
+      "In-app messaging with customers",
+      "Delivery history and earnings overview",
+      "Real-time location sharing",
+    ],
+    live: "https://stellar-way-coral.vercel.app",
     github: {
-      frontend: "https://github.com/imamhossenbu/sellpoint-frontend",
-      backend: "https://github.com/imamhossenbu/sellpoint-server",
-      socket: "https://github.com/imamhossenbu/sellpoint-socket",
+      frontend: "https://github.com/imamhossenbu/stellar-way",
+      backend: "https://github.com/imamhossenbu/stellar-way-server",
     },
     featured: true,
   },
@@ -90,13 +105,13 @@ export const projects: Project[] = [
       "Mongoose",
       "JWT",
     ],
- features: [
-  "Comprehensive Multi-Vendor Ecosystem featuring dedicated and secure dashboards tailored for both Buyers and Sellers.",
-  "Real-time Instant Messaging framework engineered using Socket.io for continuous, low-latency communication between users.",
-  "Live Persistent Notification engine delivering instantaneous, non-blocking updates for order actions and new messages.",
-  "Highly Responsive UI/UX crafted with Next.js and Tailwind CSS, maintaining consistent performance across all screen scales.",
-  "Secure JWT-based Authentication system integrated with centralized state management for protected route validation."
-],
+    features: [
+      "Comprehensive Multi-Vendor Ecosystem featuring dedicated and secure dashboards tailored for both Buyers and Sellers.",
+      "Real-time Instant Messaging framework engineered using Socket.io for continuous, low-latency communication between users.",
+      "Live Persistent Notification engine delivering instantaneous, non-blocking updates for order actions and new messages.",
+      "Highly Responsive UI/UX crafted with Next.js and Tailwind CSS, maintaining consistent performance across all screen scales.",
+      "Secure JWT-based Authentication system integrated with centralized state management for protected route validation.",
+    ],
     live: "https://sell-point.netlify.app",
     github: {
       frontend: "https://github.com/imamhossenbu/sellpoint-frontend",
