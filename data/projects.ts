@@ -676,5 +676,31 @@ export const projects: Project[] = [
     },
     featured: false,
   },
-
+  {
+    id: 18,
+    slug: "flower-shop",
+    title: "Flower Shop",
+    category: "landing",
+    type: "Landing Page",
+    shortDescription:
+      "A clean flower shop landing page with featured products and newsletter signup.",
+    description:
+      "Flower Shop is a beautifully designed landing page for an online flower store. Built with HTML and CSS, it showcases featured flowers, delivery highlights, a hot deal promotion, an Instagram gallery section, and a newsletter subscription form.",
+    image: "/images/projects/flower-shop.png",
+    tech: ["HTML", "CSS"],
+    features: [
+      "Hero section with Shop Now CTA",
+      "Featured flowers showcase with product cards",
+      "Service highlights — Same Day Delivery, Fresh Flowers, 24/7 Support",
+      "Hot Deal banner — up to 25% off promotion",
+      "Instagram gallery section with flower images",
+      "Newsletter subscription form with $30 first-order coupon",
+      "Fully responsive design for all screen sizes",
+    ],
+    live: "https://imamhossenbu.github.io/flower-shop",
+    github: {
+      frontend: "https://github.com/imamhossenbu/flower-shop",
+    },
+    featured: false,
+  },
 ];
