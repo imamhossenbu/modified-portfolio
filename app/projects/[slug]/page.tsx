@@ -52,7 +52,7 @@ export default async function ProjectDetailsPage({
         <div className="grid items-start gap-8 lg:grid-cols-[0.92fr_1.08fr]">
           {/* ================= LEFT SIDE: DETAILS & TECH STACK ================= */}
           <div
-            className="rounded-[2rem] border left-card border-neutral-200 bg-white/70 p-7 backdrop-blur-xl dark:border-neutral-800/80  md:p-9"
+            className="rounded-[2rem]  left-card  bg-white/70 p-7 backdrop-blur-xl  md:p-9"
             style={{ opacity: 1, transform: "none" }}
           >
             <p className="mono-text mb-4 text-xs font-semibold uppercase tracking-[0.25em] text-blue-main">
@@ -69,7 +69,7 @@ export default async function ProjectDetailsPage({
 
             {/* Technical Sub-cards Row */}
             <div className="mt-8 grid gap-4 sm:grid-cols-2">
-              <div className="rounded-2xl border p-5 background-muted">
+              <div className="rounded-2xl  p-5 background-muted">
                 <div className="mb-3 flex h-11 w-11 items-center justify-center rounded-2xl bg-blue-main text-white shadow-[0_4px_14px_rgba(79,110,247,0.3)]">
                   <Layers size={20} />
                 </div>
@@ -81,7 +81,7 @@ export default async function ProjectDetailsPage({
                 </p>
               </div>
 
-              <div className="rounded-2xl border p-5 background-muted">
+              <div className="rounded-2xl  p-5 background-muted">
                 <div className="mb-3 flex h-11 w-11 items-center justify-center rounded-2xl bg-blue-main text-white shadow-[0_4px_14px_rgba(79,110,247,0.3)]">
                   <Code2 size={20} />
                 </div>
@@ -117,7 +117,7 @@ export default async function ProjectDetailsPage({
 
           {/* ================= RIGHT SIDE: IMAGE SHOWCASE & ALL LINKS ================= */}
           <div
-            className="rounded-[2rem] right-card border border-neutral-200 bg-white/70 p-5 backdrop-blur-xl dark:border-neutral-800/80 dark:bg-white md:p-7"
+            className="rounded-[2rem] right-card  bg-white/70 p-5 backdrop-blur-xl dark:border-neutral-800/80  md:p-7"
             style={{ opacity: 1, transform: "none" }}
           >
             <div className="flex items-center justify-between gap-4 mb-5">
