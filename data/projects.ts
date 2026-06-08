@@ -490,4 +490,32 @@ export const projects: Project[] = [
     },
     featured: false,
   },
+  {
+    id: 13,
+    slug: "fitness",
+    title: "Fitness",
+    category: "landing",
+    type: "Landing Page",
+    shortDescription:
+      "A modern fitness and gym landing page with BMI calculator and pricing plans.",
+    description:
+      "A sleek dark-themed fitness landing page built with React and Vite. It showcases gym services, training programs, trainer profiles, and membership pricing plans. Includes a fully functional BMI calculator, habit-building sections, and a clean responsive layout.",
+    image: "/images/projects/fitness.png",
+    tech: ["React", "Vite", "Tailwind CSS"],
+    features: [
+      "Hero section with stats — 500+ members, 350+ classes",
+      "Change Your Habits section — Movement, Time, Practice, Weight Loss",
+      "Trainings and Exercises showcase with image grid",
+      "Why Choose Us — Facility, Membership, Trainer, and Hours highlights",
+      "Pricing plans — Regular, Standard, and Premium packages",
+      "Interactive BMI Calculator with activity factor",
+      "Meet Our Team section with trainer profiles",
+      "Fully responsive dark-themed design",
+    ],
+    live: "https://imamhossenbu.github.io/B10-assignment2",
+    github: {
+      frontend: "https://github.com/imamhossenbu/B10-assignment2",
+    },
+    featured: false,
+  },
 ];
