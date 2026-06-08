@@ -421,4 +421,32 @@ export const projects: Project[] = [
     },
     featured: false,
   },
+  {
+    id: 11,
+    slug: "devfixter",
+    title: "DevFixter",
+    category: "frontend",
+    type: "Frontend Website",
+    shortDescription:
+      "Modern portfolio and company website for a freelance developer.",
+    description:
+      "DevFixter is a clean and modern personal portfolio and company website for a freelance developer. Built with Next.js and TypeScript, it highlights skills, projects, services, and client testimonials with smooth GSAP animations and a sleek professional UI.",
+    image: "/images/projects/devfixter.png",
+    tech: ["Next.js", "TypeScript", "Tailwind CSS", "GSAP"],
+    features: [
+      "Hero section with developer tagline and CTA",
+      "Skills and expertise section",
+      "Services section — web development offerings",
+      "Featured projects and portfolio showcase",
+      "About section with developer background",
+      "Client testimonials",
+      "FAQ section",
+      "Contact form",
+      "Smooth scroll animations with GSAP",
+      "Fully responsive design",
+    ],
+    live: "https://www.devfixter.com",
+    github: {},
+    featured: false,
+  },
 ];
