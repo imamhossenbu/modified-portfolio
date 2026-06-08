@@ -814,5 +814,36 @@ export const projects: Project[] = [
     },
     featured: false,
   },
-  
+  {
+    id: 23,
+    slug: "weather-app",
+    title: "Weather App",
+    category: "frontend",
+    type: "Frontend",
+    shortDescription:
+      "A real-time weather app using OpenWeatherMap API with dark/light theme toggle.",
+    description:
+      "A simple and clean weather app built with HTML, Tailwind CSS, DaisyUI, and JavaScript. Users can search any city to get real-time weather data including temperature, humidity, wind speed, and feels-like temperature — powered by the OpenWeatherMap API.",
+    image: "/images/projects/weather.png",
+    tech: [
+      "HTML",
+      "Tailwind CSS",
+      "DaisyUI",
+      "JavaScript",
+      "OpenWeatherMap API",
+    ],
+    features: [
+      "Search weather by city name",
+      "Real-time data — temperature, feels like, humidity, wind speed",
+      "Weather condition description from OpenWeatherMap",
+      "Dark and light theme toggle via DaisyUI swap component",
+      "Error handling for invalid or not found cities",
+      "Clean and minimal responsive layout",
+    ],
+    live: "https://imamhossenbu.github.io/weather-app",
+    github: {
+      frontend: "https://github.com/imamhossenbu/weather-app",
+    },
+    featured: false,
+  },
 ];
