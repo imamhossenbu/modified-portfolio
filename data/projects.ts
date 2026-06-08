@@ -392,4 +392,33 @@ export const projects: Project[] = [
     },
     featured: false,
   },
+  {
+    id: 10,
+    slug: "rinterio",
+    title: "Rinterio",
+    category: "landing",
+    type: "Landing Page",
+    shortDescription:
+      "A elegant interior design company website with portfolio and contact form.",
+    description:
+      "Rinterio is a static interior design company website built with HTML and Tailwind CSS. It showcases commercial and residential design services, portfolio work, team stats, work process, blog articles, and a contact form — all with a clean and modern layout.",
+    image: "/images/projects/rinterio.png",
+    tech: ["HTML", "Tailwind CSS", "DaisyUI", "Font Awesome"],
+    features: [
+      "Hero section with booking CTA",
+      "About section with commercial and residential service cards",
+      "Stats section — happy clients, departments, and staff count",
+      "Why Choose Us section with 6 feature highlights",
+      "4-step work process — Concept, Design, Supervision, Budget",
+      "Portfolio grid showcasing latest interior projects",
+      "Blog and articles section",
+      "Contact form with name, phone, email, and message fields",
+      "Fully responsive design for all screen sizes",
+    ],
+    live: "https://imamhossenbu.github.io/B10-assignment-3",
+    github: {
+      frontend: "https://github.com/imamhossenbu/B10-assignment-3",
+    },
+    featured: false,
+  },
 ];
