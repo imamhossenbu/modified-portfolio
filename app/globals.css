@@ -1116,6 +1116,57 @@ pre,
   box-shadow: 0 4px 14px rgba(79, 110, 247, 0.3);
 }
 
+.left-card{
+  background-color: white;
+}
+
+.dark .left-card {
+  background-color: black;
+  border: 1px solid gray;
+}
+
+.dark .title{
+  color: white;
+}
+
+.dark .subtitle{
+  color: gray;
+}
+
+
+.feature-card{
+  background-color: rgba(4, 4, 70, 0.193);
+}
+
+.dark .feature-card{
+  background-color: #0f0e0ec8;
+}
+
+
+.dark .feature-card p{
+  color: white;
+}
+
+
+
+.dark .stack{
+  color: white;
+}
+
+.right-card{
+  background-color: white;
+}
+
+.dark .right-card {
+  background-color: black;
+  border: 1px solid black;
+}
+
+
+.dark .bottom-card{
+  background-color: black;
+}
+
 .project-card {
   position: relative;
   overflow: hidden;

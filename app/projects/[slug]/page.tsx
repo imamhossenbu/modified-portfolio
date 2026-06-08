@@ -29,7 +29,6 @@ export default async function ProjectDetailsPage({
     notFound();
   }
 
-  // গিটহাব অবজেক্টে কয়টি লিংক আছে তা চেক করে আর্কিটেকচার টাইপ নির্ধারণ করা
   const isMultiLayer =
     project.github &&
     typeof project.github === "object" &&
@@ -53,14 +52,14 @@ export default async function ProjectDetailsPage({
         <div className="grid items-start gap-8 lg:grid-cols-[0.92fr_1.08fr]">
           {/* ================= LEFT SIDE: DETAILS & TECH STACK ================= */}
           <div
-            className="rounded-[2rem] border border-neutral-200 bg-white/70 p-7 shadow-xl backdrop-blur-xl dark:border-neutral-800/80 dark:bg-neutral-900/70 md:p-9"
+            className="rounded-[2rem] border left-card border-neutral-200 bg-white/70 p-7 backdrop-blur-xl dark:border-neutral-800/80  md:p-9"
             style={{ opacity: 1, transform: "none" }}
           >
             <p className="mono-text mb-4 text-xs font-semibold uppercase tracking-[0.25em] text-blue-main">
               Project Details
             </p>
 
-            <h1 className="text-3xl font-bold leading-tight md:text-5xl tracking-tight text-neutral-900 dark:text-white">
+            <h1 className="text-3xl title font-bold leading-tight md:text-5xl tracking-tight text-neutral-900 dark:text-white">
               {project.title}
             </h1>
 
@@ -74,10 +73,10 @@ export default async function ProjectDetailsPage({
                 <div className="mb-3 flex h-11 w-11 items-center justify-center rounded-2xl bg-blue-main text-white shadow-[0_4px_14px_rgba(79,110,247,0.3)]">
                   <Layers size={20} />
                 </div>
-                <h3 className="font-bold text-neutral-900 dark:text-white">
+                <h3 className="font-bold subtitle text-neutral-900 dark:text-white">
                   Project Type
                 </h3>
-                <p className="mt-1 text-sm text-neutral-500 dark:text-neutral-400">
+                <p className="mt-1  text-sm text-neutral-500 dark:text-neutral-400">
                   {project.type}
                 </p>
               </div>
@@ -86,7 +85,7 @@ export default async function ProjectDetailsPage({
                 <div className="mb-3 flex h-11 w-11 items-center justify-center rounded-2xl bg-blue-main text-white shadow-[0_4px_14px_rgba(79,110,247,0.3)]">
                   <Code2 size={20} />
                 </div>
-                <h3 className="font-bold text-neutral-900 dark:text-white">
+                <h3 className="font-bold subtitle text-neutral-900 dark:text-white">
                   Architecture
                 </h3>
                 <p className="mt-1 text-sm text-neutral-500 dark:text-neutral-400">
@@ -100,7 +99,7 @@ export default async function ProjectDetailsPage({
               <div className="mt-8">
                 <div className="flex items-center gap-2 mb-4 text-xl font-bold text-neutral-900 dark:text-white border-b pb-2 border-neutral-200 dark:border-neutral-800">
                   <Cpu size={20} className="text-blue-main" />
-                  <h2>Technical Stack</h2>
+                  <h2 className="stack">Technical Stack</h2>
                 </div>
                 <div className="flex flex-wrap gap-2">
                   {project.tech.map((tech) => (
@@ -118,7 +117,7 @@ export default async function ProjectDetailsPage({
 
           {/* ================= RIGHT SIDE: IMAGE SHOWCASE & ALL LINKS ================= */}
           <div
-            className="rounded-[2rem] border border-neutral-200 bg-white/70 p-5 shadow-xl backdrop-blur-xl dark:border-neutral-800/80 dark:bg-neutral-900/70 md:p-7"
+            className="rounded-[2rem] right-card border border-neutral-200 bg-white/70 p-5 backdrop-blur-xl dark:border-neutral-800/80 dark:bg-white md:p-7"
             style={{ opacity: 1, transform: "none" }}
           >
             <div className="flex items-center justify-between gap-4 mb-5">
@@ -211,7 +210,7 @@ export default async function ProjectDetailsPage({
 
         {/* ================= BOTTOM SIDE: KEY FEATURES (FULL WIDTH) ================= */}
         <div
-          className="mt-8 rounded-[2rem] border border-neutral-200 bg-white/70 p-7 shadow-xl backdrop-blur-xl dark:border-neutral-800/80 dark:bg-neutral-900/70 md:p-9"
+          className="mt-8 rounded-[2rem] bottom-card bg-white/70 p-7 shadow-xl backdrop-blur-xl dark:border-neutral-800/80 dark:bg-neutral-900/70 md:p-9"
           style={{ opacity: 1, transform: "none" }}
         >
           <div className="mb-6 flex items-center gap-3">
@@ -222,7 +221,7 @@ export default async function ProjectDetailsPage({
               <p className="mono-text text-xs font-semibold uppercase tracking-[0.22em] text-blue-main">
                 Main Highlights
               </p>
-              <h2 className="text-2xl font-bold tracking-tight text-neutral-900 dark:text-white">
+              <h2 className="text-2xl subtitle font-bold tracking-tight text-neutral-900 dark:text-white">
                 Key Features
               </h2>
             </div>
@@ -232,7 +231,7 @@ export default async function ProjectDetailsPage({
             {project.features.map((feature) => (
               <div
                 key={feature}
-                className="group flex gap-4 rounded-2xl border border-neutral-200 bg-neutral-50/30 p-5 transition-all duration-300 hover:-translate-y-0.5 dark:border-neutral-800 dark:bg-neutral-900/30"
+                className="group flex feature-card gap-4 rounded-2xl bg-neutral-50 p-5 transition-all duration-300 hover:-translate-y-0.5 dark:bg-neutral-900/30"
               >
                 <span className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-blue-main/10 text-blue-main transition-all duration-300 group-hover:bg-blue-main group-hover:text-white">
                   <CheckCircle2 size={16} />
