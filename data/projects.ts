@@ -730,4 +730,33 @@ export const projects: Project[] = [
     },
     featured: false,
   },
+  {
+    id: 20,
+    slug: "food-restaurant",
+    title: "Foody",
+    category: "landing",
+    type: "Landing Page",
+    shortDescription:
+      "A food delivery landing page with product listings, services, and newsletter.",
+    description:
+      "Foody is a responsive food delivery landing page built with HTML, CSS, and Font Awesome. It showcases popular menu items with prices and ratings, highlights delivery services, features customer testimonials, and includes a newsletter subscription form.",
+    image: "/images/projects/food-restaurant.png",
+    tech: ["HTML", "CSS", "Font Awesome"],
+    features: [
+      "Hero section with bike delivery highlight and Order Now CTA",
+      "Featured food cards — Burger, Food Combo, Pizza, Cake",
+      "Working hours, location, and phone number info bar",
+      "Most Popular Items section with Add to Cart buttons and star ratings",
+      "Why Choose Us — Quality Food, Healthy Food, Fast Delivery",
+      "Customer testimonial section with client profile",
+      "Newsletter subscription form",
+      "Footer with opening hours, links, and contact info",
+      "Fully responsive design for mobile and desktop",
+    ],
+    live: "https://imamhossenbu.github.io/food-restaurant",
+    github: {
+      frontend: "https://github.com/imamhossenbu/food-restaurant",
+    },
+    featured: false,
+  },
 ];
