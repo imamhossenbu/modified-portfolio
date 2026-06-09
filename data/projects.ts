@@ -220,6 +220,34 @@ export const projects: Project[] = [
   },
   {
     id: 5,
+    slug: "designfixter",
+    title: "DesignFixter",
+    category: "frontend",
+    type: "Frontend Website",
+    shortDescription:
+      "Modern company website for a UI/UX design agency with cinematic GSAP animations.",
+    description:
+      "A sleek, high-performance company website built for DesignFixter, a UI/UX design agency. The site showcases the agency's services, portfolio, team, and process through fluid scroll-based animations powered by GSAP. Built with Next.js and TypeScript for performance and scalability, styled with Tailwind CSS for a sharp, modern aesthetic. Every section is crafted to reflect the agency's design-forward identity — from animated hero transitions to smooth page reveals.",
+    image: "/images/projects/designfixter.png",
+    tech: ["Next.js", "TypeScript", "Tailwind CSS", "GSAP"],
+    features: [
+      "Animated hero section with GSAP scroll-triggered transitions",
+      "Services section highlighting UI/UX design offerings",
+      "Portfolio / case studies showcase",
+      "Team members section",
+      "Client testimonials",
+      "Contact form",
+      "Smooth page transitions and entrance animations",
+      "Fully responsive design across all screen sizes",
+      "SEO-optimized with Next.js App Router",
+      "Performance-first architecture with static generation",
+    ],
+    live: "https://designfixter.com",
+    github: {},
+    featured: false,
+  },
+  {
+    id: 6,
     slug: "seoul-mirage",
     title: "Seoul Mirage",
     category: "fullstack",
@@ -264,7 +292,7 @@ export const projects: Project[] = [
     featured: false,
   },
   {
-    id: 6,
+    id: 7,
     slug: "cyberfixter",
     title: "CyberFixter",
     category: "frontend",
@@ -290,7 +318,7 @@ export const projects: Project[] = [
     featured: false,
   },
   {
-    id: 7,
+    id: 8,
     slug: "hero-travel",
     title: "Hero Travel",
     category: "landing",
@@ -315,7 +343,7 @@ export const projects: Project[] = [
     featured: false,
   },
   {
-    id: 8,
+    id: 9,
     slug: "ai-chatbot",
     title: "AI Chatbot",
     category: "ai",
@@ -347,7 +375,7 @@ export const projects: Project[] = [
     featured: true,
   },
   {
-    id: 8,
+    id: 10,
     slug: "bu-cse",
     title: "BU CSE",
     category: "frontend",
@@ -386,7 +414,7 @@ export const projects: Project[] = [
     featured: false,
   },
   {
-    id: 9,
+    id: 11,
     slug: "peddycare",
     title: "PeddyCare",
     category: "fullstack",
@@ -439,7 +467,7 @@ export const projects: Project[] = [
     featured: false,
   },
   {
-    id: 10,
+    id: 12,
     slug: "rinterio",
     title: "Rinterio",
     category: "landing",
@@ -468,7 +496,7 @@ export const projects: Project[] = [
     featured: false,
   },
   {
-    id: 11,
+    id: 13,
     slug: "devfixter",
     title: "DevFixter",
     category: "frontend",
@@ -496,7 +524,7 @@ export const projects: Project[] = [
     featured: true,
   },
   {
-    id: 12,
+    id: 14,
     slug: "eco-explorer",
     title: "EcoExplorer",
     category: "frontend",
@@ -537,7 +565,7 @@ export const projects: Project[] = [
     featured: false,
   },
   {
-    id: 13,
+    id: 15,
     slug: "fitness",
     title: "Fitness",
     category: "landing",
@@ -565,7 +593,7 @@ export const projects: Project[] = [
     featured: false,
   },
   {
-    id: 14,
+    id: 16,
     slug: "peddy",
     title: "Peddy",
     category: "frontend",
@@ -591,7 +619,7 @@ export const projects: Project[] = [
     featured: false,
   },
   {
-    id: 15,
+    id: 17,
     slug: "honestview",
     title: "HonestView",
     category: "fullstack",
@@ -634,7 +662,7 @@ export const projects: Project[] = [
     featured: false,
   },
   {
-    id: 16,
+    id: 18,
     slug: "movieverse",
     title: "MovieVerse",
     category: "fullstack",
@@ -683,7 +711,7 @@ export const projects: Project[] = [
     featured: false,
   },
   {
-    id: 17,
+    id: 19,
     slug: "gadget-heaven",
     title: "Gadget Heaven",
     category: "frontend",
@@ -723,7 +751,7 @@ export const projects: Project[] = [
     featured: false,
   },
   {
-    id: 18,
+    id: 20,
     slug: "flower-shop",
     title: "Flower Shop",
     category: "landing",
@@ -750,7 +778,7 @@ export const projects: Project[] = [
     featured: false,
   },
   {
-    id: 19,
+    id: 21,
     slug: "biker-zone",
     title: "Biker Zone",
     category: "landing",
@@ -777,7 +805,7 @@ export const projects: Project[] = [
     featured: false,
   },
   {
-    id: 20,
+    id: 22,
     slug: "food-restaurant",
     title: "Foody",
     category: "landing",
@@ -806,7 +834,7 @@ export const projects: Project[] = [
     featured: false,
   },
   {
-    id: 21,
+    id: 23,
     slug: "g3-architects",
     title: "G3 Architects",
     category: "landing",
@@ -833,7 +861,7 @@ export const projects: Project[] = [
     featured: false,
   },
   {
-    id: 22,
+    id: 24,
     slug: "tea-house",
     title: "Tea House",
     category: "landing",
@@ -861,7 +889,7 @@ export const projects: Project[] = [
     featured: false,
   },
   {
-    id: 23,
+    id: 25,
     slug: "weather-app",
     title: "Weather App",
     category: "frontend",
