@@ -1227,24 +1227,59 @@ pre,
   background-color: black;
 }
 
+.title {
+  color: var(--foreground);
+}
+
 .dark .title {
   color: white;
+}
+
+.subtitle {
+  color: black;
 }
 
 .dark .subtitle {
   color: gray;
 }
 
+
+.description {
+  color: rgba(15, 23, 42, 0.65);
+}
+
+.dark .description {
+  color: rgb(226, 232, 240);
+}
+
+
+.source {
+  color: rgba(15, 23, 42, 0.8);
+}
+
+.dark .source {
+  color: rgb(226, 232, 240);
+}
+
 .feature-card {
   background-color: rgba(4, 4, 70, 0.193);
 }
 
-.dark .feature-card {
+.dark .feature-card{
   background-color: #0f0e0ec8;
+}
+
+.feature-card p {
+  color: rgba(15, 23, 42, 0.8);
 }
 
 .dark .feature-card p {
   color: white;
+}
+
+
+.stack {
+  color: rgba(15, 23, 42, 0.8);
 }
 
 .dark .stack {
@@ -1258,6 +1293,11 @@ pre,
 .dark .right-card {
   background-color: black;
   border: 1px solid black;
+}
+
+
+.bottom-card{
+  background-color: white;
 }
 
 .dark .bottom-card {

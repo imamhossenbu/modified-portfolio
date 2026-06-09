@@ -59,11 +59,11 @@ export default async function ProjectDetailsPage({
               Project Details
             </p>
 
-            <h1 className="text-3xl title font-bold leading-tight md:text-5xl tracking-tight text-neutral-900 dark:text-white">
+            <h1 className="text-3xl title font-bold leading-tight md:text-5xl tracking-tight ">
               {project.title}
             </h1>
 
-            <p className="mt-5 text-base leading-8 text-neutral-600 dark:text-neutral-300">
+            <p className="mt-5 description text-base leading-8 ">
               {project.description}
             </p>
 
@@ -99,7 +99,7 @@ export default async function ProjectDetailsPage({
               <div className="mt-8">
                 <div className="flex items-center gap-2 mb-4 text-xl font-bold text-neutral-900 dark:text-white border-b pb-2 border-neutral-200 dark:border-neutral-800">
                   <Cpu size={20} className="text-blue-main" />
-                  <h2 className="stack">Technical Stack</h2>
+                  <h2 className="stack text-xl">Technical Stack</h2>
                 </div>
                 <div className="flex flex-wrap gap-2">
                   {project.tech.map((tech) => (
@@ -143,7 +143,7 @@ export default async function ProjectDetailsPage({
 
             {/* Action Buttons Section (Live Link + Repositories) */}
             <div className="mt-6 pt-5 border-t border-neutral-200/60 dark:border-neutral-800/60 space-y-4">
-              <h4 className="text-xs font-bold uppercase tracking-wider text-neutral-700 dark:text-neutral-300">
+              <h4 className="text-xs font-bold source uppercase tracking-wider ">
                 Project Links & Source Code
               </h4>
 
@@ -231,12 +231,12 @@ export default async function ProjectDetailsPage({
             {project.features.map((feature) => (
               <div
                 key={feature}
-                className="group flex feature-card gap-4 rounded-2xl bg-neutral-50 p-5 transition-all duration-300 hover:-translate-y-0.5 dark:bg-neutral-900/30"
+                className="group flex feature-card gap-4 rounded-2xl  p-5 transition-all duration-300 hover:-translate-y-0.5"
               >
                 <span className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-blue-main/10 text-blue-main transition-all duration-300 group-hover:bg-blue-main group-hover:text-white">
                   <CheckCircle2 size={16} />
                 </span>
-                <p className="text-sm leading-7 text-neutral-700 dark:text-neutral-300">
+                <p className="text-sm leading-7">
                   {feature}
                 </p>
               </div>
