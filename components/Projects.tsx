@@ -83,7 +83,7 @@ export default function Projects() {
           <p className="mono-text mb-3 text-sm font-semibold uppercase tracking-[0.25em] text-blue-main">
             My Projects
           </p>
-          <h2 className="project-section-title text-3xl font-bold text-neutral-900 dark:text-white md:text-4xl">
+          <h2 className="project-section-title text-3xl font-bold md:text-4xl">
             Selected work by category
           </h2>
           <p className="hero-description mx-auto mt-4 max-w-2xl text-base text-neutral-600 dark:text-neutral-400 leading-7">
