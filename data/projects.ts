@@ -78,8 +78,8 @@ export const projects: Project[] = [
     ],
     live: "https://stellar-way-coral.vercel.app",
     github: {
-      frontend: "https://github.com/imamhossenbu/stellar-way",
-      backend: "https://github.com/imamhossenbu/stellar-way-server",
+      frontend: "https://github.com/dev-cuisine/stellar-way-frontend",
+      backend: "https://github.com/dev-cuisine/stellar-way-server",
     },
     featured: true,
   },
@@ -167,8 +167,8 @@ export const projects: Project[] = [
     ],
     live: "https://smart-cse-three.vercel.app",
     github: {
-      frontend: "https://github.com/adsfixterintern/smart-cse",
-      backend: "https://github.com/adsfixterintern/smart-cse-server",
+      frontend: "https://github.com/dev-cuisine/smart-cse-frontend",
+      backend: "https://github.com/dev-cuisine/smart-cse-server",
     },
     featured: true,
   },
