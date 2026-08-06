@@ -200,7 +200,7 @@ export default function Hero() {
                 alt="Imam Hossen"
                 fill
                 priority
-                className="drop-shadow-none"
+                className="object-cover"
               />
             </div>
           </div>

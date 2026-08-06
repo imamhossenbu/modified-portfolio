@@ -85,7 +85,6 @@ export default function Contact() {
         </div>
 
         <div className="grid gap-8 lg:grid-cols-[0.85fr_1.15fr]">
-          {/* ইনফো কার্ড */}
           <div className="contact-animate contact-info-card">
             <h3 className="mb-5 text-2xl font-bold text-[var(--foreground)]">
               Contact Information
@@ -93,18 +92,22 @@ export default function Contact() {
 
             <div className="space-y-4">
               <div className="contact-info-item">
-                <Mail size={20} />
-                <span>ihossen22.cse@bu.ac.bd</span>
+                <Mail size={20} className="text-[var(--accent)]" />
+                <span className="text-[var(--foreground)]">
+                  imam62310@gmail.com
+                </span>
               </div>
 
               <div className="contact-info-item">
-                <Phone size={20} />
-                <span>+880 1624-994532</span>
+                <Phone size={20} className="text-[var(--accent)]" />
+                <span className="text-[var(--foreground)]">
+                  +880 1624-994532
+                </span>
               </div>
 
               <div className="contact-info-item">
-                <MapPin size={20} />
-                <span>Bangladesh</span>
+                <MapPin size={20} className="text-[var(--accent)]" />
+                <span className="text-[var(--foreground)]">Barishal, Bangladesh</span>
               </div>
             </div>
 
@@ -114,7 +117,7 @@ export default function Contact() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Github"
-                className="contact-social-link"
+                className="contact-social-link shadow-none"
               >
                 <FaGithub size={19} />
               </a>
@@ -124,15 +127,15 @@ export default function Contact() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="LinkedIn"
-                className="contact-social-link"
+                className="contact-social-link shadow-none"
               >
                 <FaLinkedinIn size={19} />
               </a>
 
               <a
-                href="mailto:ihossen22.cse@bu.ac.bd"
+                href="mailto:imam62310@gmail.com"
                 aria-label="Email"
-                className="contact-social-link"
+                className="contact-social-link shadow-none"
               >
                 <Mail size={19} />
               </a>
@@ -142,14 +145,13 @@ export default function Contact() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Facebook"
-                className="contact-social-link"
+                className="contact-social-link shadow-none"
               >
                 <FaFacebook size={19} />
               </a>
             </div>
           </div>
 
-          {/* ফর্ম কার্ড */}
           <form
             onSubmit={handleSubmit}
             className="contact-animate contact-form-card"
@@ -190,7 +192,7 @@ export default function Contact() {
 
             <button
               type="submit"
-              className="contact-submit-btn"
+              className="contact-submit-btn shadow-none"
               disabled={loading}
             >
               {loading ? "Sending..." : "Send Message"}
