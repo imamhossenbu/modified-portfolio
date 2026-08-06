@@ -92,18 +92,18 @@ export default function Hero() {
     <section
       id="home"
       ref={heroRef}
-      className="hero-section relative flex  items-center overflow-visible px-5 py-28 md:px-10 lg:px-12"
+      className="hero-section relative flex items-center overflow-visible px-5 py-28 md:px-10 lg:px-12"
     >
       <div className="hero-bg-orb hero-orb-one" />
       <div className="hero-bg-orb hero-orb-two" />
 
       <div className="mx-auto grid w-full max-w-7xl items-center gap-12 lg:grid-cols-[1fr_1.05fr_0.9fr]">
         <div ref={titleRef} className="z-10 text-center lg:text-left">
-          <p className="mono-text designation-text mb-4 inline-flex rounded-full border border-blue-main/30 bg-white/60 px-4 py-2 text-sm font-semibold text-blue-main backdrop-blur-md dark:bg-white/5">
+          <p className="mono-text designation-text mb-4 inline-flex rounded-full border border-[var(--accent-dim)] bg-[var(--panel-soft)] px-4 py-2 text-sm font-semibold text-[var(--accent)] backdrop-blur-md">
             Full Stack Developer
           </p>
 
-          <h1 className="mb-5 text-4xl font-bold leading-tight text-(--foreground) md:text-5xl ">
+          <h1 className="mb-5 text-4xl font-bold leading-tight text-[var(--foreground)] md:text-5xl">
             Hi, I&apos;m <br />
             <span className="gradient-text">Imam Hossen</span>
           </h1>
@@ -135,13 +135,13 @@ export default function Hero() {
           <div className="flex flex-wrap justify-center gap-4 lg:justify-start">
             <a
               href="#projects"
-              className="primary-btn rounded-full px-7 py-3 text-sm font-bold"
+              className="primary-btn rounded-full px-7 py-3 text-sm font-bold shadow-none"
             >
               View Projects
             </a>
             <a
               href="#contact"
-              className="hero-contact-btn rounded-full px-7 py-3 text-sm font-bold"
+              className="hero-contact-btn rounded-full px-7 py-3 text-sm font-bold shadow-none"
             >
               Contact Me
             </a>
@@ -154,7 +154,7 @@ export default function Hero() {
             <a
               href="https://github.com/imamhossenbu"
               target="_blank"
-              className="hero-social-link"
+              className="hero-social-link shadow-none"
               aria-label="Github"
             >
               <FaGithub size={18} />
@@ -163,7 +163,7 @@ export default function Hero() {
             <a
               href="https://www.linkedin.com/in/imam-hossen-ub"
               target="_blank"
-              className="hero-social-link"
+              className="hero-social-link shadow-none"
               aria-label="LinkedIn"
             >
               <FaLinkedinIn size={18} />
@@ -172,7 +172,7 @@ export default function Hero() {
             <a
               href="mailto:imam62310@gmail.com"
               target="_blank"
-              className="hero-social-link"
+              className="hero-social-link shadow-none"
               aria-label="Email"
             >
               <Mail size={18} />
@@ -180,7 +180,7 @@ export default function Hero() {
             <a
               href="https://www.facebook.com/imamhossainbu"
               target="_blank"
-              className="hero-social-link"
+              className="hero-social-link shadow-none"
               aria-label="Facebook"
             >
               <FaFacebook size={18} />
@@ -196,20 +196,21 @@ export default function Hero() {
 
             <div className="hero-image-inner">
               <Image
-                src="/images/imam1.png"
+                src="/images/imam.png"
                 alt="Imam Hossen"
                 fill
                 priority
-                className="drop-shadow-[0_35px_55px_rgba(79,110,247,0.25)]"
+                className="drop-shadow-none"
               />
             </div>
           </div>
         </div>
-        <div ref={cardRef} className="z-10">
-          <div className="soft-card rounded-4xl p-6">
-            <div className="mb-5 h-1 w-14 rounded-full bg-linear-to-r from-blue-main to-blue-soft" />
 
-            <h3 className="mb-4 text-2xl font-bold text-(--foreground)">
+        <div ref={cardRef} className="z-10">
+          <div className="soft-card rounded-4xl p-6 shadow-none">
+            <div className="mb-5 h-1 w-14 rounded-full bg-gradient-to-r from-[var(--accent)] to-[var(--accent-soft)]" />
+
+            <h3 className="mb-4 text-2xl font-bold text-[var(--foreground)]">
               Available for Projects
             </h3>
 
@@ -219,26 +220,26 @@ export default function Hero() {
             </p>
 
             <div className="space-y-4">
-              <div className="hero-info-row">
+              <div className="hero-info-row shadow-none">
                 <span>Role</span>
                 <strong>Full Stack Developer</strong>
               </div>
 
-              <div className="hero-info-row">
+              <div className="hero-info-row shadow-none">
                 <span>Focus</span>
                 <strong>Next.js + TypeScript</strong>
               </div>
 
-              <div className="hero-info-row">
+              <div className="hero-info-row shadow-none">
                 <span>Status</span>
-                <strong className="text-blue-main">Open to Work</strong>
+                <strong className="text-[var(--accent)]">Open to Work</strong>
               </div>
             </div>
 
             <a
               href="/resume.pdf"
               download="Imam-Hossen-CV.pdf"
-              className="mt-7 inline-flex w-full items-center justify-center gap-2 rounded-full primary-btn px-6 py-3 text-sm font-bold"
+              className="mt-7 inline-flex w-full items-center justify-center gap-2 rounded-full primary-btn px-6 py-3 text-sm font-bold shadow-none"
             >
               <Download size={18} />
               Download CV

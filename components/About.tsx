@@ -55,7 +55,7 @@ export default function About() {
             trigger: sectionRef.current,
             start: "top 75%",
           },
-        }
+        },
       );
 
       gsap.fromTo(
@@ -72,7 +72,7 @@ export default function About() {
             end: "bottom 40%",
             scrub: true,
           },
-        }
+        },
       );
 
       gsap.fromTo(
@@ -91,7 +91,7 @@ export default function About() {
             trigger: ".education-timeline",
             start: "top 70%",
           },
-        }
+        },
       );
     }, sectionRef);
 
@@ -106,18 +106,18 @@ export default function About() {
     >
       <div className="mx-auto max-w-7xl">
         <div className="about-animate mb-14 text-center">
-          <p className="mono-text mb-3 text-sm font-semibold uppercase tracking-[0.25em] text-blue-main">
+          <p className="mono-text mb-3 text-sm font-semibold uppercase tracking-[0.25em] text-[var(--accent)]">
             About Me
           </p>
 
-          <h2 className="text-3xl font-bold text-(--foreground) md:text-4xl">
+          <h2 className="text-3xl font-bold text-[var(--foreground)] md:text-4xl">
             Building clean, modern and useful web experiences
           </h2>
         </div>
 
         <div className="grid items-start gap-8 lg:grid-cols-[1.05fr_0.95fr]">
           <div className="about-animate soft-card self-start rounded-[2rem] p-7 md:p-9">
-            <div className="mb-6 inline-flex rounded-2xl bg-blue-main/15 p-4 text-blue-main">
+            <div className="mb-6 inline-flex rounded-2xl bg-[var(--accent-dim)] p-4 text-[var(--accent)]">
               <Code2 size={28} />
             </div>
 
@@ -133,8 +133,8 @@ export default function About() {
             </p>
 
             <p className="hero-description leading-8">
-              My goal is to write clean code, design smooth user interfaces,
-              and develop websites that are visually attractive, practical,
+              My goal is to write clean code, design smooth user interfaces, and
+              develop websites that are visually attractive, practical,
               scalable, and easy to use.
             </p>
 
@@ -158,12 +158,12 @@ export default function About() {
 
           <div className="about-animate soft-card rounded-[2rem] p-7 md:p-9">
             <div className="mb-8 flex items-center gap-3">
-              <div className="rounded-2xl bg-blue-main/15 p-4 text-blue-main">
+              <div className="rounded-2xl bg-[var(--accent-dim)] p-4 text-[var(--accent)]">
                 <GraduationCap size={28} />
               </div>
 
               <div>
-                <p className="mono-text text-sm font-semibold text-blue-main">
+                <p className="mono-text text-sm font-semibold text-[var(--accent)]">
                   Education
                 </p>
 

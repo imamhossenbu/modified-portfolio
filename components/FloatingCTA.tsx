@@ -11,21 +11,18 @@ const contactButtons = [
     href: "https://wa.me/8801624994532",
     icon: SiWhatsapp,
     bg: "bg-[#25D366]",
-    shadow: "shadow-[0_10px_30px_rgba(37,211,102,0.35)]",
   },
   {
     name: "Messenger",
     href: "https://m.me/imamhossainbu",
     icon: SiMessenger,
     bg: "bg-[#0084FF]",
-    shadow: "shadow-[0_10px_30px_rgba(0,132,255,0.35)]",
   },
   {
     name: "Call",
     href: "tel:+8801624994532",
     icon: Phone,
-    bg: "bg-blue-main",
-    shadow: "shadow-[0_10px_30px_rgba(79,110,247,0.35)]",
+    bg: "bg-[var(--accent)]",
   },
 ];
 
@@ -65,7 +62,7 @@ export default function FloatingCTA() {
           stagger: 0.08,
           duration: 0.42,
           ease: "back.out(1.8)",
-        }
+        },
       );
     }
   }, [open]);
@@ -106,9 +103,10 @@ export default function FloatingCTA() {
                 aria-label={item.name}
                 className={`
                   floating-contact-item group relative flex h-14 w-14 items-center justify-center
-                  rounded-full ${item.bg} ${item.shadow}
+                  rounded-full ${item.bg}
                   text-white transition-all duration-300
                   hover:-translate-y-1 hover:scale-110 active:scale-95
+                  shadow-none
                 `}
               >
                 <span className="absolute inset-0 rounded-full bg-white/15 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
@@ -118,10 +116,10 @@ export default function FloatingCTA() {
                 <span
                   className="
                     pointer-events-none absolute right-[68px] top-1/2 -translate-y-1/2
-                    whitespace-nowrap rounded-full bg-neutral-900 px-3 py-1.5
-                    text-xs font-medium text-white opacity-0 shadow-lg
+                    whitespace-nowrap rounded-full bg-[var(--panel)] px-3 py-1.5
+                    text-xs font-medium text-[var(--foreground)] opacity-0
                     transition-all duration-300 group-hover:right-[74px] group-hover:opacity-100
-                    dark:bg-white dark:text-neutral-900
+                    border border-[var(--panel-border)] shadow-none
                   "
                 >
                   {item.name}
@@ -138,15 +136,15 @@ export default function FloatingCTA() {
         aria-label="Open contact options"
         className="
           group relative flex h-16 w-16 items-center justify-center overflow-hidden
-          rounded-full bg-gradient-to-br from-blue-main to-nav-hover
-          text-white shadow-[0_16px_45px_rgba(79,110,247,0.45)]
-          transition-all duration-300 hover:scale-110 active:scale-95
+          rounded-full bg-[var(--accent)]
+          text-white transition-all duration-300 hover:scale-110 active:scale-95
+          shadow-none
         "
       >
         <span className="absolute inset-0 rounded-full bg-white/20 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
 
         {!open && (
-          <span className="absolute inset-0 rounded-full border border-blue-main/40 animate-ping" />
+          <span className="absolute inset-0 rounded-full border border-[var(--accent)]/40 animate-ping" />
         )}
 
         <span className="relative z-10 flex h-12 w-12 items-center justify-center rounded-full bg-white/15 backdrop-blur-md">

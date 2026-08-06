@@ -10,7 +10,7 @@ export default function CustomCursor() {
     Array.from({ length: 12 }, () => ({
       x: 0,
       y: 0,
-    }))
+    })),
   );
 
   useEffect(() => {
@@ -100,8 +100,8 @@ export default function CustomCursor() {
               width: `${size}px`,
               height: `${size}px`,
               borderRadius: "9999px",
-              background: "var(--blue-main)",
-              boxShadow: "0 0 18px rgba(79, 110, 247, 0.75)",
+              background: "var(--accent)",
+              boxShadow: "0 0 18px rgba(217, 98, 43, 0.75)",
               pointerEvents: "none",
               opacity: 0,
               willChange: "transform",

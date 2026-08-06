@@ -5,9 +5,12 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ExternalLink } from "lucide-react";
 import { projectCategories, projects } from "@/data/projects";
 import Link from "next/link";
+
+gsap.registerPlugin(ScrollTrigger);
 
 export default function Projects() {
   const router = useRouter();
@@ -80,13 +83,13 @@ export default function Projects() {
       <div className="mx-auto max-w-7xl">
         {/* Header Section */}
         <div className="project-animate mb-12 text-center">
-          <p className="mono-text mb-3 text-sm font-semibold uppercase tracking-[0.25em] text-blue-main">
+          <p className="mono-text mb-3 text-sm font-semibold uppercase tracking-[0.25em] text-[var(--accent)]">
             My Projects
           </p>
-          <h2 className="project-section-title text-3xl font-bold md:text-4xl">
+          <h2 className="project-section-title text-3xl font-bold text-[var(--foreground)] md:text-4xl">
             Selected work by category
           </h2>
-          <p className="hero-description mx-auto mt-4 max-w-2xl text-base text-neutral-600 dark:text-neutral-400 leading-7">
+          <p className="hero-description mx-auto mt-4 max-w-2xl text-base leading-7">
             Here are some projects organized by frontend, full stack, landing
             page, and AI-based work.
           </p>
@@ -129,10 +132,10 @@ export default function Projects() {
 
               {/* Bottom Content Area - Handles Mobile vs Desktop layout via CSS */}
               <div className="project-card-content">
-                <h3 className="mb-1 text-lg font-bold text-neutral-900 dark:text-white truncate">
+                <h3 className="mb-1 text-lg font-bold text-[var(--foreground)] truncate">
                   {project.title}
                 </h3>
-                <p className="mb-4 text-xs text-neutral-500 dark:text-neutral-400 line-clamp-1">
+                <p className="mb-4 text-xs text-[var(--foreground-muted)] line-clamp-1">
                   {project.shortDescription}
                 </p>
 
@@ -141,11 +144,13 @@ export default function Projects() {
                   onClick={(e) => e.stopPropagation()}
                 >
                   <Link href={`/projects/${project.slug}`}>
-                    <button className="project-hover-link">Details</button>
+                    <button className="project-hover-link shadow-none">
+                      Details
+                    </button>
                   </Link>
                   <a
                     href={project.live}
-                    className="project-hover-link secondary"
+                    className="project-hover-link secondary shadow-none"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
@@ -163,7 +168,7 @@ export default function Projects() {
           <div className="mt-14 text-center">
             <button
               onClick={handleLoadMore}
-              className="project-back-link font-bold px-8 py-3.5"
+              className="project-back-link font-bold px-8 py-3.5 shadow-none"
             >
               View More
             </button>

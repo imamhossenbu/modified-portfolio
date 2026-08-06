@@ -5,7 +5,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Mail, MapPin, Send, Phone } from "lucide-react";
 import { FaFacebook, FaGithub, FaLinkedinIn } from "react-icons/fa";
-import toast from "react-hot-toast"; 
+import toast from "react-hot-toast";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -70,7 +70,7 @@ export default function Contact() {
     >
       <div className="mx-auto max-w-7xl">
         <div className="contact-animate mb-14 text-center">
-          <p className="mono-text mb-3 text-sm font-semibold uppercase tracking-[0.25em] text-blue-main">
+          <p className="mono-text mb-3 text-sm font-semibold uppercase tracking-[0.25em] text-[var(--accent)]">
             Contact
           </p>
 
@@ -85,7 +85,7 @@ export default function Contact() {
         </div>
 
         <div className="grid gap-8 lg:grid-cols-[0.85fr_1.15fr]">
-        
+          {/* ইনফো কার্ড */}
           <div className="contact-animate contact-info-card">
             <h3 className="mb-5 text-2xl font-bold text-[var(--foreground)]">
               Contact Information
