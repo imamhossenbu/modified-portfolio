@@ -9,7 +9,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 const education = [
   {
-    degree: "B.Sc. in Computer Science & Engineering",
+    degree: "BSc. in Computer Science & Engineering",
     institute: "University of Barishal",
     year: "2022 - Present",
     details:
