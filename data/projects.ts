@@ -1,9 +1,10 @@
-export type ProjectCategory = "frontend" | "fullstack" | "landing" | "ai";
+export type ProjectCategory = "frontend" | "fullstack" | "mobile" | "landing" | "ai";
 
 export type ProjectGithub = {
   frontend?: string;
   backend?: string;
   socket?: string;
+  app?: string;
 };
 
 export type Project = {
@@ -26,6 +27,7 @@ export const projectCategories = [
   { label: "All", value: "all" },
   { label: "Frontend", value: "frontend" },
   { label: "Full Stack", value: "fullstack" },
+  { label: "Mobile App", value: "mobile" },
   { label: "Landing Page", value: "landing" },
   { label: "AI", value: "ai" },
 ];
@@ -919,5 +921,118 @@ export const projects: Project[] = [
       frontend: "https://github.com/imamhossenbu/weather-app",
     },
     featured: false,
+  },
+  {
+    id: 26,
+    slug: "megastore-flutter",
+    title: "MegaStore",
+    category: "mobile",
+    type: "Full Stack Mobile Application",
+    shortDescription:
+      "Full-stack E-Commerce mobile application with dual customer & admin architecture powered by Firebase & Cloudinary.",
+    description:
+      "MegaStore is a production-grade full-stack e-commerce mobile application built with Flutter, Firebase (Cloud Firestore & Authentication), and Cloudinary Image CDN. It features a complete dual-interface architecture: a borderless customer storefront with live catalog streaming, soft-delete filtering, promo vouchers, and Cash on Delivery with Bangladesh address/phone validation, plus an executive Admin Control Center with real-time revenue analytics, inventory restock steppers, role-based access control, and an audited order status pipeline.",
+    image: "/images/projects/megastore.png",
+    tech: [
+      "Flutter",
+      "Dart",
+      "Firebase Firestore",
+      "Firebase Auth",
+      "Cloudinary CDN",
+      "Provider",
+      "Repository Pattern",
+      "REST API",
+      "Android APK",
+    ],
+    features: [
+      "Dual-interface architecture: Customer Storefront and Executive Admin Control Center",
+      "Real-time Firestore catalog streaming with soft-delete filtering and instant search",
+      "Atomic order placement pipeline with inventory auto-deduction and restock rollback",
+      "Bangladeshi 11-digit phone number verification and zoned delivery fee calculation",
+      "Admin analytics dashboard: live revenue, active orders, and low-stock alerts",
+      "Promotional discount voucher engine (percentage discounts, minimum spend limits)",
+      "Cloudinary CDN unsigned image uploads with automated transformations",
+      "Direct 1-click Android release APK downloads (ARM64 and ARM32)",
+    ],
+    live: "https://github.com/imamhossenbu/flutter-mega-assignment/raw/main/apk/MegaStore-release-arm64.apk",
+    github: {
+      frontend: "https://github.com/imamhossenbu/flutter-mega-assignment",
+    },
+    featured: true,
+  },
+  {
+    id: 27,
+    slug: "quizzical-quiz-app",
+    title: "Quizzical",
+    category: "mobile",
+    type: "Flutter Mobile Application",
+    shortDescription:
+      "Feature-rich, animated quiz app with 24+ categories, customizable timers, and dark/light mode.",
+    description:
+      "Quizzical is a high-performance, beautifully animated trivia and quiz application built with Flutter and Dart, powered by the Open Trivia DB API. It offers a fully customizable challenge engine with 24+ diverse categories, difficulty levels, question counts, and speed-run timers. Features include live streak tracking, question bookmarking, deep answer reviews, persistent score histories, and optimized ABI-split Android APKs under 16 MB.",
+    image: "/images/projects/quizzical.png",
+    tech: [
+      "Flutter",
+      "Dart",
+      "Provider",
+      "Open Trivia API",
+      "SharedPreferences",
+      "Google Fonts",
+      "MVVM Architecture",
+      "Android APK",
+    ],
+    features: [
+      "24+ diverse knowledge categories (Science, Computing, Books, Films, and more)",
+      "Customizable quiz configurations: question count (5-50), timers (10s, 20s, 30s), and difficulty",
+      "Live quiz engine with milestone streaks, real-time timers, and question bookmarking",
+      "In-depth answer review breakdown with correctness feedback and timeout diagnostics",
+      "Persistent local score history and leaderboard tracking",
+      "Adaptive sleek Light and Dark theme modes",
+      "Size-optimized binaries with ABI splitting, icon tree-shaking, and R8 minification (14–16 MB)",
+      "Direct ready-to-install Android Release APK (ARM64 & ARM32)",
+    ],
+    live: "https://github.com/imamhossenbu/flutter-quizzable/raw/main/releases/Quizzical-arm64-v8a-release.apk?raw=true",
+    github: {
+      frontend: "https://github.com/imamhossenbu/flutter-quizzable",
+    },
+    featured: true,
+  },
+  {
+    id: 28,
+    slug: "alokito-telecom",
+    title: "Alokito Telecom",
+    category: "mobile",
+    type: "Flutter Telecom & Fintech App",
+    shortDescription:
+      "Modern telecom drive offer, automated MFS wallet top-up & KYC mobile application for Bangladesh.",
+    description:
+      "Alokito Telecom is a high-performance Flutter mobile application engineered for telecom drive offers, internet/minute pack purchases, automated MFS wallet top-ups (bKash, Nagad, Rocket, Upay), and live order tracking across Bangladesh. Built with Material 3 design and bilingual localization (Bangla & English), it features smart NID KYC verification with local Tesseract OCR, secure 4-digit PIN authentication with 2FA OTP, tap-to-reveal privacy balance card, real-time prayer times schedule, and automated SMS listener TrxID matching for instant zero-wait wallet recharges.",
+    image: "/images/projects/alokito-telecom.png",
+    tech: [
+      "Flutter",
+      "Dart",
+      "Provider",
+      "REST API",
+      "OCR (Tesseract)",
+      "Material 3",
+      "MFS Integration",
+      "Bilingual (BN/EN)",
+      "Secure Storage",
+    ],
+    features: [
+      "Smart NID KYC verification with local Tesseract OCR for automatic national ID extraction",
+      "Secure 4-digit transaction PIN protection with OTP two-factor verification (2FA)",
+      "Tap-to-reveal privacy wallet balance card with smooth interactive animation",
+      "Real-time Islamic prayer times tracker (Fajr, Dhuhr, Asr, Maghrib, Isha) tailored for Bangladesh",
+      "Drive and regular telecom packs engine supporting GP, Robi, Banglalink, Airtel & Teletalk",
+      "Smart operator prefix detection (auto-matching 017/018/019/016/015 phone numbers)",
+      "Automated MFS Add Money via bKash, Nagad, Rocket & Upay with instant TrxID SMS listener matching",
+      "Double-entry wallet ledger statement with live order pipeline & auto-refund architecture",
+    ],
+    live: "https://github.com/imamhossenbu/drive-offer-customer-app",
+    github: {
+      frontend: "https://github.com/imamhossenbu/drive-offer-customer-app",
+    },
+    featured: true,
   },
 ];

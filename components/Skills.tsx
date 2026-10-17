@@ -11,6 +11,7 @@ import {
   Brain,
   TestTube2,
   Zap,
+  Smartphone,
 } from "lucide-react";
 import {
   SiNextdotjs,
@@ -46,6 +47,8 @@ import {
   SiCplusplus,
   SiPandas,
   SiGooglecolab,
+  SiFlutter,
+  SiDart,
 } from "react-icons/si";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -62,6 +65,16 @@ const skillCategories = [
       { name: "Tailwind CSS", icon: SiTailwindcss },
       { name: "Framer Motion", icon: SiFramer },
       { name: "GSAP", icon: SiGreensock },
+    ],
+  },
+  {
+    title: "Mobile Development",
+    icon: Smartphone,
+    skills: [
+      { name: "Flutter", icon: SiFlutter },
+      { name: "Dart", icon: SiDart },
+      { name: "Firebase", icon: SiFirebase },
+      { name: "REST API", icon: Server },
     ],
   },
   {
@@ -87,6 +100,7 @@ const skillCategories = [
       { name: "C++", icon: SiCplusplus },
       { name: "JavaScript", icon: SiJavascript },
       { name: "TypeScript", icon: SiTypescript },
+      { name: "Dart", icon: SiDart },
     ],
   },
   {
@@ -141,6 +155,8 @@ const skillCategories = [
 const marqueeSkills = [
   "Next.js",
   "React",
+  "Flutter",
+  "Dart",
   "TypeScript",
   "JavaScript",
   "Tailwind CSS",

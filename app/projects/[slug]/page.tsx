@@ -80,7 +80,11 @@ export default async function ProjectDetailsPage({
                 </div>
                 <h3 className="subtitle font-bold">Architecture</h3>
                 <p className="description mt-1 text-sm">
-                  {isMultiLayer ? "Multi-layer Stack" : "Frontend Stack"}
+                  {project.category === "mobile"
+                    ? "Mobile App Stack"
+                    : isMultiLayer
+                      ? "Multi-layer Stack"
+                      : "Frontend Stack"}
                 </p>
               </div>
             </div>
@@ -136,7 +140,7 @@ export default async function ProjectDetailsPage({
               </h4>
 
               <div className="grid grid-cols-1 gap-3 xs:grid-cols-2 sm:flex sm:flex-wrap sm:items-center">
-                {/* Live Preview Button */}
+                {/* Live Preview / APK Download Button */}
                 {project.live && project.live !== "#" && (
                   <a
                     href={project.live}
@@ -145,11 +149,15 @@ export default async function ProjectDetailsPage({
                     rel="noopener noreferrer"
                   >
                     <ExternalLink size={16} />
-                    Live Preview
+                    {project.live.includes(".apk")
+                      ? "Download APK"
+                      : project.category === "mobile"
+                        ? "Live / Download"
+                        : "Live Preview"}
                   </a>
                 )}
 
-                {/* Frontend Code Button */}
+                {/* Frontend / App Code Button */}
                 {project.github?.frontend && (
                   <a
                     href={project.github.frontend}
@@ -157,7 +165,20 @@ export default async function ProjectDetailsPage({
                     rel="noopener noreferrer"
                     className="project-link secondary flex w-full items-center justify-center gap-2 whitespace-nowrap px-4 py-2.5 text-center text-xs sm:w-auto"
                   >
-                    <SiGithub size={15} /> Frontend Code
+                    <SiGithub size={15} />{" "}
+                    {project.category === "mobile" ? "App Code" : "Frontend Code"}
+                  </a>
+                )}
+
+                {/* App Code Button (if specified separately) */}
+                {project.github?.app && (
+                  <a
+                    href={project.github.app}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="project-link secondary flex w-full items-center justify-center gap-2 whitespace-nowrap px-4 py-2.5 text-center text-xs sm:w-auto"
+                  >
+                    <SiGithub size={15} /> App Code
                   </a>
                 )}
 

@@ -90,8 +90,8 @@ export default function Projects() {
             Selected work by category
           </h2>
           <p className="hero-description mx-auto mt-4 max-w-2xl text-base leading-7">
-            Here are some projects organized by frontend, full stack, landing
-            page, and AI-based work.
+            Here are some projects organized by frontend, full stack, mobile
+            app, landing page, and AI-based work.
           </p>
         </div>
 
@@ -155,7 +155,7 @@ export default function Projects() {
                     rel="noopener noreferrer"
                   >
                     <ExternalLink size={13} />
-                    Live
+                    {project.category === "mobile" ? "APK" : "Live"}
                   </a>
                 </div>
               </div>
