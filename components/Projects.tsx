@@ -5,11 +5,10 @@ import Image from "next/image";
 import Link from "next/link";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { ArrowUpRight, ExternalLink } from "lucide-react";
+import { ArrowUpRight, ExternalLink, Plus } from "lucide-react";
 import { projectCategories, projects } from "@/data/projects";
 import SectionHead from "@/components/SectionHead";
 import BrowserFrame, { displayHost } from "@/components/BrowserFrame";
-import Magnetic from "@/components/motion/Magnetic";
 import { useReveal } from "@/components/motion/useReveal";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -203,17 +202,18 @@ export default function Projects() {
 
         {filteredProjects.length > visibleCount && (
           <div className="work-more">
-            <Magnetic strength={0.3}>
-              <button
-                type="button"
-                onClick={() => setVisibleCount((prev) => prev + PAGE_SIZE)}
-                className="round-btn"
-              >
-                View
-                <br />
-                More
-              </button>
-            </Magnetic>
+            <button
+              type="button"
+              onClick={() => setVisibleCount((prev) => prev + PAGE_SIZE)}
+              className="btn-x"
+            >
+              <span className="btn-x-label" data-text="View More">
+                <span>View More</span>
+              </span>
+              <span className="btn-x-icon">
+                <Plus />
+              </span>
+            </button>
           </div>
         )}
       </div>

@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { ArrowUpRight, Mail, MapPin, Phone } from "lucide-react";
+import { ArrowUpRight, Mail, MapPin, Phone, Send } from "lucide-react";
 import { FaFacebook, FaGithub, FaLinkedinIn } from "react-icons/fa";
 import toast from "react-hot-toast";
 import SectionHead from "@/components/SectionHead";
@@ -127,13 +127,17 @@ export default function Contact() {
             </label>
 
             <div className="contact-x-submit" data-reveal>
-              <Magnetic strength={0.3}>
-                <button type="submit" className="round-btn is-accent" disabled={loading}>
-                  {loading ? "Sending" : "Send"}
-                  <br />
-                  {loading ? "…" : "Message"}
-                </button>
-              </Magnetic>
+              <button type="submit" className="btn-x is-accent" disabled={loading}>
+                <span
+                  className="btn-x-label"
+                  data-text={loading ? "Sending…" : "Send Message"}
+                >
+                  <span>{loading ? "Sending…" : "Send Message"}</span>
+                </span>
+                <span className="btn-x-icon">
+                  <Send />
+                </span>
+              </button>
             </div>
           </form>
         </div>

@@ -1,116 +1,136 @@
-/* eslint-disable react-hooks/refs */
 "use client";
 
 import { useEffect, useRef } from "react";
+import gsap from "gsap";
+import { ArrowUpRight } from "lucide-react";
 
+type Mode = "default" | "link" | "button" | "text";
+
+const BUTTON_SELECTOR =
+  'button, [role="button"], .hero-x-btn, .btn-x, .nav-x-cta, .hero-social-link, .contact-social-link';
+const TEXT_SELECTOR = "input, textarea";
+const LINK_SELECTOR = "a, [data-cursor='link']";
+
+/**
+ * A ring that trails the pointer and changes with what is under it:
+ *  - buttons: the ring snaps around the button and hugs its shape
+ *  - links:   the ring swells into a filled disc with an arrow
+ *  - fields:  the ring thins into a text caret
+ * The native cursor stays visible, so precision is never lost.
+ */
 export default function CustomCursor() {
-  const trailRefs = useRef<HTMLDivElement[]>([]);
-  const mouse = useRef({ x: 0, y: 0 });
-  const trails = useRef(
-    Array.from({ length: 12 }, () => ({
-      x: 0,
-      y: 0,
-    })),
-  );
+  const ringRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    const isTouchDevice =
-      "ontouchstart" in window || navigator.maxTouchPoints > 0;
+    const ring = ringRef.current;
+    if (!ring) return;
+    if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
 
-    if (isTouchDevice) return;
+    const xTo = gsap.quickTo(ring, "x", { duration: 0.45, ease: "power3.out" });
+    const yTo = gsap.quickTo(ring, "y", { duration: 0.45, ease: "power3.out" });
 
-    let firstMove = true;
-    let animationFrame: number;
+    let mode: Mode = "default";
+    let hovered: Element | null = null;
+    let pointer = { x: -100, y: -100 };
+    let shown = false;
 
-    const handleMouseMove = (e: MouseEvent) => {
-      mouse.current.x = e.clientX;
-      mouse.current.y = e.clientY;
+    const shape = (vars: gsap.TweenVars) =>
+      gsap.to(ring, { duration: 0.4, ease: "power3.out", overwrite: "auto", ...vars });
 
-      if (firstMove) {
-        trails.current.forEach((trail) => {
-          trail.x = e.clientX;
-          trail.y = e.clientY;
-        });
+    const hug = (el: Element) => {
+      const rect = el.getBoundingClientRect();
+      const radius = parseFloat(getComputedStyle(el).borderTopLeftRadius) || 0;
+      const pad = 6;
 
-        trailRefs.current.forEach((el) => {
-          if (el) {
-            el.style.opacity = "1";
-          }
-        });
+      shape({
+        width: rect.width + pad * 2,
+        height: rect.height + pad * 2,
+        borderRadius: Math.min(radius + pad, (rect.height + pad * 2) / 2),
+      });
+      xTo(rect.left + rect.width / 2);
+      yTo(rect.top + rect.height / 2);
+    };
 
-        firstMove = false;
+    const setMode = (next: Mode, el: Element | null) => {
+      if (next === mode && el === hovered) return;
+      mode = next;
+      hovered = el;
+      ring.dataset.mode = next;
+
+      if (next === "link") shape({ width: 58, height: 58, borderRadius: 29 });
+      else if (next === "text") shape({ width: 3, height: 28, borderRadius: 2 });
+      else if (next === "default") shape({ width: 30, height: 30, borderRadius: 15 });
+    };
+
+    const resolve = (target: EventTarget | null) => {
+      if (!(target instanceof Element)) return setMode("default", null);
+
+      const button = target.closest(BUTTON_SELECTOR);
+      if (button) return setMode("button", button);
+
+      const field = target.closest(TEXT_SELECTOR);
+      if (field) return setMode("text", field);
+
+      const link = target.closest(LINK_SELECTOR);
+      if (link) return setMode("link", link);
+
+      setMode("default", null);
+    };
+
+    const follow = () => {
+      if (mode === "button" && hovered?.isConnected) {
+        hug(hovered);
+      } else {
+        xTo(pointer.x);
+        yTo(pointer.y);
       }
     };
 
-    const animateTrail = () => {
-      let x = mouse.current.x;
-      let y = mouse.current.y;
+    const handleMove = (e: MouseEvent) => {
+      pointer = { x: e.clientX, y: e.clientY };
 
-      trails.current.forEach((trail, index) => {
-        trail.x += (x - trail.x) * 0.35;
-        trail.y += (y - trail.y) * 0.35;
+      if (!shown) {
+        shown = true;
+        gsap.set(ring, { x: pointer.x, y: pointer.y });
+        gsap.to(ring, { opacity: 1, duration: 0.3 });
+      }
 
-        x = trail.x;
-        y = trail.y;
-
-        const el = trailRefs.current[index];
-
-        if (el) {
-          el.style.transform = `translate3d(${trail.x}px, ${trail.y}px, 0) translate(-50%, -50%)`;
-        }
-      });
-
-      animationFrame = requestAnimationFrame(animateTrail);
+      resolve(e.target);
+      follow();
     };
 
-    window.addEventListener("mousemove", handleMouseMove);
-    animateTrail();
+    // The page can move under a still pointer; keep the ring on its button
+    const handleScroll = () => {
+      resolve(document.elementFromPoint(pointer.x, pointer.y));
+      follow();
+    };
+
+    const handleDown = () => gsap.to(ring, { scale: 0.86, duration: 0.2 });
+    const handleUp = () => gsap.to(ring, { scale: 1, duration: 0.45, ease: "elastic.out(1, 0.4)" });
+    const handleLeave = () => {
+      shown = false;
+      gsap.to(ring, { opacity: 0, duration: 0.25 });
+    };
+
+    window.addEventListener("mousemove", handleMove, { passive: true });
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("mousedown", handleDown);
+    window.addEventListener("mouseup", handleUp);
+    document.documentElement.addEventListener("mouseleave", handleLeave);
 
     return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
-      cancelAnimationFrame(animationFrame);
+      window.removeEventListener("mousemove", handleMove);
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("mousedown", handleDown);
+      window.removeEventListener("mouseup", handleUp);
+      document.documentElement.removeEventListener("mouseleave", handleLeave);
+      gsap.killTweensOf(ring);
     };
   }, []);
 
   return (
-    <div
-      aria-hidden="true"
-      style={{
-        position: "fixed",
-        inset: 0,
-        zIndex: 999999,
-        pointerEvents: "none",
-        overflow: "hidden",
-      }}
-    >
-      {trails.current.map((_, index) => {
-        const size = Math.max(4, 15 - index);
-        const opacity = Math.max(0.12, 0.75 - index * 0.055);
-
-        return (
-          <div
-            key={index}
-            ref={(el) => {
-              if (el) trailRefs.current[index] = el;
-            }}
-            style={{
-              position: "fixed",
-              top: 0,
-              left: 0,
-              width: `${size}px`,
-              height: `${size}px`,
-              borderRadius: "9999px",
-              background: "var(--accent)",
-              boxShadow: "0 0 18px rgba(255, 77, 0, 0.6)",
-              pointerEvents: "none",
-              opacity: 0,
-              willChange: "transform",
-              transform: "translate3d(0, 0, 0)",
-              filter: `blur(${index > 6 ? 1 : 0}px)`,
-            }}
-          />
-        );
-      })}
+    <div ref={ringRef} className="cursor-ring" data-mode="default" aria-hidden="true">
+      <ArrowUpRight />
     </div>
   );
 }

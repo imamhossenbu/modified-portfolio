@@ -40,6 +40,7 @@ export default function Navbar() {
 
   const [activeLink, setActiveLink] = useState("#home");
   const [compact, setCompact] = useState(false);
+  const [overFooter, setOverFooter] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
 
@@ -133,6 +134,10 @@ export default function Navbar() {
       const progress = max > 0 ? Math.min(Math.max(y / max, 0), 1) : 0;
 
       setCompact(y > 80);
+
+      // The footer is a dark slab; flip the capsule so it stays readable on it
+      const footer = document.querySelector("footer");
+      setOverFooter(Boolean(footer && footer.getBoundingClientRect().top < 76));
 
       if (ringRef.current) {
         ringRef.current.style.strokeDashoffset = String(
@@ -237,7 +242,11 @@ export default function Navbar() {
   return (
     <>
       <header ref={headerRef} className="nav-x-header">
-        <nav className={`nav-x ${compact ? "is-compact" : ""} ${isOpen ? "is-open" : ""}`}>
+        <nav
+          className={`nav-x ${compact ? "is-compact" : ""} ${
+            overFooter ? "is-over-footer" : ""
+          } ${isOpen ? "is-open" : ""}`}
+        >
           <Link
             href="/#home"
             onClick={(e) => handleNav(e, "#home")}

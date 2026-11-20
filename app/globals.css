@@ -4505,6 +4505,12 @@ pre,
   max-width: 860px;
 }
 
+/* Over the dark footer the capsule turns light, whatever the theme */
+.nav-x.is-compact.is-over-footer {
+  --nav-fg: #0a0a0a;
+  --nav-bg: #fafafa;
+}
+
 .nav-x-logo {
   font-family: var(--font-display), sans-serif;
   font-size: 1.35rem;
@@ -5473,5 +5479,173 @@ pre,
   .gravity-pill svg {
     width: 20px;
     height: 20px;
+  }
+}
+
+/* =========================================================
+   BUTTON — pill with a rolling label and a badge that flips
+========================================================= */
+
+.btn-x {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  padding: 7px 7px 7px 26px;
+  border-radius: 999px;
+  border: 1px solid var(--foreground);
+  background: transparent;
+  color: var(--foreground);
+  font-family: var(--font-mono), monospace;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.45s ease, color 0.45s ease, border-color 0.45s ease;
+}
+
+/* The label is printed twice; on hover one copy rolls out as the other rolls in */
+.btn-x-label {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+  line-height: 1.4;
+}
+
+.btn-x-label span,
+.btn-x-label::after {
+  display: block;
+  transition: transform 0.5s cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+.btn-x-label::after {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  transform: translateY(105%);
+}
+
+.btn-x-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--foreground);
+  color: var(--background);
+  transition: background 0.45s ease, color 0.45s ease, transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.btn-x-icon svg {
+  width: 17px;
+  height: 17px;
+}
+
+.btn-x:hover {
+  background: var(--foreground);
+  color: var(--background);
+}
+
+.btn-x:hover .btn-x-label span {
+  transform: translateY(-105%);
+}
+
+.btn-x:hover .btn-x-label::after {
+  transform: translateY(0);
+}
+
+.btn-x:hover .btn-x-icon {
+  background: var(--accent);
+  color: #ffffff;
+  transform: rotate(90deg);
+}
+
+.btn-x.is-accent {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: #ffffff;
+}
+
+.btn-x.is-accent .btn-x-icon {
+  background: #ffffff;
+  color: var(--accent);
+}
+
+.btn-x.is-accent:hover {
+  border-color: var(--foreground);
+  background: var(--foreground);
+  color: var(--background);
+}
+
+.btn-x.is-accent:hover .btn-x-icon {
+  background: var(--accent);
+  color: #ffffff;
+  transform: translateX(2px) rotate(45deg);
+}
+
+.btn-x:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+/* =========================================================
+   CURSOR — a ring that adapts to what it is pointing at
+========================================================= */
+
+.cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 99980;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  margin: 0;
+  border-radius: 15px;
+  border: 1.5px solid var(--foreground);
+  opacity: 0;
+  pointer-events: none;
+  translate: -50% -50%;
+  transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+.cursor-ring svg {
+  width: 20px;
+  height: 20px;
+  color: #ffffff;
+  opacity: 0;
+  transform: scale(0.4) rotate(-45deg);
+  transition: opacity 0.25s ease, transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Links: a filled disc with an arrow */
+.cursor-ring[data-mode="link"] {
+  border-color: var(--accent);
+  background-color: var(--accent);
+}
+
+.cursor-ring[data-mode="link"] svg {
+  opacity: 1;
+  transform: none;
+}
+
+/* Buttons: an outline that hugs the button */
+.cursor-ring[data-mode="button"] {
+  border-color: var(--accent);
+  background-color: transparent;
+}
+
+/* Fields: a caret */
+.cursor-ring[data-mode="text"] {
+  border-color: var(--accent);
+  background-color: var(--accent);
+}
+
+@media (hover: none), (pointer: coarse) {
+  .cursor-ring {
+    display: none;
   }
 }
