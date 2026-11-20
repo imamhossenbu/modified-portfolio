@@ -17,7 +17,11 @@ const experience = {
     {
       title: "E-commerce SaaS platform",
       text: "Developing a modern e-commerce SaaS platform focusing on feature scalability, dashboard metrics, and interactive controls.",
-      tags: ["Feature scalability", "Dashboard metrics", "Interactive controls"],
+      tags: [
+        "Feature scalability",
+        "Dashboard metrics",
+        "Interactive controls",
+      ],
     },
     {
       title: "Digital commerce systems",
@@ -89,86 +93,90 @@ export default function Experience() {
           description="A focused overview of my hands-on development work, production SaaS experience, and technical contribution at Adsfixter."
         />
 
-        <div className="xp-head">
-          <div>
-            <p className="exp-x-when" data-reveal>
-              <span>{experience.type}</span>
-              {experience.duration}
-            </p>
-            <h3 className="exp-x-company" data-reveal>
-              {experience.company}
-            </h3>
-            <p className="exp-x-role" data-reveal>
-              {experience.role}
-            </p>
+        <div className="xp-layout">
+          <div className="xp-head">
+            <div>
+              <p className="exp-x-when" data-reveal>
+                <span>{experience.type}</span>
+                {experience.duration}
+              </p>
+              <h3 className="exp-x-company" data-reveal>
+                {experience.company}
+              </h3>
+              <p className="exp-x-role" data-reveal>
+                {experience.role}
+              </p>
+            </div>
+
+            <div>
+              <p className="exp-x-desc" data-reveal>
+                {experience.description}
+              </p>
+              <dl className="exp-x-stats" data-reveal>
+                {experience.stats.map((item) => (
+                  <div key={item.label}>
+                    <dt>{item.label}</dt>
+                    <dd>{item.value}</dd>
+                  </div>
+                ))}
+              </dl>
+            </div>
           </div>
 
-          <div>
-            <p className="exp-x-desc" data-reveal>
-              {experience.description}
-            </p>
-            <dl className="exp-x-stats" data-reveal>
-              {experience.stats.map((item) => (
-                <div key={item.label}>
-                  <dt>{item.label}</dt>
-                  <dd>{item.value}</dd>
+          {/* Layered cards: each sticks a step lower, so every title stays readable */}
+          <div ref={stackRef} className="xp-stack">
+            {experience.points.map((point, index) => (
+              <article
+                key={point.title}
+                className="xp-card"
+                style={{ "--layer": index } as React.CSSProperties}
+              >
+                <div className={`xp-card-inner tone-${index}`}>
+                  <header className="xp-card-head">
+                    <span className="xp-card-num">0{index + 1}</span>
+                    <h4>{point.title}</h4>
+                    <span className="xp-card-tag">What I worked on</span>
+                  </header>
+
+                  <div className="xp-card-body">
+                    <p>{point.text}</p>
+                    <ul>
+                      {point.tags.map((tag) => (
+                        <li key={tag}>{tag}</li>
+                      ))}
+                    </ul>
+                  </div>
                 </div>
-              ))}
-            </dl>
-          </div>
-        </div>
+              </article>
+            ))}
 
-        {/* Layered cards: each sticks a step lower, so every title stays readable */}
-        <div ref={stackRef} className="xp-stack">
-          {experience.points.map((point, index) => (
             <article
-              key={point.title}
               className="xp-card"
-              style={{ "--layer": index } as React.CSSProperties}
+              style={
+                { "--layer": experience.points.length } as React.CSSProperties
+              }
             >
-              <div className={`xp-card-inner tone-${index}`}>
+              <div className="xp-card-inner tone-4 is-now">
                 <header className="xp-card-head">
-                  <span className="xp-card-num">0{index + 1}</span>
-                  <h4>{point.title}</h4>
-                  <span className="xp-card-tag">What I worked on</span>
+                  <span className="xp-card-num">Now</span>
+                  <h4>What I&apos;m focused on</h4>
+                  <span className="xp-card-tag">
+                    <i />
+                    In progress
+                  </span>
                 </header>
 
                 <div className="xp-card-body">
-                  <p>{point.text}</p>
+                  <p>{experience.now}</p>
                   <ul>
-                    {point.tags.map((tag) => (
+                    {experience.nowTags.map((tag) => (
                       <li key={tag}>{tag}</li>
                     ))}
                   </ul>
                 </div>
               </div>
             </article>
-          ))}
-
-          <article
-            className="xp-card"
-            style={{ "--layer": experience.points.length } as React.CSSProperties}
-          >
-            <div className="xp-card-inner tone-4 is-now">
-              <header className="xp-card-head">
-                <span className="xp-card-num">Now</span>
-                <h4>What I&apos;m focused on</h4>
-                <span className="xp-card-tag">
-                  <i />
-                  In progress
-                </span>
-              </header>
-
-              <div className="xp-card-body">
-                <p>{experience.now}</p>
-                <ul>
-                  {experience.nowTags.map((tag) => (
-                    <li key={tag}>{tag}</li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-          </article>
+          </div>
         </div>
       </div>
     </section>

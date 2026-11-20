@@ -6383,12 +6383,46 @@ pre,
   color: var(--foreground);
 }
 
-@media (min-width: 768px) {
+/* Desktop: the company stays pinned on the left, the layers stack in a
+   narrower column on the right */
+@media (min-width: 1024px) {
+  .xp-layout {
+    display: grid;
+    grid-template-columns: 0.72fr 1.28fr;
+    gap: 72px;
+    align-items: start;
+  }
+
+  .xp-layout .xp-head {
+    position: sticky;
+    top: 110px;
+    grid-template-columns: 1fr;
+    gap: 22px;
+    margin-bottom: 0;
+  }
+
+  .xp-layout .exp-x-company {
+    font-size: clamp(2.4rem, 4.4vw, 3.8rem);
+  }
+
+  .xp-layout .xp-card-inner {
+    min-height: clamp(300px, 42vh, 380px);
+  }
+
+  .xp-layout .xp-card-body {
+    padding-left: clamp(16px, 2.4vw, 30px);
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
   .xp-head {
     grid-template-columns: 1fr 1fr;
     gap: 60px;
     align-items: end;
   }
+}
+
+@media (min-width: 768px) {
 
   .xp-stack {
     --layer-step: 60px;
