@@ -5383,7 +5383,8 @@ pre,
 
 .gravity {
   position: relative;
-  height: 600px;
+  /* Narrow phones need a taller box for the same number of pills */
+  height: clamp(600px, 190vw, 720px);
   overflow: hidden;
   border-radius: 24px;
   border: 1px solid var(--panel-border);
@@ -6439,5 +6440,248 @@ pre,
   .xp-card-body {
     padding-top: 22px;
     padding-left: calc(clamp(16px, 2.4vw, 30px) + 2.2em * 1.5 + 14px);
+  }
+}
+
+/* ---------- 06 Contact v2: the form is a letter with blanks to fill ---------- */
+
+.letter {
+  display: grid;
+  gap: clamp(16px, 2.4vw, 26px);
+  max-width: 62rem;
+}
+
+.letter-line {
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(1.3rem, 3.1vw, 2.5rem);
+  font-weight: 600;
+  line-height: 1.5;
+  letter-spacing: -0.025em;
+  color: var(--foreground);
+}
+
+.letter-blank {
+  display: inline-block;
+  vertical-align: baseline;
+}
+
+.letter-blank input {
+  width: 9.5em;
+  max-width: 100%;
+  padding: 0 0.15em 0.04em;
+  border: 0;
+  border-bottom: 2px dashed var(--foreground-faint);
+  border-radius: 0;
+  background: transparent;
+  outline: none;
+  font: inherit;
+  letter-spacing: inherit;
+  color: var(--accent);
+  transition: border-color 0.3s ease;
+}
+
+.letter-blank.is-wide input {
+  width: 13em;
+}
+
+.letter-blank input::placeholder,
+.letter-message textarea::placeholder {
+  color: var(--foreground-faint);
+  opacity: 1;
+}
+
+.letter-blank input:focus,
+.letter-blank input:not(:placeholder-shown) {
+  border-bottom-style: solid;
+  border-bottom-color: var(--accent);
+}
+
+.letter-topics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.letter-topic {
+  padding: 10px 20px;
+  border-radius: 999px;
+  border: 1px solid var(--foreground);
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(0.95rem, 1.5vw, 1.2rem);
+  font-weight: 600;
+  color: var(--foreground);
+  cursor: pointer;
+  transition:
+    background 0.35s ease,
+    color 0.35s ease,
+    border-color 0.35s ease,
+    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.letter-topic:hover {
+  transform: translateY(-3px);
+}
+
+.letter-topic.is-active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #ffffff;
+}
+
+.letter-message textarea {
+  width: 100%;
+  padding: 18px 20px;
+  border: 1px solid var(--panel-border);
+  border-radius: 18px;
+  background: var(--panel);
+  outline: none;
+  resize: vertical;
+  font-family: var(--font-body), sans-serif;
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: var(--foreground);
+  transition: border-color 0.3s ease;
+}
+
+.letter-message textarea:focus {
+  border-color: var(--accent);
+}
+
+.letter-foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px 24px;
+}
+
+.letter-note {
+  font-family: var(--font-mono), monospace;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--foreground-faint);
+}
+
+/* Direct contact strip */
+.reach {
+  display: grid;
+  gap: 0 32px;
+  margin-top: clamp(44px, 6vw, 84px);
+}
+
+.reach-item {
+  position: relative;
+  display: grid;
+  gap: 8px;
+  align-content: start;
+  padding: 20px 0 22px;
+}
+
+.reach-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-family: var(--font-mono), monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--foreground-faint);
+}
+
+.reach-label svg {
+  color: var(--accent);
+}
+
+.reach-value {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(1.05rem, 1.5vw, 1.25rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  overflow-wrap: anywhere;
+  color: var(--foreground);
+  transition: color 0.3s ease;
+}
+
+.reach-value svg {
+  flex: none;
+  width: 16px;
+  height: 16px;
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+a.reach-value:hover {
+  color: var(--accent);
+}
+
+a.reach-value:hover svg {
+  transform: translate(3px, -3px);
+}
+
+.reach-copy {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  justify-self: start;
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--panel-border);
+  font-family: var(--font-mono), monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--foreground-muted);
+  cursor: pointer;
+  transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+.reach-copy:hover {
+  background: var(--foreground);
+  border-color: var(--foreground);
+  color: var(--background);
+}
+
+.reach-socials {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+@media (max-width: 639px) {
+  .letter-blank,
+  .letter-blank input,
+  .letter-blank.is-wide input {
+    display: block;
+    width: 100%;
+  }
+
+  .letter-blank {
+    margin: 6px 0;
+  }
+
+  /* The blank is its own line on phones, so the full stop after it is dropped */
+  .letter-dot {
+    display: none;
+  }
+
+  .letter-foot .btn-x {
+    width: 100%;
+    justify-content: space-between;
+  }
+}
+
+@media (min-width: 640px) {
+  .reach {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (min-width: 1024px) {
+  .reach {
+    grid-template-columns: 1.3fr 1fr 1fr 1fr;
   }
 }
