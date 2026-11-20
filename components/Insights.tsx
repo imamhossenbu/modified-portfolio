@@ -2,134 +2,65 @@
 
 import { useEffect, useRef, useState } from "react";
 import CountUp from "react-countup";
-import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import RevealText from "@/components/motion/RevealText";
-import { Briefcase, Clock, Code2, Users } from "lucide-react";
+import gsap from "gsap";
+import SectionHead from "@/components/SectionHead";
+import { useReveal } from "@/components/motion/useReveal";
 
 gsap.registerPlugin(ScrollTrigger);
 
 const insights = [
-  {
-    value: 20,
-    suffix: "+",
-    label: "Projects Completed",
-    icon: Briefcase,
-  },
-  {
-    value: 1,
-    suffix: "+",
-    label: "Years Experience",
-    icon: Clock,
-  },
-  {
-    value: 15,
-    suffix: "+",
-    label: "Technologies Used",
-    icon: Code2,
-  },
-  {
-    value: 100,
-    suffix: "%",
-    label: "Client Focused",
-    icon: Users,
-  },
+  { value: 20, suffix: "+", label: "Projects Completed" },
+  { value: 1, suffix: "+", label: "Years Experience" },
+  { value: 15, suffix: "+", label: "Technologies Used" },
+  { value: 100, suffix: "%", label: "Client Focused" },
 ];
 
 export default function Insights() {
   const sectionRef = useRef<HTMLElement | null>(null);
+  const statsRef = useRef<HTMLDivElement | null>(null);
   const [startCount, setStartCount] = useState(false);
+  useReveal(sectionRef);
 
   useEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.fromTo(
-        ".insight-animate",
-        { y: 70, opacity: 0, filter: "blur(10px)" },
-        {
-          y: 0,
-          opacity: 1,
-          filter: "blur(0px)",
-          duration: 0.9,
-          stagger: 0.14,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: "top 75%",
-            once: true,
-            onEnter: () => setStartCount(true),
-          },
-        },
-      );
+    const trigger = ScrollTrigger.create({
+      trigger: statsRef.current,
+      start: "top 85%",
+      once: true,
+      onEnter: () => setStartCount(true),
+    });
 
-      gsap.to(".insight-floating-icon", {
-        y: -14,
-        duration: 2.4,
-        repeat: -1,
-        yoyo: true,
-        ease: "sine.inOut",
-        stagger: 0.25,
-      });
-    }, sectionRef);
-
-    return () => ctx.revert();
+    return () => trigger.kill();
   }, []);
 
   return (
-    <section
-      id="insights"
-      ref={sectionRef}
-      className="section-padding relative overflow-hidden"
-    >
-      <div className="mx-auto max-w-7xl">
-        <div className="insight-animate mb-14 text-center">
-          <p className="mono-text mb-3 text-sm font-semibold uppercase tracking-[0.25em] text-[var(--accent)]">
-            Insights
-          </p>
+    <section id="insights" ref={sectionRef} className="sec">
+      <div className="sec-inner">
+        <SectionHead
+          index="05"
+          label="Insights"
+          title="My work in numbers"
+          description="A quick overview of my development journey, project work, and technical growth."
+        />
 
-          <RevealText
-            className="text-4xl font-bold text-[var(--foreground)] md:text-5xl"
-            text="My work in numbers"
-          />
+        <div ref={statsRef} className="stats-x">
+          {insights.map((item, index) => (
+            <div key={item.label} className="stats-x-item" data-reveal>
+              <span className="row-line" data-line />
+              <span className="stats-x-num">0{index + 1}</span>
 
-          <p className="hero-description mx-auto mt-5 max-w-2xl leading-8">
-            A quick overview of my development journey, project work, and
-            technical growth.
-          </p>
-        </div>
+              <p className="stats-x-value">
+                {startCount ? (
+                  <CountUp end={item.value} duration={2.4} />
+                ) : (
+                  "0"
+                )}
+                <i>{item.suffix}</i>
+              </p>
 
-        <div className="insight-animate">
-          <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
-            {insights.map((item, index) => {
-              const Icon = item.icon;
-
-              return (
-                <div
-                  key={index}
-                  className="soft-card rounded-2xl p-8 text-center"
-                >
-                  <div className="mb-4 inline-flex rounded-xl bg-[var(--accent-dim)] p-4 text-[var(--accent)]">
-                    <Icon size={28} />
-                  </div>
-
-                  <h3 className="text-5xl font-black text-[var(--accent)]">
-                    {startCount ? (
-                      <CountUp
-                        end={item.value}
-                        duration={2.4}
-                        suffix={item.suffix}
-                      />
-                    ) : (
-                      `0${item.suffix}`
-                    )}
-                  </h3>
-
-                  <p className="mt-3 font-bold text-[var(--foreground)]">
-                    {item.label}
-                  </p>
-                </div>
-              );
-            })}
-          </div>
+              <p className="stats-x-label">{item.label}</p>
+            </div>
+          ))}
         </div>
       </div>
     </section>

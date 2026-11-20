@@ -49,6 +49,9 @@ export default function VelocityMarquee() {
 
       const step = (0.06 * deltaTime + Math.abs(velocity) * 0.9) * direction;
 
+      // Sparkles turn with the page: scroll down spins them one way, up the other
+      wrap.style.setProperty("--spin", `${scroll * 0.45}deg`);
+
       tracks.forEach((track, index) => {
         const half = halves[index];
         if (!half) return;

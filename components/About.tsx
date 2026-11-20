@@ -1,13 +1,10 @@
 "use client";
 
-import { useEffect, useRef } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useRef } from "react";
+import { Briefcase, Code2, Sparkles } from "lucide-react";
+import SectionHead from "@/components/SectionHead";
 import ScrollWords from "@/components/motion/ScrollWords";
-import RevealText from "@/components/motion/RevealText";
-import { GraduationCap, Code2, Briefcase, Sparkles } from "lucide-react";
-
-gsap.registerPlugin(ScrollTrigger);
+import { useReveal } from "@/components/motion/useReveal";
 
 const education = [
   {
@@ -33,188 +30,77 @@ const education = [
   },
 ];
 
+const focus = [
+  { label: "Clean UI", icon: Sparkles },
+  { label: "Projects", icon: Briefcase },
+  { label: "Full Stack", icon: Code2 },
+];
+
 export default function About() {
   const sectionRef = useRef<HTMLElement | null>(null);
-  const lineRef = useRef<HTMLDivElement | null>(null);
-
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.fromTo(
-        ".about-animate",
-        {
-          y: 60,
-          opacity: 0,
-          filter: "blur(10px)",
-        },
-        {
-          y: 0,
-          opacity: 1,
-          filter: "blur(0px)",
-          duration: 0.9,
-          stagger: 0.15,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: "top 75%",
-          },
-        },
-      );
-
-      gsap.fromTo(
-        lineRef.current,
-        {
-          height: "0%",
-        },
-        {
-          height: "100%",
-          ease: "none",
-          scrollTrigger: {
-            trigger: ".education-timeline",
-            start: "top 75%",
-            end: "bottom 40%",
-            scrub: true,
-          },
-        },
-      );
-
-      gsap.fromTo(
-        ".timeline-item",
-        {
-          x: 40,
-          opacity: 0,
-        },
-        {
-          x: 0,
-          opacity: 1,
-          duration: 0.7,
-          stagger: 0.22,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: ".education-timeline",
-            start: "top 70%",
-          },
-        },
-      );
-    }, sectionRef);
-
-    return () => ctx.revert();
-  }, []);
+  useReveal(sectionRef);
 
   return (
-    <section
-      id="about"
-      ref={sectionRef}
-      className="section-padding relative overflow-hidden"
-    >
-      <div className="mx-auto max-w-7xl">
-        <div className="about-animate mb-14 text-center">
-          <p className="mono-text mb-3 text-sm font-semibold uppercase tracking-[0.25em] text-[var(--accent)]">
-            About Me
-          </p>
-
-          <RevealText
-            className="text-3xl font-bold text-[var(--foreground)] md:text-4xl"
-            text="Building clean, modern and useful web experiences"
-          />
-        </div>
+    <section id="about" ref={sectionRef} className="sec">
+      <div className="sec-inner">
+        <SectionHead
+          index="01"
+          label="About Me"
+          title="Building clean, modern and useful web experiences"
+        />
 
         <ScrollWords
-          className="mx-auto mb-16 max-w-5xl md:mb-24"
+          className="about-x-statement"
           highlight={["responsive,", "fast,", "user-friendly", "clean", "scalable"]}
           text="I'm a Full Stack Developer building responsive, fast, and user-friendly web applications — clean code, smooth interfaces, and scalable products from the first pixel to production."
         />
 
-        <div className="grid items-start gap-8 lg:grid-cols-[1.05fr_0.95fr]">
-          <div className="about-animate soft-card self-start rounded-[2rem] p-7 md:p-9">
-            <div className="mb-6 inline-flex rounded-2xl bg-[var(--accent-dim)] p-4 text-[var(--accent)]">
-              <Code2 size={28} />
-            </div>
+        <div className="about-x">
+          <div className="about-x-bio">
+            <h3 data-reveal>Hi, I&apos;m Imam Hossen</h3>
 
-            <h3 className="mb-5 text-2xl font-bold text-[var(--foreground)]">
-              Hi, I&apos;m Imam Hossen
-            </h3>
-
-            <p className="hero-description mb-5 leading-8">
+            <p data-reveal>
               I am a Full Stack Developer focused on creating responsive, fast,
               and user-friendly web applications. I enjoy working with modern
               technologies like Next.js, TypeScript, Tailwind CSS, and backend
               tools to build complete digital solutions.
             </p>
 
-            <p className="hero-description leading-8">
+            <p data-reveal>
               My goal is to write clean code, design smooth user interfaces, and
               develop websites that are visually attractive, practical,
               scalable, and easy to use.
             </p>
 
-            <div className="mt-8 grid gap-4 sm:grid-cols-3">
-              <div className="about-mini-card">
-                <Sparkles size={22} />
-                <strong>Clean UI</strong>
-              </div>
-
-              <div className="about-mini-card">
-                <Briefcase size={22} />
-                <strong>Projects</strong>
-              </div>
-
-              <div className="about-mini-card">
-                <Code2 size={22} />
-                <strong>Full Stack</strong>
-              </div>
-            </div>
+            <ul className="about-x-focus" data-reveal>
+              {focus.map(({ label, icon: Icon }) => (
+                <li key={label}>
+                  <Icon size={16} />
+                  {label}
+                </li>
+              ))}
+            </ul>
           </div>
 
-          <div className="about-animate soft-card rounded-[2rem] p-7 md:p-9">
-            <div className="mb-8 flex items-center gap-3">
-              <div className="rounded-2xl bg-[var(--accent-dim)] p-4 text-[var(--accent)]">
-                <GraduationCap size={28} />
-              </div>
+          <div className="about-x-edu">
+            <p className="sec-kicker" data-reveal>
+              Education — Academic Timeline
+            </p>
 
-              <div>
-                <p className="mono-text text-sm font-semibold text-[var(--accent)]">
-                  Education
-                </p>
+            {education.map((item, index) => (
+              <article key={item.degree} className="edu-row" data-reveal>
+                <span className="row-line" data-line />
+                <span className="edu-year">{item.year}</span>
 
-                <h3 className="text-2xl font-bold text-[var(--foreground)]">
-                  Academic Timeline
-                </h3>
-              </div>
-            </div>
+                <div>
+                  <h4>{item.degree}</h4>
+                  <p className="edu-institute">{item.institute}</p>
+                  <p className="edu-details">{item.details}</p>
+                </div>
 
-            <div className="education-timeline">
-              <div className="timeline-line">
-                <div ref={lineRef} className="timeline-line-fill" />
-              </div>
-
-              <div className="space-y-7">
-                {education.map((item, index) => (
-                  <div key={index} className="timeline-item">
-                    <div className="timeline-dot">
-                      <GraduationCap size={17} />
-                    </div>
-
-                    <div className="timeline-card">
-                      <div className="mb-2 flex flex-wrap items-center justify-between gap-3">
-                        <h4 className="text-lg font-bold text-[var(--foreground)]">
-                          {item.degree}
-                        </h4>
-
-                        <span className="timeline-year">{item.year}</span>
-                      </div>
-
-                      <p className="mb-2 font-semibold text-[var(--foreground)]">
-                        {item.institute}
-                      </p>
-
-                      <p className="hero-description text-sm leading-7">
-                        {item.details}
-                      </p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
+                <span className="edu-num">0{index + 1}</span>
+              </article>
+            ))}
           </div>
         </div>
       </div>

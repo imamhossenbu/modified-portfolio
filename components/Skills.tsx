@@ -1,9 +1,10 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import RevealText from "@/components/motion/RevealText";
+import SectionHead from "@/components/SectionHead";
+import { useReveal } from "@/components/motion/useReveal";
 import {
   Code2,
   Database,
@@ -153,167 +154,98 @@ const skillCategories = [
   },
 ];
 
-const marqueeSkills = [
-  "Next.js",
-  "React",
-  "Flutter",
-  "Dart",
-  "TypeScript",
-  "JavaScript",
-  "Tailwind CSS",
-  "Framer Motion",
-  "GSAP",
-  "Node.js",
-  "Express.js",
-  "NestJS",
-  "REST API",
-  "Python",
-  "Java",
-  "PHP",
-  "C",
-  "C++",
-  "Prisma",
-  "MongoDB",
-  "PostgreSQL",
-  "MySQL",
-  "Redis",
-  "Firebase",
-  "Pandas",
-  "Google Colab",
-  "Jest",
-  "React Testing Library",
-  "SonarQube",
-  "Docker",
-  "Git",
-  "GitHub",
-  "GitHub Actions",
-  "Vercel",
-  "Figma",
-  "WordPress",
-  "Generative AI",
-];
-
-const reversedMarqueeSkills = [...marqueeSkills].reverse();
-
 export default function Skills() {
   const sectionRef = useRef<HTMLElement | null>(null);
+  const panelRef = useRef<HTMLDivElement | null>(null);
+  const [active, setActive] = useState(0);
+  useReveal(sectionRef);
 
+  const current = skillCategories[active];
+
+  // Re-deal the chips every time the category changes
   useEffect(() => {
+    const panel = panelRef.current;
+    if (!panel) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
     const ctx = gsap.context(() => {
       gsap.fromTo(
-        ".skills-animate",
-        {
-          y: 60,
-          opacity: 0,
-          filter: "blur(10px)",
-        },
+        ".skills-x-chip",
+        { y: 28, opacity: 0, rotate: -3 },
         {
           y: 0,
           opacity: 1,
-          filter: "blur(0px)",
-          duration: 1.5,
-          stagger: 0.12,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: "top 75%",
-          },
+          rotate: 0,
+          duration: 0.55,
+          stagger: 0.045,
+          ease: "back.out(1.6)",
+          overwrite: true,
         },
       );
-    }, sectionRef);
+      gsap.fromTo(
+        ".skills-x-ghost",
+        { xPercent: 8, opacity: 0 },
+        { xPercent: 0, opacity: 1, duration: 0.7, ease: "power3.out" },
+      );
+    }, panel);
 
     return () => ctx.revert();
-  }, []);
+  }, [active]);
 
   return (
-    <section
-      id="skills"
-      ref={sectionRef}
-      className="section-padding relative overflow-hidden"
-    >
-      <div className="mx-auto max-w-7xl">
-        <div className="skills-animate mb-14 text-center">
-          <p className="mono-text mb-3 text-sm font-semibold uppercase tracking-[0.25em] text-[var(--accent)]">
-            My Skills
-          </p>
+    <section id="skills" ref={sectionRef} className="sec">
+      <div className="sec-inner">
+        <SectionHead
+          index="03"
+          label="My Skills"
+          title="Technologies I work with"
+          description="I use modern frontend, backend, programming, database, data, and deployment tools to build clean, scalable, and production-ready web applications."
+        />
 
-          <RevealText
-            className="text-3xl font-bold text-[var(--foreground)] md:text-4xl"
-            text="Technologies I work with"
-          />
-
-          <p className="hero-description mx-auto mt-5 max-w-2xl leading-8">
-            I use modern frontend, backend, programming, database, data, and
-            deployment tools to build clean, scalable, and production-ready web
-            applications.
-          </p>
-        </div>
-
-        <div className="skills-animate mb-12 space-y-5">
-          <div className="skills-marquee">
-            <div className="skills-marquee-track">
-              {[...marqueeSkills, ...marqueeSkills].map((skill, index) => (
-                <span
-                  key={`${skill}-top-${index}`}
-                  className="skills-marquee-item"
+        <div className="skills-x">
+          <ul className="skills-x-cats" data-reveal>
+            {skillCategories.map((category, index) => (
+              <li key={category.title}>
+                <button
+                  type="button"
+                  className={`skills-x-cat ${index === active ? "is-active" : ""}`}
+                  onMouseEnter={() => setActive(index)}
+                  onFocus={() => setActive(index)}
+                  onClick={() => setActive(index)}
+                  aria-pressed={index === active}
                 >
-                  {skill}
-                </span>
-              ))}
-            </div>
-          </div>
-
-          <div className="skills-marquee reverse">
-            <div className="skills-marquee-track">
-              {[...reversedMarqueeSkills, ...reversedMarqueeSkills].map(
-                (skill, index) => (
-                  <span
-                    key={`${skill}-bottom-${index}`}
-                    className="skills-marquee-item"
-                  >
-                    {skill}
+                  <span className="skills-x-cat-num">
+                    {String(index + 1).padStart(2, "0")}
                   </span>
-                ),
-              )}
+                  <span className="skills-x-cat-name">{category.title}</span>
+                  <span className="skills-x-cat-count">
+                    {category.skills.length}
+                  </span>
+                </button>
+              </li>
+            ))}
+          </ul>
+
+          <div className="skills-x-panel" ref={panelRef} data-reveal>
+            <span className="skills-x-ghost" aria-hidden="true">
+              {String(active + 1).padStart(2, "0")}
+            </span>
+
+            <p className="sec-kicker">{current.title}</p>
+
+            <div className="skills-x-grid">
+              {current.skills.map((skill) => {
+                const SkillIcon = skill.icon;
+
+                return (
+                  <span key={skill.name} className="skills-x-chip">
+                    <SkillIcon size={22} />
+                    {skill.name}
+                  </span>
+                );
+              })}
             </div>
           </div>
-        </div>
-
-        <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
-          {skillCategories.map((category, index) => {
-            const CategoryIcon = category.icon;
-
-            return (
-              <div key={index} className="skills-animate skill-category-card">
-                <div className="mb-6 flex items-center gap-3">
-                  <div className="skill-category-icon">
-                    <CategoryIcon size={24} />
-                  </div>
-
-                  <h3 className="text-xl font-bold text-[var(--foreground)]">
-                    {category.title}
-                  </h3>
-                </div>
-
-                <div className="space-y-4">
-                  {category.skills.map((skill, skillIndex) => {
-                    const SkillIcon = skill.icon;
-
-                    return (
-                      <div key={skillIndex} className="skill-item">
-                        <div className="flex items-center gap-3">
-                          <SkillIcon size={20} />
-                          <span>{skill.name}</span>
-                        </div>
-
-                        <span className="skill-dot" />
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-            );
-          })}
         </div>
       </div>
     </section>

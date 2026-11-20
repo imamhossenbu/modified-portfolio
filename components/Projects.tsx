@@ -1,158 +1,167 @@
-/* eslint-disable react-hooks/set-state-in-render */
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import RevealText from "@/components/motion/RevealText";
-import { ExternalLink } from "lucide-react";
+import { ArrowUpRight, ExternalLink } from "lucide-react";
 import { projectCategories, projects } from "@/data/projects";
-import Link from "next/link";
+import SectionHead from "@/components/SectionHead";
+import Magnetic from "@/components/motion/Magnetic";
+import { useReveal } from "@/components/motion/useReveal";
 
-gsap.registerPlugin(ScrollTrigger);
+const PAGE_SIZE = 6;
 
 export default function Projects() {
   const router = useRouter();
   const sectionRef = useRef<HTMLElement | null>(null);
+  const gridRef = useRef<HTMLDivElement | null>(null);
   const [activeCategory, setActiveCategory] = useState("all");
-  const [visibleCount, setVisibleCount] = useState(6);
+  const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
+  useReveal(sectionRef);
 
-  // Filter projects based on active category
+  const counts = useMemo(() => {
+    const map: Record<string, number> = { all: projects.length };
+    projects.forEach((project) => {
+      map[project.category] = (map[project.category] ?? 0) + 1;
+    });
+    return map;
+  }, []);
+
   const filteredProjects = useMemo(() => {
-    setVisibleCount(6);
     if (activeCategory === "all") return projects;
     return projects.filter((project) => project.category === activeCategory);
   }, [activeCategory]);
 
-  // Handle pagination/visible limit
-  const displayedProjects = useMemo(() => {
-    return filteredProjects.slice(0, visibleCount);
-  }, [filteredProjects, visibleCount]);
+  const displayedProjects = filteredProjects.slice(0, visibleCount);
 
-  // Initial GSAP scroll animation for the section layout
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.fromTo(
-        ".project-animate",
-        { y: 50, opacity: 0, filter: "blur(8px)" },
-        {
-          y: 0,
-          opacity: 1,
-          filter: "blur(0px)",
-          duration: 0.8,
-          stagger: 0.1,
-          ease: "power2.out",
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: "top 78%",
-          },
-        },
-      );
-    }, sectionRef);
-
-    return () => ctx.revert();
-  }, []);
-
-  // GSAP animation triggered when changing filters or loading more items
-  useEffect(() => {
-    gsap.fromTo(
-      ".project-card",
-      { y: 25, opacity: 0, scale: 0.98 },
-      {
-        y: 0,
-        opacity: 1,
-        scale: 1,
-        duration: 0.4,
-        stagger: 0.06,
-        ease: "power2.out",
-      },
-    );
-  }, [activeCategory, visibleCount]);
-
-  const handleLoadMore = () => {
-    setVisibleCount((prev) => prev + 6);
+  const handleCategory = (value: string) => {
+    setActiveCategory(value);
+    setVisibleCount(PAGE_SIZE);
   };
 
-  return (
-    <section
-      id="projects"
-      ref={sectionRef}
-      className="section-padding relative overflow-hidden transition-colors duration-300"
-    >
-      <div className="mx-auto max-w-7xl">
-        {/* Header Section */}
-        <div className="project-animate mb-12 text-center">
-          <p className="mono-text mb-3 text-sm font-semibold uppercase tracking-[0.25em] text-[var(--accent)]">
-            My Projects
-          </p>
-          <RevealText
-            className="project-section-title text-3xl font-bold text-[var(--foreground)] md:text-4xl"
-            text="Selected work by category"
-          />
-          <p className="hero-description mx-auto mt-4 max-w-2xl text-base leading-7">
-            Here are some projects organized by frontend, full stack, mobile
-            app, landing page, and AI-based work.
-          </p>
-        </div>
+  // Curtain-wipe each card in when the filter changes or more are loaded
+  useEffect(() => {
+    const grid = gridRef.current;
+    if (!grid) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
-        {/* Filter Buttons */}
-        <div className="project-animate mb-12 flex flex-wrap justify-center gap-3">
+    const ctx = gsap.context(() => {
+      const fresh = gsap.utils.toArray<HTMLElement>(
+        ".work-card:not([data-shown])",
+      );
+
+      fresh.forEach((card, index) => {
+        card.dataset.shown = "true";
+        const media = card.querySelector(".work-card-media");
+        const info = card.querySelector(".work-card-info");
+
+        gsap.fromTo(
+          media,
+          { clipPath: "inset(100% 0% 0% 0%)" },
+          {
+            clipPath: "inset(0% 0% 0% 0%)",
+            duration: 1.1,
+            ease: "power4.inOut",
+            delay: (index % 2) * 0.12,
+            scrollTrigger: { trigger: card, start: "top 90%", once: true },
+          },
+        );
+        gsap.fromTo(
+          media?.querySelector("img") ?? null,
+          { scale: 1.35 },
+          {
+            scale: 1,
+            duration: 1.5,
+            ease: "power3.out",
+            delay: (index % 2) * 0.12,
+            scrollTrigger: { trigger: card, start: "top 90%", once: true },
+          },
+        );
+        gsap.fromTo(
+          info,
+          { y: 24, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.8,
+            ease: "power3.out",
+            delay: 0.35 + (index % 2) * 0.12,
+            scrollTrigger: { trigger: card, start: "top 90%", once: true },
+          },
+        );
+      });
+    }, grid);
+
+    return () => ctx.revert();
+  }, [activeCategory, visibleCount]);
+
+  return (
+    <section id="projects" ref={sectionRef} className="sec">
+      <div className="sec-inner">
+        <SectionHead
+          index="04"
+          label="My Projects"
+          title="Selected work by category"
+          description="Here are some projects organized by frontend, full stack, mobile app, landing page, and AI-based work."
+        />
+
+        <div className="work-filters" data-reveal>
           {projectCategories.map((category) => (
             <button
               key={category.value}
-              onClick={() => setActiveCategory(category.value)}
-              className={`project-filter-btn ${
-                activeCategory === category.value ? "active" : ""
+              type="button"
+              onClick={() => handleCategory(category.value)}
+              className={`work-filter ${
+                activeCategory === category.value ? "is-active" : ""
               }`}
             >
               {category.label}
+              <sup>{counts[category.value] ?? 0}</sup>
             </button>
           ))}
         </div>
 
-        {/* Projects Grid */}
-        <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-          {displayedProjects.map((project) => (
-            <div
+        <div ref={gridRef} key={activeCategory} className="work-grid">
+          {displayedProjects.map((project, index) => (
+            <article
               key={project.id}
-              className="project-card group cursor-pointer"
+              className="work-card"
               onClick={() => router.push(`/projects/${project.slug}`)}
             >
-              {/* Image Container - Fixed Aspect Ratio */}
-              <div className="project-image-wrap">
+              <div className="work-card-media">
                 <Image
                   src={project.image}
                   alt={project.title}
                   fill
-                  sizes="(max-w-768px) 100vw, (max-w-1200px) 50vw, 33vw"
-                  className="object-contain transition-transform duration-500"
-                  priority={project.id <= 3}
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  className="object-cover object-top"
+                  preload={index < 2}
                 />
+                <span className="work-card-view" aria-hidden="true">
+                  View
+                  <ArrowUpRight size={18} />
+                </span>
               </div>
 
-              {/* Bottom Content Area - Handles Mobile vs Desktop layout via CSS */}
-              <div className="project-card-content">
-                <h3 className="mb-1 text-lg font-bold text-[var(--foreground)] truncate">
-                  {project.title}
-                </h3>
-                <p className="mb-4 text-xs text-[var(--foreground-muted)] line-clamp-1">
-                  {project.shortDescription}
-                </p>
+              <div className="work-card-info">
+                <span className="work-card-num">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+
+                <div className="work-card-text">
+                  <h3>{project.title}</h3>
+                  <p>{project.shortDescription}</p>
+                </div>
 
                 <div
-                  className="project-action-row"
+                  className="work-card-links"
                   onClick={(e) => e.stopPropagation()}
                 >
-                  <Link href={`/projects/${project.slug}`}>
-                    <button className="project-hover-link shadow-none">
-                      Details
-                    </button>
-                  </Link>
+                  <Link href={`/projects/${project.slug}`}>Details</Link>
                   <a
                     href={project.live}
-                    className="project-hover-link secondary shadow-none"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
@@ -161,19 +170,23 @@ export default function Projects() {
                   </a>
                 </div>
               </div>
-            </div>
+            </article>
           ))}
         </div>
 
-        {/* Load More Trigger */}
         {filteredProjects.length > visibleCount && (
-          <div className="mt-14 text-center">
-            <button
-              onClick={handleLoadMore}
-              className="project-back-link font-bold px-8 py-3.5 shadow-none"
-            >
-              View More
-            </button>
+          <div className="work-more">
+            <Magnetic strength={0.3}>
+              <button
+                type="button"
+                onClick={() => setVisibleCount((prev) => prev + PAGE_SIZE)}
+                className="round-btn"
+              >
+                View
+                <br />
+                More
+              </button>
+            </Magnetic>
           </div>
         )}
       </div>

@@ -1,45 +1,41 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import Magnetic from "@/components/motion/Magnetic";
-import RevealText from "@/components/motion/RevealText";
-import { Mail, MapPin, Send, Phone } from "lucide-react";
+import { useRef, useState } from "react";
+import { ArrowUpRight, Mail, MapPin, Phone } from "lucide-react";
 import { FaFacebook, FaGithub, FaLinkedinIn } from "react-icons/fa";
 import toast from "react-hot-toast";
+import SectionHead from "@/components/SectionHead";
+import Magnetic from "@/components/motion/Magnetic";
+import { useReveal } from "@/components/motion/useReveal";
 
-gsap.registerPlugin(ScrollTrigger);
+const GOOGLE_SCRIPT_URL =
+  "https://script.google.com/macros/s/AKfycbzvU1CT9uVu-19r_S6hdW9ALqOlBMehklIT6tzx61Mfy0NynM6hrxDJB8eyDGsm2wd8bQ/exec";
+
+const SOCIALS = [
+  { label: "Github", href: "https://github.com/imamhossenbu", icon: FaGithub },
+  {
+    label: "LinkedIn",
+    href: "https://linkedin.com/in/imam-hossen-ub",
+    icon: FaLinkedinIn,
+  },
+  { label: "Email", href: "mailto:imam62310@gmail.com", icon: Mail },
+  {
+    label: "Facebook",
+    href: "https://facebook.com/imamhossainbu",
+    icon: FaFacebook,
+  },
+];
+
+const FIELDS = [
+  { name: "name", label: "Your Name", type: "text" },
+  { name: "email", label: "Your Email", type: "email" },
+  { name: "subject", label: "Subject", type: "text" },
+];
 
 export default function Contact() {
   const sectionRef = useRef<HTMLElement | null>(null);
   const [loading, setLoading] = useState(false);
-
-  const GOOGLE_SCRIPT_URL =
-    "https://script.google.com/macros/s/AKfycbzvU1CT9uVu-19r_S6hdW9ALqOlBMehklIT6tzx61Mfy0NynM6hrxDJB8eyDGsm2wd8bQ/exec";
-
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.fromTo(
-        ".contact-animate",
-        { y: 70, opacity: 0, filter: "blur(10px)" },
-        {
-          y: 0,
-          opacity: 1,
-          filter: "blur(0px)",
-          duration: 0.9,
-          stagger: 0.14,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: "top 75%",
-          },
-        },
-      );
-    }, sectionRef);
-
-    return () => ctx.revert();
-  }, []);
+  useReveal(sectionRef);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -65,144 +61,80 @@ export default function Contact() {
   };
 
   return (
-    <section
-      id="contact"
-      ref={sectionRef}
-      className="section-padding relative overflow-hidden"
-    >
-      <div className="mx-auto max-w-7xl">
-        <div className="contact-animate mb-14 text-center">
-          <p className="mono-text mb-3 text-sm font-semibold uppercase tracking-[0.25em] text-[var(--accent)]">
-            Contact
-          </p>
+    <section id="contact" ref={sectionRef} className="sec">
+      <div className="sec-inner">
+        <SectionHead
+          index="06"
+          label="Contact"
+          title="Let's build something together"
+          description="Have a project idea, website, dashboard, landing page, or full stack app? Send me a message."
+        />
 
-          <RevealText
-            className="text-4xl font-bold text-[var(--foreground)] md:text-5xl"
-            text="Let's build something together"
-          />
+        <div className="contact-x">
+          <div className="contact-x-info">
+            <a
+              href="mailto:imam62310@gmail.com"
+              className="contact-x-mail"
+              data-reveal
+            >
+              <span>imam62310@gmail.com</span>
+              <ArrowUpRight />
+            </a>
 
-          <p className="hero-description mx-auto mt-5 max-w-2xl leading-8">
-            Have a project idea, website, dashboard, landing page, or full stack
-            app? Send me a message.
-          </p>
-        </div>
+            <ul className="contact-x-list" data-reveal>
+              <li>
+                <Phone size={18} />
+                <a href="tel:+8801624994532">+880 1624-994532</a>
+              </li>
+              <li>
+                <MapPin size={18} />
+                Barishal, Bangladesh
+              </li>
+            </ul>
 
-        <div className="grid gap-8 lg:grid-cols-[0.85fr_1.15fr]">
-          <div className="contact-animate contact-info-card">
-            <h3 className="mb-5 text-2xl font-bold text-[var(--foreground)]">
-              Contact Information
-            </h3>
-
-            <div className="space-y-4">
-              <div className="contact-info-item">
-                <Mail size={20} className="text-[var(--accent)]" />
-                <span className="text-[var(--foreground)]">
-                  imam62310@gmail.com
-                </span>
-              </div>
-
-              <div className="contact-info-item">
-                <Phone size={20} className="text-[var(--accent)]" />
-                <span className="text-[var(--foreground)]">
-                  +880 1624-994532
-                </span>
-              </div>
-
-              <div className="contact-info-item">
-                <MapPin size={20} className="text-[var(--accent)]" />
-                <span className="text-[var(--foreground)]">Barishal, Bangladesh</span>
-              </div>
-            </div>
-
-            <div className="mt-8 flex items-center gap-3">
-              <a
-                href="https://github.com/imamhossenbu"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Github"
-                className="contact-social-link shadow-none"
-              >
-                <FaGithub size={19} />
-              </a>
-
-              <a
-                href="https://linkedin.com/in/imam-hossen-ub"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="LinkedIn"
-                className="contact-social-link shadow-none"
-              >
-                <FaLinkedinIn size={19} />
-              </a>
-
-              <a
-                href="mailto:imam62310@gmail.com"
-                aria-label="Email"
-                className="contact-social-link shadow-none"
-              >
-                <Mail size={19} />
-              </a>
-
-              <a
-                href="https://facebook.com/imamhossainbu"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Facebook"
-                className="contact-social-link shadow-none"
-              >
-                <FaFacebook size={19} />
-              </a>
+            <div className="contact-x-socials" data-reveal>
+              {SOCIALS.map(({ label, href, icon: Icon }) => (
+                <Magnetic key={label} strength={0.5}>
+                  <a
+                    href={href}
+                    target={href.startsWith("mailto:") ? undefined : "_blank"}
+                    rel="noopener noreferrer"
+                    aria-label={label}
+                    className="contact-social-link shadow-none"
+                  >
+                    <Icon size={19} />
+                  </a>
+                </Magnetic>
+              ))}
             </div>
           </div>
 
-          <form
-            onSubmit={handleSubmit}
-            className="contact-animate contact-form-card"
-          >
-            <div className="grid gap-5 md:grid-cols-2">
-              <input
-                type="text"
-                name="name"
-                placeholder="Your Name"
-                className="contact-input"
-                required
-              />
+          <form onSubmit={handleSubmit} className="contact-x-form">
+            {FIELDS.map((field, index) => (
+              <label key={field.name} className="field-x" data-reveal>
+                <span className="field-x-label">
+                  0{index + 1} — {field.label}
+                </span>
+                <input type={field.type} name={field.name} required />
+                <span className="field-x-line" />
+              </label>
+            ))}
 
-              <input
-                type="email"
-                name="email"
-                placeholder="Your Email"
-                className="contact-input"
-                required
-              />
+            <label className="field-x" data-reveal>
+              <span className="field-x-label">04 — Tell me about your project</span>
+              <textarea name="message" rows={4} required />
+              <span className="field-x-line" />
+            </label>
+
+            <div className="contact-x-submit" data-reveal>
+              <Magnetic strength={0.3}>
+                <button type="submit" className="round-btn is-accent" disabled={loading}>
+                  {loading ? "Sending" : "Send"}
+                  <br />
+                  {loading ? "…" : "Message"}
+                </button>
+              </Magnetic>
             </div>
-
-            <input
-              type="text"
-              name="subject"
-              placeholder="Subject"
-              className="contact-input"
-              required
-            />
-
-            <textarea
-              name="message"
-              placeholder="Tell me about your project..."
-              rows={6}
-              className="contact-input resize-none"
-              required
-            />
-
-            <Magnetic strength={0.25}>
-              <button
-                type="submit"
-                className="contact-submit-btn shadow-none"
-                disabled={loading}
-              >
-                {loading ? "Sending..." : "Send Message"}
-                <Send size={18} />
-              </button>
-            </Magnetic>
           </form>
         </div>
       </div>
