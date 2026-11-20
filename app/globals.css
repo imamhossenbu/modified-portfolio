@@ -2509,17 +2509,8 @@ pre,
   }
 }
 
-.hero-x-rule {
-  display: block;
-  width: 100%;
-  height: 1px;
-  margin: clamp(20px, 4vh, 40px) 0 clamp(18px, 3vh, 30px);
-  background: var(--foreground);
-  opacity: 0.16;
-  transform-origin: left center;
-}
-
 .hero-x-bottom {
+  margin-top: clamp(24px, 5vh, 48px);
   display: grid;
   gap: 28px;
   align-items: end;

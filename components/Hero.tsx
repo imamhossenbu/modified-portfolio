@@ -95,12 +95,6 @@ export default function Hero() {
           0.55,
         )
         .fromTo(
-          ".hero-x-rule",
-          { scaleX: 0 },
-          { scaleX: 1, duration: 1.2, ease: "power3.inOut" },
-          0.4,
-        )
-        .fromTo(
           ".hero-x-fade",
           { y: 36, opacity: 0, filter: "blur(8px)" },
           {
@@ -227,8 +221,6 @@ export default function Hero() {
             </a>
           </span>
         </h1>
-
-        <span className="hero-x-rule" aria-hidden="true" />
 
         <div className="hero-x-bottom">
           <div className="hero-x-copy">
