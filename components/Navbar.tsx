@@ -2,11 +2,11 @@
 "use client";
 
 import {
-    useCallback,
-    useEffect,
-    useRef,
-    useState,
-    type MouseEvent,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  type MouseEvent,
 } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import gsap from "gsap";
@@ -16,395 +16,411 @@ import { useLenis } from "lenis/react";
 import Link from "next/link";
 
 const navLinks = [
-    { name: "Home", href: "#home" },
-    { name: "About", href: "#about" },
-    { name: "Experience", href: "#experience" },
-    { name: "Skills", href: "#skills" },
-    { name: "Projects", href: "#projects" },
+  { name: "Home", href: "#home" },
+  { name: "About", href: "#about" },
+  { name: "Experience", href: "#experience" },
+  { name: "Skills", href: "#skills" },
+  { name: "Projects", href: "#projects" },
 ];
 
 export default function Navbar() {
-    const headerRef = useRef<HTMLElement | null>(null);
-    const navRef = useRef<HTMLElement | null>(null);
-    const logoRef = useRef<HTMLAnchorElement | null>(null);
-    const linksRef = useRef<HTMLAnchorElement[]>([]);
-    const mobileMenuRef = useRef<HTMLDivElement | null>(null);
-    const lastScrollY = useRef(0);
+  const headerRef = useRef<HTMLElement | null>(null);
+  const navRef = useRef<HTMLElement | null>(null);
+  const logoRef = useRef<HTMLAnchorElement | null>(null);
+  const linksRef = useRef<HTMLAnchorElement[]>([]);
+  const mobileMenuRef = useRef<HTMLDivElement | null>(null);
+  const lastScrollY = useRef(0);
 
-    const [activeLink, setActiveLink] = useState("#home");
-    const [isOpen, setIsOpen] = useState(false);
-    const [mounted, setMounted] = useState(false);
+  const [activeLink, setActiveLink] = useState("#home");
+  const [isOpen, setIsOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
-    const { theme, setTheme } = useTheme();
-    const lenis = useLenis();
-    const pathname = usePathname();
-    const router = useRouter();
+  const { theme, setTheme } = useTheme();
+  const lenis = useLenis();
+  const pathname = usePathname();
+  const router = useRouter();
 
-    const isHomePage = pathname === "/";
-    const isProjectDetailsPage =
-        pathname.startsWith("/projects") || pathname.startsWith("/project");
+  const isHomePage = pathname === "/";
+  const isProjectDetailsPage =
+    pathname.startsWith("/projects") || pathname.startsWith("/project");
 
-    const scrollToSection = useCallback(
-        (href: string) => {
-            if (typeof window === "undefined") return;
+  const scrollToSection = useCallback(
+    (href: string) => {
+      if (typeof window === "undefined") return;
 
-            const tryScroll = (attempt = 0) => {
-                const section = document.querySelector<HTMLElement>(href);
+      const tryScroll = (attempt = 0) => {
+        const section = document.querySelector<HTMLElement>(href);
 
-                if (!section) {
-                    if (attempt < 25) {
-                        setTimeout(() => tryScroll(attempt + 1), 80);
-                    }
-                    return;
-                }
+        if (!section) {
+          if (attempt < 25) {
+            setTimeout(() => tryScroll(attempt + 1), 80);
+          }
+          return;
+        }
 
-                if (lenis) {
-                    lenis.scrollTo(section, {
-                        offset: -110,
-                        duration: 1.2,
-                    });
-                } else {
-                    window.scrollTo({
-                        top: section.offsetTop - 110,
-                        behavior: "smooth",
-                    });
-                }
+        if (lenis) {
+          lenis.scrollTo(section, {
+            offset: -110,
+            duration: 1.2,
+          });
+        } else {
+          window.scrollTo({
+            top: section.offsetTop - 110,
+            behavior: "smooth",
+          });
+        }
 
-                window.history.replaceState(null, "", href);
-            };
+        window.history.replaceState(null, "", href);
+      };
 
-            setTimeout(() => tryScroll(), 120);
+      setTimeout(() => tryScroll(), 120);
+    },
+    [lenis],
+  );
+
+  const handleSmoothScroll = (
+    e: MouseEvent<HTMLAnchorElement>,
+    href: string,
+  ) => {
+    e.preventDefault();
+
+    setIsOpen(false);
+    setActiveLink(href);
+
+    if (isHomePage) {
+      scrollToSection(href);
+      return;
+    }
+
+    sessionStorage.setItem("scrollTarget", href);
+    router.push("/");
+  };
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (!isHomePage) {
+      if (isProjectDetailsPage) {
+        setActiveLink("#projects");
+      }
+      return;
+    }
+
+    const savedTarget = sessionStorage.getItem("scrollTarget");
+    const hashTarget = window.location.hash;
+    const target = savedTarget || hashTarget;
+
+    if (target) {
+      sessionStorage.removeItem("scrollTarget");
+      setActiveLink(target);
+      scrollToSection(target);
+    }
+  }, [pathname, isHomePage, isProjectDetailsPage, scrollToSection]);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        headerRef.current,
+        {
+          y: -100,
+          opacity: 0,
+          filter: "blur(12px)",
         },
-        [lenis]
-    );
+        {
+          y: 0,
+          opacity: 1,
+          filter: "blur(0px)",
+          duration: 1,
+          ease: "power4.out",
+        },
+      );
 
-    const handleSmoothScroll = (
-        e: MouseEvent<HTMLAnchorElement>,
-        href: string
-    ) => {
-        e.preventDefault();
+      gsap.fromTo(
+        logoRef.current,
+        {
+          x: -40,
+          opacity: 0,
+        },
+        {
+          x: 0,
+          opacity: 1,
+          duration: 0.9,
+          delay: 0.25,
+          ease: "back.out(1.7)",
+        },
+      );
 
-        setIsOpen(false);
-        setActiveLink(href);
+      gsap.fromTo(
+        linksRef.current,
+        {
+          y: -20,
+          opacity: 0,
+        },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.7,
+          delay: 0.4,
+          stagger: 0.12,
+          ease: "power3.out",
+        },
+      );
+    });
 
-        if (isHomePage) {
-            scrollToSection(href);
-            return;
+    return () => ctx.revert();
+  }, []);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+
+      if (!isHomePage) {
+        if (isProjectDetailsPage) {
+          setActiveLink("#projects");
         }
 
-        sessionStorage.setItem("scrollTarget", href);
-        router.push("/");
-    };
+        if (!headerRef.current) return;
 
-    useEffect(() => {
-        setMounted(true);
-    }, []);
-
-    useEffect(() => {
-        if (!isHomePage) {
-            if (isProjectDetailsPage) {
-                setActiveLink("#projects");
-            }
-            return;
-        }
-
-        const savedTarget = sessionStorage.getItem("scrollTarget");
-        const hashTarget = window.location.hash;
-        const target = savedTarget || hashTarget;
-
-        if (target) {
-            sessionStorage.removeItem("scrollTarget");
-            setActiveLink(target);
-            scrollToSection(target);
-        }
-    }, [pathname, isHomePage, isProjectDetailsPage, scrollToSection]);
-
-    useEffect(() => {
-        const ctx = gsap.context(() => {
-            gsap.fromTo(
-                headerRef.current,
-                {
-                    y: -100,
-                    opacity: 0,
-                    filter: "blur(12px)",
-                },
-                {
-                    y: 0,
-                    opacity: 1,
-                    filter: "blur(0px)",
-                    duration: 1,
-                    ease: "power4.out",
-                }
-            );
-
-            gsap.fromTo(
-                logoRef.current,
-                {
-                    x: -40,
-                    opacity: 0,
-                },
-                {
-                    x: 0,
-                    opacity: 1,
-                    duration: 0.9,
-                    delay: 0.25,
-                    ease: "back.out(1.7)",
-                }
-            );
-
-            gsap.fromTo(
-                linksRef.current,
-                {
-                    y: -20,
-                    opacity: 0,
-                },
-                {
-                    y: 0,
-                    opacity: 1,
-                    duration: 0.7,
-                    delay: 0.4,
-                    stagger: 0.12,
-                    ease: "power3.out",
-                }
-            );
-        });
-
-        return () => ctx.revert();
-    }, []);
-
-    useEffect(() => {
-        const handleScroll = () => {
-            const currentScrollY = window.scrollY;
-
-            if (!isHomePage) {
-                if (isProjectDetailsPage) {
-                    setActiveLink("#projects");
-                }
-
-                if (!headerRef.current) return;
-
-                if (currentScrollY <= 20) {
-                    gsap.to(headerRef.current, {
-                        y: 0,
-                        opacity: 1,
-                        duration: 0.45,
-                        ease: "power3.out",
-                    });
-                } else if (currentScrollY > lastScrollY.current) {
-                    setIsOpen(false);
-
-                    gsap.to(headerRef.current, {
-                        y: -110,
-                        opacity: 0,
-                        duration: 0.45,
-                        ease: "power3.inOut",
-                    });
-                } else {
-                    gsap.to(headerRef.current, {
-                        y: 0,
-                        opacity: 1,
-                        duration: 0.45,
-                        ease: "power3.out",
-                    });
-                }
-
-                lastScrollY.current = currentScrollY;
-                return;
-            }
-
-            // ================= অ্যাক্টিভ লিংক ডিটেকশনের ফিক্সড লজিক =================
-            const sections = navLinks
-                .map((link) => document.querySelector<HTMLElement>(link.href))
-                .filter(Boolean) as HTMLElement[];
-
-            let current = "#home";
-            const triggerPoint = window.innerHeight / 3; // স্ক্রিনের ৩ ভাগের ১ ভাগ অংশ থ্রেশহোল্ড
-
-            sections.forEach((section) => {
-                const sectionTop = section.offsetTop;
-                const sectionHeight = section.offsetHeight;
-
-                // চেক করা হচ্ছে স্ক্রোল পজিশনটি নির্দিষ্ট সেকশনের বাউন্ডারির ভেতরে আছে কিনা
-                if (
-                    currentScrollY >= sectionTop - triggerPoint &&
-                    currentScrollY < sectionTop + sectionHeight - triggerPoint
-                ) {
-                    current = `#${section.id}`;
-                }
-            });
-
-            // একদম ওপরে থাকলে যেন সবসময় হোম সিলেক্ট থাকে
-            if (currentScrollY < 100) {
-                current = "#home";
-            }
-
-            setActiveLink(current);
-            // ====================================================================
-
-            if (!headerRef.current) return;
-
-            if (currentScrollY <= 20) {
-                gsap.to(headerRef.current, {
-                    y: 0,
-                    opacity: 1,
-                    duration: 0.45,
-                    ease: "power3.out",
-                });
-            } else if (currentScrollY > lastScrollY.current) {
-                setIsOpen(false);
-
-                gsap.to(headerRef.current, {
-                    y: -110,
-                    opacity: 0,
-                    duration: 0.45,
-                    ease: "power3.inOut",
-                });
-            } else {
-                gsap.to(headerRef.current, {
-                    y: 0,
-                    opacity: 1,
-                    duration: 0.45,
-                    ease: "power3.out",
-                });
-            }
-
-            lastScrollY.current = currentScrollY;
-        };
-
-        window.addEventListener("scroll", handleScroll);
-        handleScroll();
-
-        return () => window.removeEventListener("scroll", handleScroll);
-    }, [isHomePage, isProjectDetailsPage, pathname]);
-
-    useEffect(() => {
-        if (!mobileMenuRef.current) return;
-
-        if (isOpen) {
-            gsap.fromTo(
-                mobileMenuRef.current,
-                {
-                    height: 0,
-                    opacity: 0,
-                    y: -12,
-                },
-                {
-                    height: "auto",
-                    opacity: 1,
-                    y: 0,
-                    duration: 0.45,
-                    ease: "power3.out",
-                }
-            );
-        }
-    }, [isOpen]);
-
-    const handleHover = (element: HTMLAnchorElement) => {
-        gsap.to(element, {
-            y: -3,
-            scale: 1.06,
-            duration: 0.25,
-            ease: "power2.out",
-        });
-    };
-
-    const handleLeave = (element: HTMLAnchorElement) => {
-        gsap.to(element, {
+        if (currentScrollY <= 20) {
+          gsap.to(headerRef.current, {
             y: 0,
-            scale: 1,
-            duration: 0.25,
-            ease: "power2.out",
+            opacity: 1,
+            duration: 0.45,
+            ease: "power3.out",
+          });
+        } else if (currentScrollY > lastScrollY.current) {
+          setIsOpen(false);
+
+          gsap.to(headerRef.current, {
+            y: -110,
+            opacity: 0,
+            duration: 0.45,
+            ease: "power3.inOut",
+          });
+        } else {
+          gsap.to(headerRef.current, {
+            y: 0,
+            opacity: 1,
+            duration: 0.45,
+            ease: "power3.out",
+          });
+        }
+
+        lastScrollY.current = currentScrollY;
+        return;
+      }
+
+      // ================= অ্যাক্টিভ লিংক ডিটেকশনের ফিক্সড লজিক =================
+      const sections = navLinks
+        .map((link) => document.querySelector<HTMLElement>(link.href))
+        .filter(Boolean) as HTMLElement[];
+
+      let current = "#home";
+      const triggerPoint = window.innerHeight / 3; // স্ক্রিনের ৩ ভাগের ১ ভাগ অংশ থ্রেশহোল্ড
+
+      sections.forEach((section) => {
+        const sectionTop = section.offsetTop;
+        const sectionHeight = section.offsetHeight;
+
+        // চেক করা হচ্ছে স্ক্রোল পজিশনটি নির্দিষ্ট সেকশনের বাউন্ডারির ভেতরে আছে কিনা
+        if (
+          currentScrollY >= sectionTop - triggerPoint &&
+          currentScrollY < sectionTop + sectionHeight - triggerPoint
+        ) {
+          current = `#${section.id}`;
+        }
+      });
+
+      // একদম ওপরে থাকলে যেন সবসময় হোম সিলেক্ট থাকে
+      if (currentScrollY < 100) {
+        current = "#home";
+      }
+
+      setActiveLink(current);
+      // ====================================================================
+
+      if (!headerRef.current) return;
+
+      if (currentScrollY <= 20) {
+        gsap.to(headerRef.current, {
+          y: 0,
+          opacity: 1,
+          duration: 0.45,
+          ease: "power3.out",
         });
+      } else if (currentScrollY > lastScrollY.current) {
+        setIsOpen(false);
+
+        gsap.to(headerRef.current, {
+          y: -110,
+          opacity: 0,
+          duration: 0.45,
+          ease: "power3.inOut",
+        });
+      } else {
+        gsap.to(headerRef.current, {
+          y: 0,
+          opacity: 1,
+          duration: 0.45,
+          ease: "power3.out",
+        });
+      }
+
+      lastScrollY.current = currentScrollY;
     };
 
-    return (
-        <header ref={headerRef} className="fixed left-0 top-0 z-50 w-full px-4 py-4">
-            <nav
-                ref={navRef}
-                className="navbar-glass mx-auto flex max-w-6xl items-center justify-between rounded-full px-5 py-3 md:px-7"
+    window.addEventListener("scroll", handleScroll);
+    handleScroll();
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [isHomePage, isProjectDetailsPage, pathname]);
+
+  useEffect(() => {
+    if (!mobileMenuRef.current) return;
+
+    if (isOpen) {
+      gsap.fromTo(
+        mobileMenuRef.current,
+        {
+          height: 0,
+          opacity: 0,
+          y: -12,
+        },
+        {
+          height: "auto",
+          opacity: 1,
+          y: 0,
+          duration: 0.45,
+          ease: "power3.out",
+        },
+      );
+    }
+  }, [isOpen]);
+
+  const handleHover = (element: HTMLAnchorElement) => {
+    gsap.to(element, {
+      y: -3,
+      scale: 1.06,
+      duration: 0.25,
+      ease: "power2.out",
+    });
+  };
+
+  const handleLeave = (element: HTMLAnchorElement) => {
+    gsap.to(element, {
+      y: 0,
+      scale: 1,
+      duration: 0.25,
+      ease: "power2.out",
+    });
+  };
+
+  return (
+    <header
+      ref={headerRef}
+      className="fixed left-0 top-0 z-50 w-full px-4 py-4"
+    >
+      <nav
+        ref={navRef}
+        className="navbar-glass mx-auto flex max-w-6xl items-center justify-between rounded-2xl px-5 py-3 md:px-7"
+      >
+        <div className="flex items-center gap-4">
+          <Link
+            ref={logoRef}
+            href="/#home"
+            onClick={(e) => handleSmoothScroll(e, "#home")}
+            className="logo-gradient text-xl font-bold tracking-tight md:text-2xl"
+          >
+            Imam<span className="text-accent">.</span>
+          </Link>
+
+          {/* System status readout — schematic signature, desktop only */}
+          <span className="hidden items-center gap-1.5 rounded-md border border-accent/25 bg-accent/10 px-2.5 py-1 font-mono text-[10px] font-semibold uppercase tracking-wider text-accent xl:inline-flex">
+            <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-accent" />
+            Available for work
+          </span>
+        </div>
+
+        <div className="hidden items-center gap-2 md:flex">
+          {navLinks.map((link, index) => (
+            <a
+              key={link.href}
+              href={`/${link.href}`}
+              ref={(el) => {
+                if (el) linksRef.current[index] = el;
+              }}
+              onClick={(e) => handleSmoothScroll(e, link.href)}
+              onMouseEnter={(e) => handleHover(e.currentTarget)}
+              onMouseLeave={(e) => handleLeave(e.currentTarget)}
+              className={`nav-link ${activeLink === link.href ? "active" : ""}`}
             >
-                <Link
-                    ref={logoRef}
-                    href="/#home"
-                    onClick={(e) => handleSmoothScroll(e, "#home")}
-                    className="logo-gradient text-xl font-bold tracking-tight md:text-2xl"
-                >
-                    Imam<span className="text-accent">.</span>
-                </Link>
+              {link.name}
+            </a>
+          ))}
+        </div>
 
-                <div className="hidden items-center gap-2 md:flex">
-                    {navLinks.map((link, index) => (
-                        <a
-                            key={link.href}
-                            href={`/${link.href}`}
-                            ref={(el) => {
-                                if (el) linksRef.current[index] = el;
-                            }}
-                            onClick={(e) => handleSmoothScroll(e, link.href)}
-                            onMouseEnter={(e) => handleHover(e.currentTarget)}
-                            onMouseLeave={(e) => handleLeave(e.currentTarget)}
-                            className={`nav-link ${activeLink === link.href ? "active" : ""}`}
-                        >
-                            {link.name}
-                        </a>
-                    ))}
-                </div>
+        <div className="flex items-center gap-3">
+          <Link
+            href="/#contact"
+            onClick={(e) => handleSmoothScroll(e, "#contact")}
+            className="hidden primary-btn rounded-lg px-5 py-2.5 text-sm font-semibold md:inline-flex"
+          >
+            Hire Me
+          </Link>
 
-                <div className="flex items-center gap-3">
-                    <Link
-                        href="/#contact"
-                        onClick={(e) => handleSmoothScroll(e, "#contact")}
-                        className="hidden primary-btn rounded-full px-5 py-2.5 text-sm font-semibold md:inline-flex"
-                    >
-                        Hire Me
-                    </Link>
-
-                    <button
-                        onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-                        className="theme-toggle-btn"
-                        aria-label="Toggle theme"
-                    >
-                        {mounted && theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
-                    </button>
-
-                    <button
-                        onClick={() => setIsOpen(!isOpen)}
-                        className="mobile-menu-btn md:!hidden"
-                        aria-label="Toggle menu"
-                    >
-                        {isOpen ? <X size={22} /> : <Menu size={22} />}
-                    </button>
-                </div>
-            </nav>
-
-            {isOpen && (
-                <div
-                    ref={mobileMenuRef}
-                    className="mobile-glass mx-auto mt-3 max-w-6xl overflow-hidden rounded-3xl px-5 py-5 md:hidden"
-                >
-                    <div className="flex flex-col gap-3">
-                        {navLinks.map((link) => (
-                            <a
-                                key={link.href}
-                                href={`/${link.href}`}
-                                onClick={(e) => handleSmoothScroll(e, link.href)}
-                                className={`mobile-nav-link ${activeLink === link.href ? "active" : ""
-                                    }`}
-                            >
-                                {link.name}
-                            </a>
-                        ))}
-
-                        <Link
-                            href="/#contact"
-                            onClick={(e) => handleSmoothScroll(e, "#contact")}
-                            className="mt-2 primary-btn rounded-full px-5 py-3 text-center text-sm font-semibold text-white"
-                        >
-                            Hire Me
-                        </Link>
-                    </div>
-                </div>
+          <button
+            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+            className="theme-toggle-btn"
+            aria-label="Toggle theme"
+          >
+            {mounted && theme === "dark" ? (
+              <Sun size={18} />
+            ) : (
+              <Moon size={18} />
             )}
-        </header>
-    );
+          </button>
+
+          <button
+            onClick={() => setIsOpen(!isOpen)}
+            className="mobile-menu-btn md:!hidden"
+            aria-label="Toggle menu"
+          >
+            {isOpen ? <X size={22} /> : <Menu size={22} />}
+          </button>
+        </div>
+      </nav>
+
+      {isOpen && (
+        <div
+          ref={mobileMenuRef}
+          className="mobile-glass mx-auto mt-3 max-w-6xl overflow-hidden rounded-2xl px-5 py-5 md:hidden"
+        >
+          <div className="flex flex-col gap-3">
+            {navLinks.map((link) => (
+              <a
+                key={link.href}
+                href={`/${link.href}`}
+                onClick={(e) => handleSmoothScroll(e, link.href)}
+                className={`mobile-nav-link ${
+                  activeLink === link.href ? "active" : ""
+                }`}
+              >
+                {link.name}
+              </a>
+            ))}
+
+            <Link
+              href="/#contact"
+              onClick={(e) => handleSmoothScroll(e, "#contact")}
+              className="mt-2 primary-btn rounded-lg px-5 py-3 text-center text-sm font-semibold text-white"
+            >
+              Hire Me
+            </Link>
+          </div>
+        </div>
+      )}
+    </header>
+  );
 }

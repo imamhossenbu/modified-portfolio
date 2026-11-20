@@ -64,7 +64,7 @@ export default function RootLayout({
             <Navbar />
             <BackgroundParticles />
             <FloatingCTA/>
-            <AnimatedBackground />
+            {/* <AnimatedBackground /> */}
             <Toaster position="top-center" reverseOrder={false} />
             {children}
             <Footer />

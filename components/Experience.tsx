@@ -96,11 +96,11 @@ export default function Experience() {
     >
       <div className="mx-auto max-w-7xl">
         <div className="experience-animate mb-14 text-center">
-          <p className="mono-text mb-3 text-sm font-semibold uppercase tracking-[0.25em] text-blue-main">
+          <p className="mono-text mb-3 text-sm font-semibold uppercase tracking-[0.25em] text-[var(--accent)]">
             Experience
           </p>
 
-          <h2 className="text-3xl font-bold text-(--foreground) md:text-4xl">
+          <h2 className="text-3xl font-bold text-[var(--foreground)] md:text-4xl">
             My working journey
           </h2>
 
@@ -113,7 +113,7 @@ export default function Experience() {
         <div
           ref={cardRef}
           onMouseMove={handleMouseMove}
-          className="experience-animate experience-modern-card !shadow-none border border-neutral-200 dark:border-neutral-800"
+          className="experience-animate experience-modern-card !shadow-none border border-[var(--panel-border)]"
         >
           {/* Subtle background glow effects without harsh shadows */}
           <div className="experience-glow-orb experience-orb-one opacity-40" />
@@ -125,11 +125,11 @@ export default function Experience() {
 
           <div className="grid items-center gap-10 lg:grid-cols-[0.9fr_1.1fr]">
             <div className="relative z-10">
-              <div className="mb-6 inline-flex rounded-3xl bg-blue-main/15 p-5 text-blue-main">
+              <div className="mb-6 inline-flex rounded-3xl bg-[var(--accent-dim)] p-5 text-[var(--accent)]">
                 <BriefcaseBusiness size={34} />
               </div>
 
-              <p className="mono-text mb-3 text-sm font-semibold uppercase tracking-[0.22em] text-blue-main">
+              <p className="mono-text mb-3 text-sm font-semibold uppercase tracking-[0.22em] text-[var(--accent)]">
                 {experience.type}
               </p>
 
@@ -137,11 +137,11 @@ export default function Experience() {
                 {experience.role}
               </h3>
 
-              <p className="mb-5 text-lg font-semibold text-blue-main">
+              <p className="mb-5 text-lg font-semibold text-[var(--accent)]">
                 {experience.company}
               </p>
 
-              <div className="mb-8 inline-flex items-center gap-2 rounded-full bg-blue-main/12 px-4 py-2 text-sm font-bold text-blue-main">
+              <div className="mb-8 inline-flex items-center gap-2 rounded-full bg-[var(--accent-dim)] px-4 py-2 text-sm font-bold text-[var(--accent)]">
                 <CalendarDays size={16} />
                 {experience.duration}
               </div>
@@ -154,7 +154,7 @@ export default function Experience() {
                 {experience.stats.map((item) => (
                   <div
                     key={item.label}
-                    className="experience-stat-card !shadow-none border border-neutral-200/60 dark:border-neutral-800/60"
+                    className="experience-stat-card !shadow-none border border-[var(--panel-border)]"
                   >
                     <span>{item.label}</span>
                     <strong>{item.value}</strong>
@@ -165,7 +165,7 @@ export default function Experience() {
 
             <div className="relative z-10">
               <div className="mb-6 flex items-center gap-3">
-                <div className="rounded-2xl bg-blue-main/15 p-3 text-blue-main">
+                <div className="rounded-2xl bg-[var(--accent-dim)] p-3 text-[var(--accent)]">
                   <Layers size={24} />
                 </div>
 
@@ -183,8 +183,8 @@ export default function Experience() {
                 ))}
               </div>
 
-              <div className="mt-8 rounded-3xl border border-blue-main/20 bg-white/45 p-5 !shadow-none backdrop-blur-md ">
-                <p className="experience-description text-sm leading-7">
+              <div className="mt-8 rounded-3xl border border-[var(--accent-dim)] bg-[var(--panel-soft)] p-5 !shadow-none backdrop-blur-md">
+                <p className="experience-description text-sm leading-7 text-[var(--foreground-muted)]">
                   Currently focusing on scaling the SaaS platform, improving
                   system security with proper server architecture, real-time
                   sync systems, and standard automated testing workflows.
