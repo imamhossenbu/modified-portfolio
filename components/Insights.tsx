@@ -93,10 +93,11 @@ export default function Insights() {
 
   return (
     <section id="insights" ref={sectionRef} className="sec">
-      <div className="sec-inner">
+      <div className="sec-inner is-narrow">
         <SectionHead
           index="05"
           label="How I Work"
+          align="center"
           title="From first idea to launch"
           description="A quick overview of my development journey, and the steps a project goes through with me."
         />

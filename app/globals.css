@@ -2937,6 +2937,27 @@ pre,
   margin-bottom: clamp(36px, 6vw, 80px);
 }
 
+/* Centred variant: narrower column, header stacked in the middle */
+.sec-inner.is-narrow {
+  max-width: 62rem;
+}
+
+.sec-head.is-center {
+  grid-template-columns: 1fr;
+  justify-items: center;
+  gap: 14px;
+  text-align: center;
+}
+
+.sec-head.is-center .sec-head-meta {
+  padding-top: 0;
+}
+
+.sec-head.is-center .sec-head-title,
+.sec-head.is-center .sec-head-desc {
+  margin-inline: auto;
+}
+
 .sec-head-meta,
 .sec-kicker {
   font-family: var(--font-mono), monospace;
@@ -6449,6 +6470,7 @@ pre,
   display: grid;
   gap: clamp(16px, 2.4vw, 26px);
   max-width: 62rem;
+  margin-inline: auto;
 }
 
 .letter-line {
@@ -6688,10 +6710,24 @@ a.reach-value:hover svg {
 
 /* ---------- 05 How I work: three numbers + a pipeline that fills on scroll ---------- */
 
-@media (min-width: 1024px) {
-  .stats-x.is-three {
-    grid-template-columns: repeat(3, 1fr);
-  }
+/* Three across at every width, so no number is left alone on a row */
+.stats-x.is-three {
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0 clamp(10px, 3vw, 36px);
+  text-align: center;
+}
+
+.stats-x.is-three .stats-x-item {
+  padding: 22px 0 28px;
+}
+
+.stats-x.is-three .stats-x-value {
+  font-size: clamp(2rem, 9vw, 4.4rem);
+}
+
+.stats-x.is-three .stats-x-label {
+  font-size: clamp(12px, 3.2vw, 16px);
+  line-height: 1.35;
 }
 
 .flow {
@@ -6800,19 +6836,21 @@ a.reach-value:hover svg {
   opacity: 1;
 }
 
+/* Desktop: four centred columns, the rail running through the node centres */
 @media (min-width: 900px) {
   .flow {
     grid-template-columns: repeat(4, 1fr);
-    gap: 32px;
+    gap: 28px;
     padding-left: 0;
     padding-top: calc(var(--node) + 26px);
+    text-align: center;
   }
 
   .flow-line {
     top: calc(var(--node) / 2 - 1px);
     bottom: auto;
-    left: calc(var(--node) / 2);
-    right: calc(25% - var(--node) / 2 - 24px);
+    left: 12.5%;
+    right: 12.5%;
     width: auto;
     height: 2px;
   }
@@ -6824,6 +6862,11 @@ a.reach-value:hover svg {
 
   .flow-node {
     top: calc(-1 * (var(--node) + 26px));
-    left: 0;
+    left: 50%;
+    margin-left: calc(var(--node) / -2);
+  }
+
+  .flow-step p {
+    margin-inline: auto;
   }
 }

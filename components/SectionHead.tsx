@@ -5,6 +5,8 @@ type SectionHeadProps = {
   label: string;
   title: string;
   description?: string;
+  /** Stack and centre the header instead of the default left-hand layout. */
+  align?: "left" | "center";
 };
 
 /** Editorial section opener: index + label on the left, oversized title. */
@@ -13,9 +15,10 @@ export default function SectionHead({
   label,
   title,
   description,
+  align = "left",
 }: SectionHeadProps) {
   return (
-    <header className="sec-head">
+    <header className={`sec-head ${align === "center" ? "is-center" : ""}`}>
       <p className="sec-head-meta" data-reveal>
         <span className="sec-head-index">{index}</span>
         <span>{label}</span>
