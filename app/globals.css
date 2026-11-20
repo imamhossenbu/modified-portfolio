@@ -5344,59 +5344,99 @@ pre,
 
 /* ---------- 03 Skills v4: a box of tools you can pick up and throw ---------- */
 
-.gravity-groups {
+/* Segmented control: one track, a dark pill that slides to the active tab */
+.seg-wrap {
   display: flex;
-  flex-wrap: wrap;
   justify-content: center;
-  gap: 8px;
-  margin-bottom: 18px;
+  margin-bottom: 20px;
 }
 
-.gravity-group,
+.seg {
+  position: relative;
+  display: flex;
+  max-width: 100%;
+  padding: 5px;
+  overflow-x: auto;
+  border-radius: 999px;
+  background: var(--panel);
+  scrollbar-width: none;
+}
+
+.seg::-webkit-scrollbar {
+  display: none;
+}
+
+.seg-indicator {
+  position: absolute;
+  top: 5px;
+  bottom: 5px;
+  left: 0;
+  width: 0;
+  border-radius: 999px;
+  background: var(--foreground);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.seg-tab {
+  position: relative;
+  flex: none;
+  padding: 10px 16px;
+  border-radius: 999px;
+  font-family: var(--font-display), sans-serif;
+  font-size: 13.5px;
+  font-weight: 600;
+  white-space: nowrap;
+  color: var(--foreground-muted);
+  cursor: pointer;
+  transition: color 0.35s ease;
+}
+
+.seg-tab sup {
+  margin-left: 4px;
+  font-family: var(--font-mono), monospace;
+  font-size: 9.5px;
+  font-weight: 700;
+  color: var(--accent);
+  transition: color 0.35s ease;
+}
+
+.seg-tab:hover {
+  color: var(--foreground);
+}
+
+.seg-tab.is-active,
+.seg-tab.is-active sup {
+  color: var(--background);
+}
+
+/* Shake lives in the corner of the box it shakes */
 .gravity-shake {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 2;
   display: inline-flex;
   align-items: center;
   gap: 7px;
-  padding: 9px 15px;
+  padding: 8px 14px;
   border-radius: 999px;
   border: 1px solid var(--panel-border);
-  font-family: var(--font-display), sans-serif;
-  font-size: 13px;
+  background: var(--background);
+  font-family: var(--font-mono), monospace;
+  font-size: 11px;
   font-weight: 700;
-  color: var(--foreground-muted);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--foreground);
   cursor: pointer;
   transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
 
-.gravity-group sup {
-  font-family: var(--font-mono), monospace;
-  font-size: 10px;
-  color: var(--accent);
-}
-
-.gravity-group:hover,
 .gravity-shake:hover {
+  background: var(--foreground);
   border-color: var(--foreground);
-  color: var(--foreground);
-}
-
-.gravity-group.is-active {
-  background: var(--accent);
-  border-color: var(--accent);
-  color: #ffffff;
-}
-
-.gravity-group.is-active sup {
-  color: #ffffff;
-}
-
-.gravity-shake {
-  border-color: var(--foreground);
-  color: var(--foreground);
-  font-family: var(--font-mono), monospace;
-  font-size: 11px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  color: var(--background);
 }
 
 .gravity-shake svg {
@@ -6718,31 +6758,24 @@ a.reach-value:hover svg {
 
 /* ---------- 05 How I work: three numbers + a pipeline that fills on scroll ---------- */
 
-/* One panel, three numbers, hairline dividers between them */
+/* Three numbers, no boxes: the size does the work */
 .stats-x.is-three {
   grid-template-columns: repeat(3, 1fr);
-  gap: 0;
-  overflow: hidden;
-  border-radius: 22px;
-  border: 1px solid var(--panel-border);
-  background: var(--panel);
+  gap: clamp(8px, 3vw, 40px);
   text-align: center;
 }
 
 .stats-x.is-three .stats-x-item {
-  padding: clamp(22px, 4vw, 44px) clamp(8px, 2vw, 24px);
-}
-
-.stats-x.is-three .stats-x-item + .stats-x-item {
-  border-left: 1px solid var(--panel-border);
+  padding: 0;
 }
 
 .stats-x.is-three .stats-x-value {
   margin-top: 0;
-  font-size: clamp(2rem, 8.5vw, 4.4rem);
+  font-size: clamp(2.2rem, 9vw, 5rem);
 }
 
 .stats-x.is-three .stats-x-label {
+  margin-top: 8px;
   font-size: clamp(11.5px, 3vw, 15px);
   line-height: 1.35;
 }

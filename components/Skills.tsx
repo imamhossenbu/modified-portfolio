@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import gsap from "gsap";
 import Matter from "matter-js";
 import { RotateCcw } from "lucide-react";
 import SectionHead from "@/components/SectionHead";
@@ -62,6 +63,7 @@ import {
 const skillCategories = [
   {
     title: "Frontend",
+    tab: "Frontend",
     file: "frontend.tsx",
     icon: Code2,
     skills: [
@@ -76,6 +78,7 @@ const skillCategories = [
   },
   {
     title: "Mobile Development",
+    tab: "Mobile",
     file: "mobile.dart",
     icon: Smartphone,
     skills: [
@@ -93,6 +96,7 @@ const skillCategories = [
   },
   {
     title: "Backend",
+    tab: "Backend",
     file: "backend.ts",
     icon: Server,
     skills: [
@@ -106,6 +110,7 @@ const skillCategories = [
   },
   {
     title: "Programming Languages",
+    tab: "Languages",
     file: "languages.py",
     icon: Code2,
     skills: [
@@ -121,6 +126,7 @@ const skillCategories = [
   },
   {
     title: "Database, Cache & ORM",
+    tab: "Database",
     file: "database.sql",
     icon: Database,
     skills: [
@@ -133,6 +139,7 @@ const skillCategories = [
   },
   {
     title: "Data & AI Tools",
+    tab: "Data & AI",
     file: "data-ai.ipynb",
     icon: Brain,
     skills: [
@@ -144,6 +151,7 @@ const skillCategories = [
   },
   {
     title: "Testing & Quality",
+    tab: "Testing",
     file: "testing.test.ts",
     icon: TestTube2,
     skills: [
@@ -154,6 +162,7 @@ const skillCategories = [
   },
   {
     title: "DevOps & Tools",
+    tab: "DevOps",
     file: "devops.yml",
     icon: Wrench,
     skills: [
@@ -167,6 +176,7 @@ const skillCategories = [
   },
   {
     title: "CMS",
+    tab: "CMS",
     file: "cms.php",
     icon: Brain,
     skills: [{ name: "WordPress", icon: SiWordpress }],
@@ -186,8 +196,35 @@ export default function Skills() {
   const sectionRef = useRef<HTMLElement | null>(null);
   const arenaRef = useRef<HTMLDivElement | null>(null);
   const bodiesRef = useRef<Map<string, Matter.Body>>(new Map());
+  const tabsRef = useRef<HTMLDivElement | null>(null);
+  const indicatorRef = useRef<HTMLSpanElement | null>(null);
   const [active, setActive] = useState<number | null>(null);
   useReveal(sectionRef);
+
+  // The dark pill slides to the selected tab
+  useEffect(() => {
+    const move = () => {
+      const tabs = tabsRef.current;
+      const indicator = indicatorRef.current;
+      const current = tabs?.querySelector<HTMLElement>(".seg-tab.is-active");
+      if (!tabs || !indicator || !current) return;
+
+      gsap.to(indicator, {
+        x: current.offsetLeft,
+        width: current.offsetWidth,
+        opacity: 1,
+        duration: 0.55,
+        ease: "power4.out",
+        overwrite: true,
+      });
+    };
+
+    move();
+    window.addEventListener("resize", move);
+    document.fonts?.ready.then(move);
+
+    return () => window.removeEventListener("resize", move);
+  }, [active]);
 
   // One pill per technology; a pill remembers every group it belongs to
   const tools = useMemo(() => {
@@ -417,31 +454,36 @@ export default function Skills() {
           description="I use modern frontend, backend, programming, database, data, and deployment tools to build clean, scalable, and production-ready web applications."
         />
 
-        <div className="gravity-groups" data-reveal>
-          {skillCategories.map((category, index) => (
-            <button
-              key={category.title}
-              type="button"
-              className={`gravity-group ${active === index ? "is-active" : ""}`}
-              onClick={() => selectGroup(index)}
-              aria-pressed={active === index}
-            >
-              {category.title}
-              <sup>{category.skills.length}</sup>
-            </button>
-          ))}
+        <div className="seg-wrap" data-reveal>
+          <div ref={tabsRef} className="seg" role="tablist" aria-label="Skill groups">
+            <span ref={indicatorRef} className="seg-indicator" />
 
-          <button
-            type="button"
-            className="gravity-shake"
-            onClick={() => {
-              setActive(null);
-              kick(null);
-            }}
-          >
-            <RotateCcw size={14} />
-            Shake
-          </button>
+            <button
+              type="button"
+              role="tab"
+              aria-selected={active === null}
+              className={`seg-tab ${active === null ? "is-active" : ""}`}
+              onClick={() => setActive(null)}
+            >
+              All
+              <sup>{tools.length}</sup>
+            </button>
+
+            {skillCategories.map((category, index) => (
+              <button
+                key={category.title}
+                type="button"
+                role="tab"
+                aria-selected={active === index}
+                title={category.title}
+                className={`seg-tab ${active === index ? "is-active" : ""}`}
+                onClick={() => selectGroup(index)}
+              >
+                {category.tab}
+                <sup>{category.skills.length}</sup>
+              </button>
+            ))}
+          </div>
         </div>
 
         <div
@@ -450,6 +492,15 @@ export default function Skills() {
           data-reveal
         >
           <p className="gravity-hint">Grab one and throw it</p>
+
+          <button
+            type="button"
+            className="gravity-shake"
+            onClick={() => kick(active)}
+          >
+            <RotateCcw size={14} />
+            Shake
+          </button>
 
           {tools.map((tool) => {
             const ToolIcon = tool.icon;
