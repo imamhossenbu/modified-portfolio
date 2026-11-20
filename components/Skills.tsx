@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import SectionHead from "@/components/SectionHead";
@@ -64,6 +64,7 @@ gsap.registerPlugin(ScrollTrigger);
 const skillCategories = [
   {
     title: "Frontend",
+    file: "frontend.tsx",
     icon: Code2,
     skills: [
       { name: "Next.js", icon: SiNextdotjs },
@@ -77,6 +78,7 @@ const skillCategories = [
   },
   {
     title: "Mobile Development",
+    file: "mobile.dart",
     icon: Smartphone,
     skills: [
       { name: "Flutter", icon: SiFlutter },
@@ -93,6 +95,7 @@ const skillCategories = [
   },
   {
     title: "Backend",
+    file: "backend.ts",
     icon: Server,
     skills: [
       { name: "Node.js", icon: SiNodedotjs },
@@ -105,6 +108,7 @@ const skillCategories = [
   },
   {
     title: "Programming Languages",
+    file: "languages.py",
     icon: Code2,
     skills: [
       { name: "Python", icon: SiPython },
@@ -119,6 +123,7 @@ const skillCategories = [
   },
   {
     title: "Database, Cache & ORM",
+    file: "database.sql",
     icon: Database,
     skills: [
       { name: "MongoDB", icon: SiMongodb },
@@ -130,6 +135,7 @@ const skillCategories = [
   },
   {
     title: "Data & AI Tools",
+    file: "data-ai.ipynb",
     icon: Brain,
     skills: [
       { name: "Python", icon: SiPython },
@@ -140,6 +146,7 @@ const skillCategories = [
   },
   {
     title: "Testing & Quality",
+    file: "testing.test.ts",
     icon: TestTube2,
     skills: [
       { name: "Jest", icon: SiJest },
@@ -149,6 +156,7 @@ const skillCategories = [
   },
   {
     title: "DevOps & Tools",
+    file: "devops.yml",
     icon: Wrench,
     skills: [
       { name: "Git", icon: SiGit },
@@ -161,108 +169,60 @@ const skillCategories = [
   },
   {
     title: "CMS",
+    file: "cms.php",
     icon: Brain,
     skills: [{ name: "WordPress", icon: SiWordpress }],
   },
 ];
 
-/* Two-letter "element symbols" for the periodic table of the stack. */
-const SYMBOLS: Record<string, string> = {
-  "Next.js": "Nx",
-  React: "Re",
-  TypeScript: "Ts",
-  JavaScript: "Js",
-  "Tailwind CSS": "Tw",
-  "Framer Motion": "Fm",
-  GSAP: "Gs",
-  Flutter: "Fl",
-  Dart: "Dt",
-  Provider: "Pv",
-  "Material 3": "M3",
-  MVVM: "Mv",
-  SharedPreferences: "Sp",
-  "Secure Storage": "Ss",
-  Android: "An",
-  Firebase: "Fb",
-  "REST API": "Api",
-  "Node.js": "Nd",
-  "Express.js": "Ex",
-  NestJS: "Ns",
-  "Socket.io": "Io",
-  Python: "Py",
-  Java: "Jv",
-  PHP: "Ph",
-  C: "C",
-  "C++": "C+",
-  MongoDB: "Mg",
-  PostgreSQL: "Pg",
-  MySQL: "My",
-  Redis: "Rd",
-  Prisma: "Pr",
-  Pandas: "Pd",
-  "Google Colab": "Co",
-  "Generative AI": "Ai",
-  Jest: "Je",
-  "React Testing Library": "Rt",
-  SonarQube: "Sq",
-  Git: "Gt",
-  GitHub: "Gh",
-  "GitHub Actions": "Ga",
-  Docker: "Dk",
-  Vercel: "Vc",
-  Figma: "Fg",
-  WordPress: "Wp",
-};
+/** camelCase identifier for the exported array: "Data & AI Tools" → "dataAiTools" */
+const toIdentifier = (title: string) =>
+  title
+    .replace(/[^a-zA-Z ]/g, "")
+    .split(" ")
+    .filter(Boolean)
+    .map((word, index) =>
+      index === 0
+        ? word.toLowerCase()
+        : word[0].toUpperCase() + word.slice(1).toLowerCase(),
+    )
+    .join("");
 
 export default function Skills() {
   const sectionRef = useRef<HTMLElement | null>(null);
-  const tableRef = useRef<HTMLDivElement | null>(null);
-  const [active, setActive] = useState<number | null>(null);
+  const codeRef = useRef<HTMLDivElement | null>(null);
+  const [active, setActive] = useState(0);
   useReveal(sectionRef);
 
-  // One tile per technology; a tile remembers every group it belongs to
-  const elements = useMemo(() => {
-    const map = new Map<
-      string,
-      { name: string; icon: (typeof skillCategories)[number]["skills"][number]["icon"]; groups: number[] }
-    >();
+  const current = skillCategories[active];
+  const total = skillCategories.reduce(
+    (sum, category) => sum + category.skills.length,
+    0,
+  );
 
-    skillCategories.forEach((category, groupIndex) => {
-      category.skills.forEach((skill) => {
-        const existing = map.get(skill.name);
-        if (existing) existing.groups.push(groupIndex);
-        else map.set(skill.name, { ...skill, groups: [groupIndex] });
-      });
-    });
-
-    return Array.from(map.values());
-  }, []);
-
-  // Tiles flip up in a random order as the table scrolls into view
+  // Each time a file opens, its lines are "typed" in from the gutter
   useEffect(() => {
-    const table = tableRef.current;
-    if (!table) return;
+    const code = codeRef.current;
+    if (!code) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     const ctx = gsap.context(() => {
       gsap.fromTo(
-        ".element",
-        { rotateX: -90, y: 30, opacity: 0, transformPerspective: 700 },
+        ".editor-line",
+        { opacity: 0, x: -14 },
         {
-          rotateX: 0,
-          y: 0,
           opacity: 1,
-          duration: 0.7,
-          ease: "back.out(1.5)",
-          stagger: { each: 0.028, from: "random" },
-          clearProps: "transform",
-          scrollTrigger: { trigger: table, start: "top 82%", once: true },
+          x: 0,
+          duration: 0.4,
+          stagger: 0.045,
+          ease: "power2.out",
+          scrollTrigger: { trigger: code, start: "top 85%", once: true },
         },
       );
-    }, table);
+    }, code);
 
     return () => ctx.revert();
-  }, []);
+  }, [active]);
 
   return (
     <section id="skills" ref={sectionRef} className="sec">
@@ -270,55 +230,99 @@ export default function Skills() {
         <SectionHead
           index="03"
           label="My Skills"
-          title="The periodic table of my stack"
+          title="Technologies I work with"
           description="I use modern frontend, backend, programming, database, data, and deployment tools to build clean, scalable, and production-ready web applications."
         />
 
-        <div
-          className="element-groups"
-          data-reveal
-          onMouseLeave={() => setActive(null)}
-        >
-          {skillCategories.map((category, index) => (
-            <button
-              key={category.title}
-              type="button"
-              className={`element-group ${active === index ? "is-active" : ""}`}
-              onMouseEnter={() => setActive(index)}
-              onFocus={() => setActive(index)}
-              onClick={() => setActive(active === index ? null : index)}
-              aria-pressed={active === index}
-            >
-              <i>{String(index + 1).padStart(2, "0")}</i>
-              {category.title}
-              <sup>{category.skills.length}</sup>
-            </button>
-          ))}
-        </div>
+        <div className="editor" data-reveal>
+          <div className="editor-bar">
+            <span className="editor-dots">
+              <i />
+              <i />
+              <i />
+            </span>
+            <span className="editor-title">imam-hossen / stack</span>
+          </div>
 
-        <div
-          ref={tableRef}
-          className={`element-table ${active !== null ? "has-active" : ""}`}
-        >
-          {elements.map((element, index) => {
-            const ElementIcon = element.icon;
-            const isLit = active !== null && element.groups.includes(active);
+          <div className="editor-body">
+            {/* File tree: one "file" per skill group */}
+            <aside className="editor-tree">
+              <p className="editor-tree-head">Explorer</p>
+              <p className="editor-tree-folder">▾ stack</p>
 
-            return (
-              <div
-                key={element.name}
-                className={`element ${isLit ? "is-lit" : ""}`}
-                title={element.name}
-              >
-                <span className="element-num">{index + 1}</span>
-                <ElementIcon className="element-icon" />
-                <span className="element-symbol">
-                  {SYMBOLS[element.name] ?? element.name.slice(0, 2)}
-                </span>
-                <span className="element-name">{element.name}</span>
+              {skillCategories.map((category, index) => (
+                <button
+                  key={category.file}
+                  type="button"
+                  onClick={() => setActive(index)}
+                  className={`editor-file ${index === active ? "is-active" : ""}`}
+                  aria-pressed={index === active}
+                >
+                  <category.icon size={14} />
+                  <span>{category.file}</span>
+                  <em>{category.skills.length}</em>
+                </button>
+              ))}
+            </aside>
+
+            <div className="editor-main">
+              <div className="editor-tabs">
+                {skillCategories.map((category, index) => (
+                  <button
+                    key={category.file}
+                    type="button"
+                    onClick={() => setActive(index)}
+                    className={`editor-tab ${index === active ? "is-active" : ""}`}
+                  >
+                    {category.file}
+                  </button>
+                ))}
               </div>
-            );
-          })}
+
+              <div ref={codeRef} key={active} className="editor-code">
+                <p className="editor-line">
+                  <span className="tok-comment">
+                    {"// "}
+                    {current.title} — {current.skills.length} tools
+                  </span>
+                </p>
+
+                <p className="editor-line">
+                  <span className="tok-key">export const</span>{" "}
+                  <span className="tok-name">{toIdentifier(current.title)}</span>{" "}
+                  <span className="tok-punct">= [</span>
+                </p>
+
+                {current.skills.map((skill) => {
+                  const SkillIcon = skill.icon;
+
+                  return (
+                    <p key={skill.name} className="editor-line is-skill">
+                      <SkillIcon className="editor-skill-icon" />
+                      <span className="tok-string">&quot;{skill.name}&quot;</span>
+                      <span className="tok-punct">,</span>
+                    </p>
+                  );
+                })}
+
+                <p className="editor-line">
+                  <span className="tok-punct">];</span>
+                  <span className="editor-caret" />
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div className="editor-status">
+            <span>
+              <i />
+              {current.file}
+            </span>
+            <span>
+              {skillCategories.length} files · {total} tools
+            </span>
+            <span>UTF-8</span>
+          </div>
         </div>
       </div>
     </section>

@@ -11,7 +11,6 @@ import ThemeProvider from "@/provider/ThemeProvider";
 import CustomCursor from "@/components/CustomCursor";
 import BackgroundParticles from "@/components/BackgroundParticles";
 import SmoothScroll from "@/components/SmoothScroll";
-import ScrollProgress from "@/components/ScrollProgress";
 import FloatingCTA from "@/components/FloatingCTA";
 import AnimatedBackground from "@/components/AnimatedBackground";
 import { Toaster } from "react-hot-toast";
@@ -54,7 +53,6 @@ export default function RootLayout({
         <ThemeProvider>
           <SmoothScroll>
             <Preloader />
-            <ScrollProgress />
             <CustomCursor />
             <Navbar />
             <BackgroundParticles />
