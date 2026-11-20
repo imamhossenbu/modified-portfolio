@@ -135,14 +135,24 @@ export default function Projects() {
                 <h3 className="proj-preview-title">{current.title}</h3>
                 <p className="proj-preview-desc">{current.shortDescription}</p>
 
-                <div className="proj-row-links">
-                  <Link href={`/projects/${current.slug}`}>
-                    Details
-                    <ArrowUpRight size={13} />
+                <div className="proj-actions">
+                  <Link
+                    href={`/projects/${current.slug}`}
+                    className="hero-x-btn is-primary"
+                  >
+                    <span>View Details</span>
+                    <ArrowUpRight size={15} />
                   </Link>
-                  <a href={current.live} target="_blank" rel="noopener noreferrer">
-                    {current.category === "mobile" ? "APK" : "Live"}
-                    <ExternalLink size={12} />
+                  <a
+                    href={current.live}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hero-x-btn"
+                  >
+                    <span>
+                      {current.category === "mobile" ? "Get APK" : "Live Site"}
+                    </span>
+                    <ExternalLink size={14} />
                   </a>
                 </div>
 
@@ -194,14 +204,24 @@ export default function Projects() {
                   </h3>
                   <p>{project.shortDescription}</p>
 
-                  <div className="proj-row-links">
-                    <Link href={`/projects/${project.slug}`}>
-                      Details
-                      <ArrowUpRight size={13} />
+                  <div className="proj-actions">
+                    <Link
+                      href={`/projects/${project.slug}`}
+                      className="hero-x-btn is-primary"
+                    >
+                      <span>View Details</span>
+                      <ArrowUpRight size={15} />
                     </Link>
-                    <a href={project.live} target="_blank" rel="noopener noreferrer">
-                      {project.category === "mobile" ? "APK" : "Live"}
-                      <ExternalLink size={12} />
+                    <a
+                      href={project.live}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="hero-x-btn"
+                    >
+                      <span>
+                        {project.category === "mobile" ? "Get APK" : "Live Site"}
+                      </span>
+                      <ExternalLink size={14} />
                     </a>
                   </div>
                 </div>

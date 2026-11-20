@@ -2915,7 +2915,14 @@ pre,
 
 .sec {
   position: relative;
-  padding: clamp(44px, 6.5vw, 88px) 20px;
+  /* One rhythm for every section: the gap between two sections is always
+     twice this block padding */
+  padding: clamp(44px, 5.5vw, 76px) 20px;
+}
+
+/* The experience stack already ends with its own breathing room */
+.sec:has(.xp-stack) {
+  padding-bottom: 0;
 }
 
 .sec-inner {
@@ -2999,7 +3006,7 @@ pre,
 
 .about-x-statement {
   max-width: 62rem;
-  margin-bottom: clamp(48px, 8vw, 110px);
+  margin-bottom: clamp(44px, 6vw, 84px);
 }
 
 .about-x {
@@ -4002,7 +4009,8 @@ pre,
   gap: 14px;
   height: 36px;
   padding: 0 14px;
-  border-bottom: 1px solid var(--panel-border);
+  border-bottom: 1px solid color-mix(in srgb, var(--c) 22%, transparent);
+  transition: border-color 0.5s ease;
 }
 
 .browser-frame-dots {
@@ -4115,11 +4123,24 @@ pre,
   color: var(--foreground-muted);
 }
 
+/* Details / Live as real buttons, so they read as the main actions */
+.proj-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.proj-actions .hero-x-btn {
+  padding: 11px 20px;
+  font-size: 12.5px;
+}
+
 .proj-preview-meta ul {
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
-  margin-top: 12px;
+  margin-top: 18px;
 }
 
 .proj-preview-meta li {
@@ -4227,7 +4248,7 @@ pre,
   /* On desktop the row is just a title: its details sit under the preview,
      so opening a row never changes the page height mid-scroll */
   .proj-row-body p,
-  .proj-row-body .proj-row-links {
+  .proj-row-body .proj-actions {
     display: none;
   }
 
@@ -5095,7 +5116,7 @@ pre,
   --foot-fg: #fafafa;
   --foot-dim: rgba(250, 250, 250, 0.55);
   position: relative;
-  margin-top: clamp(40px, 6vw, 80px);
+  margin-top: clamp(20px, 3vw, 40px);
   padding-top: clamp(44px, 6vw, 80px);
   overflow: hidden;
   border-radius: clamp(24px, 4vw, 48px) clamp(24px, 4vw, 48px) 0 0;
@@ -5779,7 +5800,7 @@ pre,
 .about-id {
   display: grid;
   gap: 44px;
-  margin-bottom: clamp(56px, 9vw, 120px);
+  margin-bottom: clamp(48px, 6vw, 84px);
 }
 
 .idcard-wrap {
@@ -6194,7 +6215,7 @@ pre,
   grid-auto-rows: 1fr;
   gap: 20px;
   /* Room to scroll with the whole stack assembled before it lets go */
-  padding-bottom: 26vh;
+  padding-bottom: clamp(40px, 8vh, 76px);
 }
 
 /* Each card sticks one step lower than the one before it, so the stack
@@ -6205,28 +6226,73 @@ pre,
   display: flex;
 }
 
-/* One calm surface for every layer: the stack is told apart by its edges
-   and numbers, not by loud alternating colours */
+/* Every layer has its own colour. While a card is being read it wears a
+   soft tint of that colour; once the next card slides over it, it turns solid. */
 .xp-card-inner {
+  --c: var(--accent);
   display: flex;
   flex-direction: column;
   width: 100%;
   min-height: clamp(250px, 34vh, 310px);
   overflow: hidden;
   border-radius: 20px;
-  border: 1px solid color-mix(in srgb, var(--foreground) 14%, transparent);
-  background: var(--background);
+  border: 1px solid color-mix(in srgb, var(--c) 30%, transparent);
+  background: color-mix(in srgb, var(--c) 9%, var(--background));
   color: var(--foreground);
   box-shadow: 0 -12px 28px -20px rgba(0, 0, 0, 0.35);
+  transition:
+    background-color 0.5s ease,
+    border-color 0.5s ease,
+    color 0.5s ease;
 }
 
-.dark .xp-card-inner {
-  background: var(--panel);
+.xp-card-inner.tone-0 {
+  --c: #ff4d00;
+}
+
+.xp-card-inner.tone-1 {
+  --c: #2f5fd8;
+}
+
+.xp-card-inner.tone-2 {
+  --c: #0f9d6b;
+}
+
+.xp-card-inner.tone-3 {
+  --c: #8b3ff0;
+}
+
+.xp-card-inner.tone-4 {
+  --c: #d6a100;
 }
 
 .xp-card-inner.is-now {
   border-style: dashed;
-  border-color: var(--accent);
+}
+
+/* Covered by the next layer: full colour, white text */
+.xp-card.is-covered .xp-card-inner {
+  border-color: var(--c);
+  background: var(--c);
+  color: #ffffff;
+}
+
+.xp-card.is-covered .xp-card-num {
+  color: #ffffff;
+}
+
+.xp-card.is-covered .xp-card-head {
+  border-bottom-color: transparent;
+}
+
+/* Whatever is still peeking out of a covered card must read on solid colour */
+.xp-card.is-covered .xp-card-body p {
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.xp-card.is-covered .xp-card-body li {
+  border-color: rgba(255, 255, 255, 0.5);
+  color: #ffffff;
 }
 
 /* Header strip: the part that stays visible once the next card slides over */
@@ -6247,7 +6313,8 @@ pre,
   font-weight: 700;
   line-height: 1;
   letter-spacing: -0.04em;
-  color: var(--accent);
+  color: var(--c);
+  transition: color 0.5s ease;
 }
 
 .xp-card-head h4 {
@@ -6295,6 +6362,7 @@ pre,
   font-size: clamp(1rem, 1.25vw, 1.1rem);
   line-height: 1.8;
   color: var(--foreground-muted);
+  transition: color 0.5s ease;
 }
 
 .xp-card-body ul {
@@ -6307,17 +6375,12 @@ pre,
 .xp-card-body li {
   padding: 6px 13px;
   border-radius: 999px;
-  border: 1px solid var(--panel-border);
-  background: var(--panel);
+  border: 1px solid color-mix(in srgb, var(--c) 35%, transparent);
   font-family: var(--font-mono), monospace;
   font-size: 11.5px;
   font-weight: 600;
   white-space: nowrap;
-  color: var(--foreground-muted);
-}
-
-.dark .xp-card-body li {
-  background: var(--background);
+  color: var(--foreground);
 }
 
 @media (min-width: 768px) {

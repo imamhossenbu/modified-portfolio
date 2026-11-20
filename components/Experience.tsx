@@ -1,6 +1,8 @@
 "use client";
 
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import SectionHead from "@/components/SectionHead";
 import { useReveal } from "@/components/motion/useReveal";
 
@@ -42,9 +44,40 @@ const experience = {
   ],
 };
 
+gsap.registerPlugin(ScrollTrigger);
+
 export default function Experience() {
   const sectionRef = useRef<HTMLElement | null>(null);
+  const stackRef = useRef<HTMLDivElement | null>(null);
   useReveal(sectionRef);
+
+  // A card keeps its soft tint while it is being read; the moment the next
+  // card slides over it, it switches to its full, solid colour.
+  useEffect(() => {
+    const stack = stackRef.current;
+    if (!stack) return;
+
+    const ctx = gsap.context(() => {
+      const cards = gsap.utils.toArray<HTMLElement>(".xp-card");
+
+      cards.forEach((card, index) => {
+        const next = cards[index + 1];
+        if (!next) return;
+
+        ScrollTrigger.create({
+          trigger: next,
+          start: () =>
+            `top ${parseFloat(getComputedStyle(card).top) + card.offsetHeight}px`,
+          endTrigger: stack,
+          end: "bottom top",
+          toggleClass: { targets: card, className: "is-covered" },
+          invalidateOnRefresh: true,
+        });
+      });
+    }, stack);
+
+    return () => ctx.revert();
+  }, []);
 
   return (
     <section id="experience" ref={sectionRef} className="sec">
@@ -86,14 +119,14 @@ export default function Experience() {
         </div>
 
         {/* Layered cards: each sticks a step lower, so every title stays readable */}
-        <div className="xp-stack">
+        <div ref={stackRef} className="xp-stack">
           {experience.points.map((point, index) => (
             <article
               key={point.title}
               className="xp-card"
               style={{ "--layer": index } as React.CSSProperties}
             >
-              <div className={`xp-card-inner tone-${index % 3}`}>
+              <div className={`xp-card-inner tone-${index}`}>
                 <header className="xp-card-head">
                   <span className="xp-card-num">0{index + 1}</span>
                   <h4>{point.title}</h4>
@@ -116,7 +149,7 @@ export default function Experience() {
             className="xp-card"
             style={{ "--layer": experience.points.length } as React.CSSProperties}
           >
-            <div className="xp-card-inner is-now">
+            <div className="xp-card-inner tone-4 is-now">
               <header className="xp-card-head">
                 <span className="xp-card-num">Now</span>
                 <h4>What I&apos;m focused on</h4>

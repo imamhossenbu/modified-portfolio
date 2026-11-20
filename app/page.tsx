@@ -10,7 +10,7 @@ import VelocityMarquee from "@/components/motion/VelocityMarquee";
 
 export default function Home() {
   return (
-    <main className="space-y-10">
+    <main>
       <Hero />
 
       <VelocityMarquee />
