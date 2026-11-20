@@ -215,10 +215,12 @@
 
 /* globals.css এর আপডেট */
 
+/* `clip`, not `hidden`: hidden would turn body into a scroll container
+   and silently break every `position: sticky` on the page. */
 html,
 body {
   min-height: 100%;
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 body {
