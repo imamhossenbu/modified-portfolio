@@ -101,7 +101,7 @@ export default function CustomCursor() {
               height: `${size}px`,
               borderRadius: "9999px",
               background: "var(--accent)",
-              boxShadow: "0 0 18px rgba(217, 98, 43, 0.75)",
+              boxShadow: "0 0 18px rgba(255, 77, 0, 0.6)",
               pointerEvents: "none",
               opacity: 0,
               willChange: "transform",
