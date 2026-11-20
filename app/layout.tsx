@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
 import {
-  Inter,
-  Space_Grotesk,
+  Bricolage_Grotesque,
+  Hanken_Grotesk,
   JetBrains_Mono,
-  Cormorant_Garamond,
 } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
@@ -18,25 +17,19 @@ import AnimatedBackground from "@/components/AnimatedBackground";
 import { Toaster } from "react-hot-toast";
 import Preloader from "@/components/motion/Preloader";
 
-const inter = Inter({
-  variable: "--font-inter",
+// Display: characterful grotesque for headings. Body: neutral, very legible.
+const display = Bricolage_Grotesque({
+  variable: "--font-display",
   subsets: ["latin"],
 });
 
-const cormorantGaramond = Cormorant_Garamond({
-  variable: "--font-cormorant",
-  subsets: ["latin"],
-  weight: ["300", "400", "500"],
-  style: ["normal", "italic"],
-});
-
-const spaceGrotesk = Space_Grotesk({
-  variable: "--font-space-grotesk",
+const body = Hanken_Grotesk({
+  variable: "--font-body",
   subsets: ["latin"],
 });
 
-const jetBrainsMono = JetBrains_Mono({
-  variable: "--font-jetbrains-mono",
+const mono = JetBrains_Mono({
+  variable: "--font-mono",
   subsets: ["latin"],
 });
 
@@ -55,7 +48,7 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${inter.variable} ${spaceGrotesk.variable} ${jetBrainsMono.variable} ${cormorantGaramond.variable} h-full antialiased`}
+      className={`${display.variable} ${body.variable} ${mono.variable} h-full antialiased`}
     >
       <body className="min-h-full">
         <ThemeProvider>

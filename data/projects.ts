@@ -42,7 +42,7 @@ export const projects: Project[] = [
     shortDescription: "Stellar Way — E-Commerce & Delivery Platform",
     description:
       "A full-featured e-commerce and delivery management platform built with **Next.js 16**, featuring real-time order tracking, live rider messaging, rider application management, and a comprehensive admin dashboard.",
-    image: "/images/projects/stellar-way.png",
+    image: "/images/projects/shots/savory-nest.webp",
     tech: [
       "Next.js",
       "MongoDB",
@@ -95,7 +95,7 @@ export const projects: Project[] = [
       "Modern house selling website with animations and theme system.",
     description:
       "SellPoint is a modern full-stack e-commerce management platform where the admin can manage products, users, and orders through a powerful dashboard. The website includes real-time chat using Socket.io for instant communication, subscription management for premium services, authentication, and an intuitive user interface for seamless buying and selling experiences.",
-    image: "/images/projects/sell1.png",
+    image: "/images/projects/shots/sell-point.webp",
     tech: [
       "Next.js",
       "MongoDB",
@@ -258,7 +258,7 @@ export const projects: Project[] = [
       "A modern e-commerce platform with cart, checkout, ratings, and admin dashboard.",
     description:
       "A responsive full-stack e-commerce platform built with Next.js 16. Customers can browse products, manage their cart, and complete checkout. Admins get a dedicated dashboard with analytics charts, product management, and order oversight — all wrapped in smooth Framer Motion animations.",
-    image: "/images/projects/ecommerce.png",
+    image: "/images/projects/shots/seoul-mirage.webp",
     tech: [
       "Next.js",
       "Tailwind CSS",
@@ -329,7 +329,7 @@ export const projects: Project[] = [
       "A clean travel landing page showcasing destinations and packages.",
     description:
       "Hero Travel is a static travel landing page built with HTML and Tailwind CSS. It highlights popular destinations and travel packages with a clean layout, smooth design, and fully responsive structure.",
-    image: "/images/projects/hero-travel.png",
+    image: "/images/projects/shots/hero-travel.webp",
     tech: ["HTML", "Tailwind CSS"],
     features: [
       "Hero section with travel CTA",
@@ -354,7 +354,7 @@ export const projects: Project[] = [
       "Intelligent chatbot powered by LLaMA with real-time web search.",
     description:
       "A smart AI chatbot built with Next.js and powered by the LLaMA API. Users can have natural conversations with the AI, which can also perform real-time web searches to answer questions with up-to-date information.",
-    image: "/images/projects/chatbot.png",
+    image: "/images/projects/shots/ai-chatbot.webp",
     tech: [
       "Next.js",
       "TypeScript",
@@ -386,7 +386,7 @@ export const projects: Project[] = [
       "Official department website for BU CSE with smooth animations and modern UI.",
     description:
       "A modern and responsive frontend website for the BU CSE department. Built with React and Vite, it showcases department info, faculty, courses, and student stats with smooth Framer Motion animations, Lottie illustrations, and an elegant UI.",
-    image: "/images/projects/cse-bu.png",
+    image: "/images/projects/shots/bu-cse.webp",
     tech: [
       "React",
       "Vite",
@@ -425,7 +425,7 @@ export const projects: Project[] = [
       "A full-stack pet adoption platform with payments, maps, and admin dashboard.",
     description:
       "PeddyCare is a full-stack pet adoption platform where users can browse adoptable pets, submit adoption requests, and donate via Stripe. It features Firebase authentication, an interactive map to find nearby shelters, a rich text editor for pet descriptions, and a full admin dashboard to manage pets and users.",
-    image: "/images/projects/peddycare.png",
+    image: "/images/projects/shots/peddycare.webp",
     tech: [
       "React",
       "Vite",
@@ -478,7 +478,7 @@ export const projects: Project[] = [
       "A elegant interior design company website with portfolio and contact form.",
     description:
       "Rinterio is a static interior design company website built with HTML and Tailwind CSS. It showcases commercial and residential design services, portfolio work, team stats, work process, blog articles, and a contact form — all with a clean and modern layout.",
-    image: "/images/projects/rinterio.png",
+    image: "/images/projects/shots/rinterio.webp",
     tech: ["HTML", "Tailwind CSS", "DaisyUI", "Font Awesome"],
     features: [
       "Hero section with booking CTA",
@@ -535,7 +535,7 @@ export const projects: Project[] = [
       "An eco-tourism and nature exploration website with Firebase auth.",
     description:
       "EcoExplorer is a nature and eco-tourism frontend website built with React and Vite. It features Firebase authentication, animated typed text, swiper carousels, and a clean responsive UI built with Tailwind CSS and DaisyUI.",
-    image: "/images/projects/eco-explorer.png",
+    image: "/images/projects/shots/eco-explorer.webp",
     tech: [
       "React",
       "Vite",
@@ -576,7 +576,7 @@ export const projects: Project[] = [
       "A modern fitness and gym landing page with BMI calculator and pricing plans.",
     description:
       "A sleek dark-themed fitness landing page built with React and Vite. It showcases gym services, training programs, trainer profiles, and membership pricing plans. Includes a fully functional BMI calculator, habit-building sections, and a clean responsive layout.",
-    image: "/images/projects/fitness.png",
+    image: "/images/projects/shots/fitness.webp",
     tech: ["React", "Vite", "Tailwind CSS"],
     features: [
       "Hero section with stats — 500+ members, 350+ classes",
@@ -604,7 +604,7 @@ export const projects: Project[] = [
       "A responsive pet adoption platform with category filtering and adoption flow.",
     description:
       "Peddy is an intuitive pet adoption platform where users can browse, filter, and adopt pets of various categories. It fetches live pet data from an API, displays detailed pet cards, and guides users through an adoption confirmation flow with a countdown modal.",
-    image: "/images/projects/peddy.png",
+    image: "/images/projects/shots/peddy.webp",
     tech: ["HTML", "Tailwind CSS", "DaisyUI", "JavaScript", "REST API"],
     features: [
       "Dynamic pet listings fetched from external API",
@@ -630,7 +630,7 @@ export const projects: Project[] = [
       "A full-stack service review platform with auth, CRUD, and search.",
     description:
       "HonestView is a full-stack service review application where users can browse, add, and manage services, post reviews, and interact with the platform securely. It features Firebase authentication, JWT-protected API routes, pagination, and smooth Framer Motion animations.",
-    image: "/images/projects/honestview.png",
+    image: "/images/projects/shots/honestview.webp",
     tech: [
       "React",
       "Tailwind CSS",
@@ -722,7 +722,7 @@ export const projects: Project[] = [
       "A React-based gadget e-commerce platform with cart, wishlist, and purchase flow.",
     description:
       "GadgetHeaven is a frontend e-commerce platform for browsing and purchasing the latest gadgets. Built with React and Vite, it features category-based product filtering, cart and wishlist management with local storage persistence, price sorting, and a purchase confirmation modal.",
-    image: "/images/projects/gadgetheaven.png",
+    image: "/images/projects/shots/gadget-heaven.webp",
     tech: [
       "React",
       "Vite",
@@ -762,7 +762,7 @@ export const projects: Project[] = [
       "A clean flower shop landing page with featured products and newsletter signup.",
     description:
       "Flower Shop is a beautifully designed landing page for an online flower store. Built with HTML and CSS, it showcases featured flowers, delivery highlights, a hot deal promotion, an Instagram gallery section, and a newsletter subscription form.",
-    image: "/images/projects/flower-shop.png",
+    image: "/images/projects/shots/flower-shop.webp",
     tech: ["HTML", "CSS"],
     features: [
       "Hero section with Shop Now CTA",
@@ -789,7 +789,7 @@ export const projects: Project[] = [
       "A motorcycle landing page with featured bikes, news, testimonials, and FAQ.",
     description:
       "Biker Zone is a responsive motorcycle landing page built with HTML, Tailwind CSS, and DaisyUI. It showcases featured bikes in a carousel, latest news articles, customer testimonials with star ratings, and an FAQ accordion — all wrapped in a sleek dark-themed layout.",
-    image: "/images/projects/biker-zone.png",
+    image: "/images/projects/shots/biker-zone.webp",
     tech: ["HTML", "Tailwind CSS", "DaisyUI", "Font Awesome"],
     features: [
       "Hero section featuring Honda CBR 300R with Purchase CTA",
@@ -816,7 +816,7 @@ export const projects: Project[] = [
       "A food delivery landing page with product listings, services, and newsletter.",
     description:
       "Foody is a responsive food delivery landing page built with HTML, CSS, and Font Awesome. It showcases popular menu items with prices and ratings, highlights delivery services, features customer testimonials, and includes a newsletter subscription form.",
-    image: "/images/projects/food-restaurant.png",
+    image: "/images/projects/shots/food-restaurant.webp",
     tech: ["HTML", "CSS", "Font Awesome"],
     features: [
       "Hero section with bike delivery highlight and Order Now CTA",
@@ -845,7 +845,7 @@ export const projects: Project[] = [
       "A professional architecture firm landing page with stats, features, and sponsors.",
     description:
       "G3 Architects is a clean and professional landing page for an architecture firm. Built with HTML and CSS, it highlights the firm's team, key features, achievement stats, and sponsor logos with a modern and structured layout.",
-    image: "/images/projects/g3-architects.png",
+    image: "/images/projects/shots/g3-architects.webp",
     tech: ["HTML", "CSS"],
     features: [
       "Hero section with firm tagline and Explore More CTA",
@@ -872,7 +872,7 @@ export const projects: Project[] = [
       "A tea shop landing page with featured products, testimonials, and news.",
     description:
       "Tea House is a warm and elegant landing page for a tea brand built with HTML, Tailwind CSS, and JavaScript. It showcases featured tea products, highlights freshness and quality, features stacked client testimonials, and includes a news section and newsletter subscription.",
-    image: "/images/projects/tea-house.png",
+    image: "/images/projects/shots/tea-house.webp",
     tech: ["HTML", "Tailwind CSS", "JavaScript", "Font Awesome"],
     features: [
       "Hero section with 5.00 Trust Pilot rating badge and Explore More CTA",

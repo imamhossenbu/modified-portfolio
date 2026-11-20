@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import SectionHead from "@/components/SectionHead";
@@ -154,43 +154,97 @@ const skillCategories = [
   },
 ];
 
+/* Two-letter "element symbols" for the periodic table of the stack. */
+const SYMBOLS: Record<string, string> = {
+  "Next.js": "Nx",
+  React: "Re",
+  TypeScript: "Ts",
+  JavaScript: "Js",
+  "Tailwind CSS": "Tw",
+  "Framer Motion": "Fm",
+  GSAP: "Gs",
+  Flutter: "Fl",
+  Dart: "Dt",
+  Firebase: "Fb",
+  "REST API": "Api",
+  "Node.js": "Nd",
+  "Express.js": "Ex",
+  NestJS: "Ns",
+  "Socket.io": "Io",
+  Python: "Py",
+  Java: "Jv",
+  PHP: "Ph",
+  C: "C",
+  "C++": "C+",
+  MongoDB: "Mg",
+  PostgreSQL: "Pg",
+  MySQL: "My",
+  Redis: "Rd",
+  Prisma: "Pr",
+  Pandas: "Pd",
+  "Google Colab": "Co",
+  "Generative AI": "Ai",
+  Jest: "Je",
+  "React Testing Library": "Rt",
+  SonarQube: "Sq",
+  Git: "Gt",
+  GitHub: "Gh",
+  "GitHub Actions": "Ga",
+  Docker: "Dk",
+  Vercel: "Vc",
+  Figma: "Fg",
+  WordPress: "Wp",
+};
+
 export default function Skills() {
   const sectionRef = useRef<HTMLElement | null>(null);
-  const panelRef = useRef<HTMLDivElement | null>(null);
-  const [active, setActive] = useState(0);
+  const tableRef = useRef<HTMLDivElement | null>(null);
+  const [active, setActive] = useState<number | null>(null);
   useReveal(sectionRef);
 
-  const current = skillCategories[active];
+  // One tile per technology; a tile remembers every group it belongs to
+  const elements = useMemo(() => {
+    const map = new Map<
+      string,
+      { name: string; icon: (typeof skillCategories)[number]["skills"][number]["icon"]; groups: number[] }
+    >();
 
-  // Re-deal the chips every time the category changes
+    skillCategories.forEach((category, groupIndex) => {
+      category.skills.forEach((skill) => {
+        const existing = map.get(skill.name);
+        if (existing) existing.groups.push(groupIndex);
+        else map.set(skill.name, { ...skill, groups: [groupIndex] });
+      });
+    });
+
+    return Array.from(map.values());
+  }, []);
+
+  // Tiles flip up in a random order as the table scrolls into view
   useEffect(() => {
-    const panel = panelRef.current;
-    if (!panel) return;
+    const table = tableRef.current;
+    if (!table) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     const ctx = gsap.context(() => {
       gsap.fromTo(
-        ".skills-x-chip",
-        { y: 28, opacity: 0, rotate: -3 },
+        ".element",
+        { rotateX: -90, y: 30, opacity: 0, transformPerspective: 700 },
         {
+          rotateX: 0,
           y: 0,
           opacity: 1,
-          rotate: 0,
-          duration: 0.55,
-          stagger: 0.045,
-          ease: "back.out(1.6)",
-          overwrite: true,
+          duration: 0.7,
+          ease: "back.out(1.5)",
+          stagger: { each: 0.028, from: "random" },
+          clearProps: "transform",
+          scrollTrigger: { trigger: table, start: "top 82%", once: true },
         },
       );
-      gsap.fromTo(
-        ".skills-x-ghost",
-        { xPercent: 8, opacity: 0 },
-        { xPercent: 0, opacity: 1, duration: 0.7, ease: "power3.out" },
-      );
-    }, panel);
+    }, table);
 
     return () => ctx.revert();
-  }, [active]);
+  }, []);
 
   return (
     <section id="skills" ref={sectionRef} className="sec">
@@ -198,54 +252,55 @@ export default function Skills() {
         <SectionHead
           index="03"
           label="My Skills"
-          title="Technologies I work with"
+          title="The periodic table of my stack"
           description="I use modern frontend, backend, programming, database, data, and deployment tools to build clean, scalable, and production-ready web applications."
         />
 
-        <div className="skills-x">
-          <ul className="skills-x-cats" data-reveal>
-            {skillCategories.map((category, index) => (
-              <li key={category.title}>
-                <button
-                  type="button"
-                  className={`skills-x-cat ${index === active ? "is-active" : ""}`}
-                  onMouseEnter={() => setActive(index)}
-                  onFocus={() => setActive(index)}
-                  onClick={() => setActive(index)}
-                  aria-pressed={index === active}
-                >
-                  <span className="skills-x-cat-num">
-                    {String(index + 1).padStart(2, "0")}
-                  </span>
-                  <span className="skills-x-cat-name">{category.title}</span>
-                  <span className="skills-x-cat-count">
-                    {category.skills.length}
-                  </span>
-                </button>
-              </li>
-            ))}
-          </ul>
+        <div
+          className="element-groups"
+          data-reveal
+          onMouseLeave={() => setActive(null)}
+        >
+          {skillCategories.map((category, index) => (
+            <button
+              key={category.title}
+              type="button"
+              className={`element-group ${active === index ? "is-active" : ""}`}
+              onMouseEnter={() => setActive(index)}
+              onFocus={() => setActive(index)}
+              onClick={() => setActive(active === index ? null : index)}
+              aria-pressed={active === index}
+            >
+              <i>{String(index + 1).padStart(2, "0")}</i>
+              {category.title}
+              <sup>{category.skills.length}</sup>
+            </button>
+          ))}
+        </div>
 
-          <div className="skills-x-panel" ref={panelRef} data-reveal>
-            <span className="skills-x-ghost" aria-hidden="true">
-              {String(active + 1).padStart(2, "0")}
-            </span>
+        <div
+          ref={tableRef}
+          className={`element-table ${active !== null ? "has-active" : ""}`}
+        >
+          {elements.map((element, index) => {
+            const ElementIcon = element.icon;
+            const isLit = active !== null && element.groups.includes(active);
 
-            <p className="sec-kicker">{current.title}</p>
-
-            <div className="skills-x-grid">
-              {current.skills.map((skill) => {
-                const SkillIcon = skill.icon;
-
-                return (
-                  <span key={skill.name} className="skills-x-chip">
-                    <SkillIcon size={22} />
-                    {skill.name}
-                  </span>
-                );
-              })}
-            </div>
-          </div>
+            return (
+              <div
+                key={element.name}
+                className={`element ${isLit ? "is-lit" : ""}`}
+                title={element.name}
+              >
+                <span className="element-num">{index + 1}</span>
+                <ElementIcon className="element-icon" />
+                <span className="element-symbol">
+                  {SYMBOLS[element.name] ?? element.name.slice(0, 2)}
+                </span>
+                <span className="element-name">{element.name}</span>
+              </div>
+            );
+          })}
         </div>
       </div>
     </section>

@@ -3,22 +3,25 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ArrowUpRight, ExternalLink } from "lucide-react";
 import { projectCategories, projects } from "@/data/projects";
 import SectionHead from "@/components/SectionHead";
+import BrowserFrame, { displayHost } from "@/components/BrowserFrame";
 import Magnetic from "@/components/motion/Magnetic";
 import { useReveal } from "@/components/motion/useReveal";
 
-const PAGE_SIZE = 6;
+gsap.registerPlugin(ScrollTrigger);
+
+const PAGE_SIZE = 7;
 
 export default function Projects() {
-  const router = useRouter();
   const sectionRef = useRef<HTMLElement | null>(null);
-  const gridRef = useRef<HTMLDivElement | null>(null);
+  const listRef = useRef<HTMLOListElement | null>(null);
   const [activeCategory, setActiveCategory] = useState("all");
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
+  const [activeIndex, setActiveIndex] = useState(0);
   useReveal(sectionRef);
 
   const counts = useMemo(() => {
@@ -35,64 +38,49 @@ export default function Projects() {
   }, [activeCategory]);
 
   const displayedProjects = filteredProjects.slice(0, visibleCount);
+  const current = displayedProjects[Math.min(activeIndex, displayedProjects.length - 1)];
 
   const handleCategory = (value: string) => {
     setActiveCategory(value);
     setVisibleCount(PAGE_SIZE);
+    setActiveIndex(0);
   };
 
-  // Curtain-wipe each card in when the filter changes or more are loaded
+  // Rows slide in, and the row crossing mid-screen drives the sticky preview
   useEffect(() => {
-    const grid = gridRef.current;
-    if (!grid) return;
+    const list = listRef.current;
+    if (!list) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     const ctx = gsap.context(() => {
-      const fresh = gsap.utils.toArray<HTMLElement>(
-        ".work-card:not([data-shown])",
-      );
+      const fresh = gsap.utils.toArray<HTMLElement>(".proj-row:not([data-shown])");
 
-      fresh.forEach((card, index) => {
-        card.dataset.shown = "true";
-        const media = card.querySelector(".work-card-media");
-        const info = card.querySelector(".work-card-info");
-
+      fresh.forEach((row) => {
+        row.dataset.shown = "true";
         gsap.fromTo(
-          media,
-          { clipPath: "inset(100% 0% 0% 0%)" },
-          {
-            clipPath: "inset(0% 0% 0% 0%)",
-            duration: 1.1,
-            ease: "power4.inOut",
-            delay: (index % 2) * 0.12,
-            scrollTrigger: { trigger: card, start: "top 90%", once: true },
-          },
-        );
-        gsap.fromTo(
-          media?.querySelector("img") ?? null,
-          { scale: 1.35 },
-          {
-            scale: 1,
-            duration: 1.5,
-            ease: "power3.out",
-            delay: (index % 2) * 0.12,
-            scrollTrigger: { trigger: card, start: "top 90%", once: true },
-          },
-        );
-        gsap.fromTo(
-          info,
-          { y: 24, opacity: 0 },
+          row,
+          { y: 36, opacity: 0 },
           {
             y: 0,
             opacity: 1,
             duration: 0.8,
             ease: "power3.out",
-            delay: 0.35 + (index % 2) * 0.12,
-            scrollTrigger: { trigger: card, start: "top 90%", once: true },
+            scrollTrigger: { trigger: row, start: "top 92%", once: true },
           },
         );
       });
-    }, grid);
+
+      gsap.utils.toArray<HTMLElement>(".proj-row").forEach((row, index) => {
+        ScrollTrigger.create({
+          trigger: row,
+          start: "top 55%",
+          end: "bottom 55%",
+          onToggle: (self) => {
+            if (self.isActive) setActiveIndex(index);
+          },
+        });
+      });
+    }, list);
 
     return () => ctx.revert();
   }, [activeCategory, visibleCount]);
@@ -123,55 +111,94 @@ export default function Projects() {
           ))}
         </div>
 
-        <div ref={gridRef} key={activeCategory} className="work-grid">
-          {displayedProjects.map((project, index) => (
-            <article
-              key={project.id}
-              className="work-card"
-              onClick={() => router.push(`/projects/${project.slug}`)}
-            >
-              <div className="work-card-media">
+        <div className="proj">
+          {/* Sticky live preview (desktop): swaps as rows are hovered or scrolled */}
+          <aside className="proj-preview" data-reveal>
+            <BrowserFrame url={current ? displayHost(current.live) : undefined}>
+              {displayedProjects.map((project, index) => (
                 <Image
+                  key={project.id}
                   src={project.image}
-                  alt={project.title}
+                  alt=""
                   fill
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                  className="object-cover object-top"
-                  preload={index < 2}
+                  sizes="(max-width: 1024px) 1px, 46vw"
+                  className={`proj-preview-img ${
+                    project.category === "mobile" ? "is-contain" : ""
+                  } ${current?.id === project.id ? "is-active" : ""}`}
+                  preload={index === 0}
                 />
-                <span className="work-card-view" aria-hidden="true">
-                  View
-                  <ArrowUpRight size={18} />
-                </span>
-              </div>
+              ))}
+            </BrowserFrame>
 
-              <div className="work-card-info">
-                <span className="work-card-num">
+            {current && (
+              <div className="proj-preview-meta" key={current.id}>
+                <p className="proj-preview-type">{current.type}</p>
+                <ul>
+                  {current.tech.slice(0, 6).map((tech) => (
+                    <li key={tech}>{tech}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </aside>
+
+          <ol ref={listRef} key={activeCategory} className="proj-list">
+            {displayedProjects.map((project, index) => (
+              <li
+                key={project.id}
+                className={`proj-row ${current?.id === project.id ? "is-active" : ""}`}
+                onMouseEnter={() => setActiveIndex(index)}
+              >
+                <span className="row-line" />
+
+                {/* Inline screenshot for small screens, where there is no sticky preview */}
+                <Link
+                  href={`/projects/${project.slug}`}
+                  className="proj-row-thumb"
+                  tabIndex={-1}
+                  aria-hidden="true"
+                >
+                  <BrowserFrame url={displayHost(project.live)}>
+                    <Image
+                      src={project.image}
+                      alt=""
+                      fill
+                      sizes="(max-width: 1024px) 100vw, 1px"
+                      className={`proj-preview-img is-active ${
+                        project.category === "mobile" ? "is-contain" : ""
+                      }`}
+                    />
+                  </BrowserFrame>
+                </Link>
+
+                <span className="proj-row-num">
                   {String(index + 1).padStart(2, "0")}
                 </span>
 
-                <div className="work-card-text">
-                  <h3>{project.title}</h3>
+                <div className="proj-row-body">
+                  <h3>
+                    <Link href={`/projects/${project.slug}`}>{project.title}</Link>
+                  </h3>
                   <p>{project.shortDescription}</p>
+
+                  <div className="proj-row-links">
+                    <Link href={`/projects/${project.slug}`}>
+                      Details
+                      <ArrowUpRight size={13} />
+                    </Link>
+                    <a href={project.live} target="_blank" rel="noopener noreferrer">
+                      {project.category === "mobile" ? "APK" : "Live"}
+                      <ExternalLink size={12} />
+                    </a>
+                  </div>
                 </div>
 
-                <div
-                  className="work-card-links"
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  <Link href={`/projects/${project.slug}`}>Details</Link>
-                  <a
-                    href={project.live}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <ExternalLink size={13} />
-                    {project.category === "mobile" ? "APK" : "Live"}
-                  </a>
-                </div>
-              </div>
-            </article>
-          ))}
+                <span className="proj-row-arrow" aria-hidden="true">
+                  <ArrowUpRight />
+                </span>
+              </li>
+            ))}
+          </ol>
         </div>
 
         {filteredProjects.length > visibleCount && (

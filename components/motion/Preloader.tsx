@@ -112,7 +112,7 @@ export default function Preloader() {
           progress,
           {
             value: 100,
-            duration: 2.1,
+            duration: 2.6,
             ease: "power2.inOut",
             onUpdate: render,
           },
