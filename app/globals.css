@@ -6205,34 +6205,28 @@ pre,
   display: flex;
 }
 
+/* One calm surface for every layer: the stack is told apart by its edges
+   and numbers, not by loud alternating colours */
 .xp-card-inner {
   display: flex;
   flex-direction: column;
   width: 100%;
-  min-height: clamp(280px, 40vh, 360px);
+  min-height: clamp(250px, 34vh, 310px);
   overflow: hidden;
-  border-radius: 22px;
-  border: 1px solid var(--panel-border);
-  background: var(--panel);
+  border-radius: 20px;
+  border: 1px solid color-mix(in srgb, var(--foreground) 14%, transparent);
+  background: var(--background);
   color: var(--foreground);
-  box-shadow: 0 -14px 30px -22px rgba(0, 0, 0, 0.45);
+  box-shadow: 0 -12px 28px -20px rgba(0, 0, 0, 0.35);
 }
 
-.xp-card-inner.tone-1 {
-  border-color: var(--foreground);
-  background: var(--foreground);
-  color: var(--background);
-}
-
-.xp-card-inner.tone-2 {
-  border-color: var(--accent);
-  background: var(--accent);
-  color: #ffffff;
+.dark .xp-card-inner {
+  background: var(--panel);
 }
 
 .xp-card-inner.is-now {
-  border: 1px dashed var(--foreground);
-  background: var(--background);
+  border-style: dashed;
+  border-color: var(--accent);
 }
 
 /* Header strip: the part that stays visible once the next card slides over */
@@ -6242,29 +6236,26 @@ pre,
   gap: 14px;
   height: var(--layer-step);
   padding: 0 clamp(16px, 2.4vw, 30px);
+  border-bottom: 1px solid var(--panel-border);
 }
 
 .xp-card-num {
   flex: none;
   min-width: 2.2em;
   font-family: var(--font-display), sans-serif;
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   font-weight: 700;
   line-height: 1;
   letter-spacing: -0.04em;
   color: var(--accent);
 }
 
-.xp-card-inner.tone-2 .xp-card-num {
-  color: #ffffff;
-}
-
 .xp-card-head h4 {
   flex: 1;
   overflow: hidden;
   font-family: var(--font-display), sans-serif;
-  font-size: clamp(1.02rem, 1.7vw, 1.35rem);
-  font-weight: 700;
+  font-size: clamp(1rem, 1.5vw, 1.2rem);
+  font-weight: 600;
   letter-spacing: -0.02em;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -6300,12 +6291,10 @@ pre,
 }
 
 .xp-card-body p {
-  max-width: 46rem;
-  font-family: var(--font-display), sans-serif;
-  font-size: clamp(1.15rem, 2.1vw, 1.7rem);
-  font-weight: 600;
-  line-height: 1.35;
-  letter-spacing: -0.02em;
+  max-width: 44rem;
+  font-size: clamp(1rem, 1.25vw, 1.1rem);
+  line-height: 1.8;
+  color: var(--foreground-muted);
 }
 
 .xp-card-body ul {
@@ -6316,13 +6305,19 @@ pre,
 }
 
 .xp-card-body li {
-  padding: 7px 14px;
+  padding: 6px 13px;
   border-radius: 999px;
-  border: 1px solid currentColor;
+  border: 1px solid var(--panel-border);
+  background: var(--panel);
   font-family: var(--font-mono), monospace;
   font-size: 11.5px;
-  font-weight: 700;
+  font-weight: 600;
   white-space: nowrap;
+  color: var(--foreground-muted);
+}
+
+.dark .xp-card-body li {
+  background: var(--background);
 }
 
 @media (min-width: 768px) {
@@ -6341,11 +6336,11 @@ pre,
   }
 
   .xp-card-num {
-    font-size: 1.9rem;
+    font-size: 1.5rem;
   }
 
   .xp-card-body {
-    padding-top: 18px;
-    padding-left: calc(clamp(16px, 2.4vw, 30px) + 2.2em * 1.9 + 14px);
+    padding-top: 22px;
+    padding-left: calc(clamp(16px, 2.4vw, 30px) + 2.2em * 1.5 + 14px);
   }
 }
