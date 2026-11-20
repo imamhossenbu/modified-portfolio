@@ -1,8 +1,8 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import Matter from "matter-js";
+import { RotateCcw } from "lucide-react";
 import SectionHead from "@/components/SectionHead";
 import { useReveal } from "@/components/motion/useReveal";
 import {
@@ -58,8 +58,6 @@ import {
   SiMaterialdesign,
   SiAndroid,
 } from "react-icons/si";
-
-gsap.registerPlugin(ScrollTrigger);
 
 const skillCategories = [
   {
@@ -175,54 +173,219 @@ const skillCategories = [
   },
 ];
 
-/** camelCase identifier for the exported array: "Data & AI Tools" → "dataAiTools" */
-const toIdentifier = (title: string) =>
-  title
-    .replace(/[^a-zA-Z ]/g, "")
-    .split(" ")
-    .filter(Boolean)
-    .map((word, index) =>
-      index === 0
-        ? word.toLowerCase()
-        : word[0].toUpperCase() + word.slice(1).toLowerCase(),
-    )
-    .join("");
+type MouseWithHandlers = Matter.Mouse & {
+  mousemove: EventListener;
+  mousedown: EventListener;
+  mouseup: EventListener;
+  mousewheel: EventListener;
+};
+
+const random = (min: number, max: number) => min + Math.random() * (max - min);
 
 export default function Skills() {
   const sectionRef = useRef<HTMLElement | null>(null);
-  const codeRef = useRef<HTMLDivElement | null>(null);
-  const [active, setActive] = useState(0);
+  const arenaRef = useRef<HTMLDivElement | null>(null);
+  const bodiesRef = useRef<Map<string, Matter.Body>>(new Map());
+  const [active, setActive] = useState<number | null>(null);
   useReveal(sectionRef);
 
-  const current = skillCategories[active];
-  const total = skillCategories.reduce(
-    (sum, category) => sum + category.skills.length,
-    0,
+  // One pill per technology; a pill remembers every group it belongs to
+  const tools = useMemo(() => {
+    const map = new Map<
+      string,
+      {
+        name: string;
+        icon: (typeof skillCategories)[number]["skills"][number]["icon"];
+        groups: number[];
+      }
+    >();
+
+    skillCategories.forEach((category, groupIndex) => {
+      category.skills.forEach((skill) => {
+        const existing = map.get(skill.name);
+        if (existing) existing.groups.push(groupIndex);
+        else map.set(skill.name, { ...skill, groups: [groupIndex] });
+      });
+    });
+
+    return Array.from(map.values());
+  }, []);
+
+  // Physics: pills are real bodies that fall, pile up and can be thrown
+  useEffect(() => {
+    const arena = arenaRef.current;
+    if (!arena) return;
+
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      arena.classList.add("is-static");
+      return;
+    }
+
+    const { Engine, Bodies, Body, Composite, Mouse, MouseConstraint } = Matter;
+    const bodies = bodiesRef.current;
+
+    let engine: Matter.Engine | null = null;
+    let mouse: MouseWithHandlers | null = null;
+    let frame = 0;
+    let visible = false;
+    let built = false;
+    let lastWidth = 0;
+    let resizeTimer: ReturnType<typeof setTimeout> | undefined;
+
+    const releaseMouse = () => {
+      if (!mouse) return;
+      const el = mouse.element;
+      el.removeEventListener("mousemove", mouse.mousemove);
+      el.removeEventListener("mousedown", mouse.mousedown);
+      el.removeEventListener("mouseup", mouse.mouseup);
+      mouse = null;
+    };
+
+    const build = () => {
+      if (engine) {
+        Engine.clear(engine);
+        Composite.clear(engine.world, false);
+      }
+      releaseMouse();
+      bodies.clear();
+
+      const width = arena.clientWidth;
+      const height = arena.clientHeight;
+      lastWidth = width;
+
+      engine = Engine.create();
+      engine.gravity.y = 1.1;
+
+      const wall = { isStatic: true };
+      const walls = [
+        Bodies.rectangle(width / 2, height + 40, width * 2, 80, wall),
+        Bodies.rectangle(-40, 0, 80, height * 12, wall),
+        Bodies.rectangle(width + 40, 0, 80, height * 12, wall),
+      ];
+
+      const pills = Array.from(
+        arena.querySelectorAll<HTMLElement>(".gravity-pill"),
+      );
+
+      pills.forEach((el, index) => {
+        const w = el.offsetWidth;
+        const h = el.offsetHeight;
+
+        // Staggered heights above the arena, so they rain in one after another
+        const body = Bodies.rectangle(
+          random(w / 2 + 12, Math.max(w / 2 + 13, width - w / 2 - 12)),
+          -60 - index * 46,
+          w,
+          h,
+          {
+            chamfer: { radius: h / 2 },
+            restitution: 0.38,
+            friction: 0.35,
+            frictionAir: 0.014,
+            angle: random(-0.5, 0.5),
+          },
+        );
+
+        bodies.set(el.dataset.name ?? String(index), body);
+      });
+
+      Composite.add(engine.world, [...walls, ...bodies.values()]);
+
+      // Dragging with the mouse; wheel and touch are handed back to the page
+      mouse = Mouse.create(arena) as MouseWithHandlers;
+      arena.removeEventListener("wheel", mouse.mousewheel);
+      arena.removeEventListener("touchmove", mouse.mousemove);
+      arena.removeEventListener("touchstart", mouse.mousedown);
+      arena.removeEventListener("touchend", mouse.mouseup);
+
+      Composite.add(
+        engine.world,
+        MouseConstraint.create(engine, {
+          mouse,
+          constraint: { stiffness: 0.18, render: { visible: false } },
+        }),
+      );
+
+      arena.classList.add("is-live");
+      built = true;
+    };
+
+    const tick = () => {
+      frame = requestAnimationFrame(tick);
+      if (!engine || !visible) return;
+
+      Engine.update(engine, 1000 / 60);
+
+      arena.querySelectorAll<HTMLElement>(".gravity-pill").forEach((el) => {
+        const body = bodies.get(el.dataset.name ?? "");
+        if (!body) return;
+
+        // Anything flung out of the box drops back in from the top
+        if (body.position.y > arena.clientHeight + 200) {
+          Body.setPosition(body, { x: arena.clientWidth / 2, y: -80 });
+          Body.setVelocity(body, { x: 0, y: 0 });
+        }
+
+        el.style.transform = `translate(${body.position.x - el.offsetWidth / 2}px, ${
+          body.position.y - el.offsetHeight / 2
+        }px) rotate(${body.angle}rad)`;
+      });
+    };
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        visible = entry.isIntersecting;
+        if (visible && !built) build();
+      },
+      { threshold: 0.15 },
+    );
+
+    const handleResize = () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => {
+        if (built && arena.clientWidth !== lastWidth) build();
+      }, 250);
+    };
+
+    observer.observe(arena);
+    window.addEventListener("resize", handleResize);
+    frame = requestAnimationFrame(tick);
+
+    return () => {
+      cancelAnimationFrame(frame);
+      clearTimeout(resizeTimer);
+      observer.disconnect();
+      window.removeEventListener("resize", handleResize);
+      releaseMouse();
+      if (engine) {
+        Composite.clear(engine.world, false);
+        Engine.clear(engine);
+      }
+      bodies.clear();
+      arena.classList.remove("is-live");
+    };
+  }, []);
+
+  /** Toss pills into the air: one group, or everything when no group is given. */
+  const kick = useCallback(
+    (group: number | null) => {
+      tools.forEach((tool) => {
+        if (group !== null && !tool.groups.includes(group)) return;
+        const body = bodiesRef.current.get(tool.name);
+        if (!body) return;
+
+        Matter.Body.setVelocity(body, { x: random(-5, 5), y: random(-17, -10) });
+        Matter.Body.setAngularVelocity(body, random(-0.25, 0.25));
+      });
+    },
+    [tools],
   );
 
-  // Each time a file opens, its lines are "typed" in from the gutter
-  useEffect(() => {
-    const code = codeRef.current;
-    if (!code) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-
-    const ctx = gsap.context(() => {
-      gsap.fromTo(
-        ".editor-line",
-        { opacity: 0, x: -14 },
-        {
-          opacity: 1,
-          x: 0,
-          duration: 0.4,
-          stagger: 0.045,
-          ease: "power2.out",
-          scrollTrigger: { trigger: code, start: "top 85%", once: true },
-        },
-      );
-    }, code);
-
-    return () => ctx.revert();
-  }, [active]);
+  const selectGroup = (index: number) => {
+    const next = active === index ? null : index;
+    setActive(next);
+    if (next !== null) kick(next);
+  };
 
   return (
     <section id="skills" ref={sectionRef} className="sec">
@@ -234,95 +397,55 @@ export default function Skills() {
           description="I use modern frontend, backend, programming, database, data, and deployment tools to build clean, scalable, and production-ready web applications."
         />
 
-        <div className="editor" data-reveal>
-          <div className="editor-bar">
-            <span className="editor-dots">
-              <i />
-              <i />
-              <i />
-            </span>
-            <span className="editor-title">imam-hossen / stack</span>
-          </div>
+        <div className="gravity-groups" data-reveal>
+          {skillCategories.map((category, index) => (
+            <button
+              key={category.title}
+              type="button"
+              className={`gravity-group ${active === index ? "is-active" : ""}`}
+              onClick={() => selectGroup(index)}
+              aria-pressed={active === index}
+            >
+              {category.title}
+              <sup>{category.skills.length}</sup>
+            </button>
+          ))}
 
-          <div className="editor-body">
-            {/* File tree: one "file" per skill group */}
-            <aside className="editor-tree">
-              <p className="editor-tree-head">Explorer</p>
-              <p className="editor-tree-folder">▾ stack</p>
+          <button
+            type="button"
+            className="gravity-shake"
+            onClick={() => {
+              setActive(null);
+              kick(null);
+            }}
+          >
+            <RotateCcw size={14} />
+            Shake
+          </button>
+        </div>
 
-              {skillCategories.map((category, index) => (
-                <button
-                  key={category.file}
-                  type="button"
-                  onClick={() => setActive(index)}
-                  className={`editor-file ${index === active ? "is-active" : ""}`}
-                  aria-pressed={index === active}
-                >
-                  <category.icon size={14} />
-                  <span>{category.file}</span>
-                  <em>{category.skills.length}</em>
-                </button>
-              ))}
-            </aside>
+        <div
+          ref={arenaRef}
+          className={`gravity ${active !== null ? "has-active" : ""}`}
+          data-reveal
+        >
+          <p className="gravity-hint">Grab one and throw it</p>
 
-            <div className="editor-main">
-              <div className="editor-tabs">
-                {skillCategories.map((category, index) => (
-                  <button
-                    key={category.file}
-                    type="button"
-                    onClick={() => setActive(index)}
-                    className={`editor-tab ${index === active ? "is-active" : ""}`}
-                  >
-                    {category.file}
-                  </button>
-                ))}
-              </div>
+          {tools.map((tool) => {
+            const ToolIcon = tool.icon;
+            const isLit = active !== null && tool.groups.includes(active);
 
-              <div ref={codeRef} key={active} className="editor-code">
-                <p className="editor-line">
-                  <span className="tok-comment">
-                    {"// "}
-                    {current.title} — {current.skills.length} tools
-                  </span>
-                </p>
-
-                <p className="editor-line">
-                  <span className="tok-key">export const</span>{" "}
-                  <span className="tok-name">{toIdentifier(current.title)}</span>{" "}
-                  <span className="tok-punct">= [</span>
-                </p>
-
-                {current.skills.map((skill) => {
-                  const SkillIcon = skill.icon;
-
-                  return (
-                    <p key={skill.name} className="editor-line is-skill">
-                      <SkillIcon className="editor-skill-icon" />
-                      <span className="tok-string">&quot;{skill.name}&quot;</span>
-                      <span className="tok-punct">,</span>
-                    </p>
-                  );
-                })}
-
-                <p className="editor-line">
-                  <span className="tok-punct">];</span>
-                  <span className="editor-caret" />
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div className="editor-status">
-            <span>
-              <i />
-              {current.file}
-            </span>
-            <span>
-              {skillCategories.length} files · {total} tools
-            </span>
-            <span>UTF-8</span>
-          </div>
+            return (
+              <span
+                key={tool.name}
+                data-name={tool.name}
+                className={`gravity-pill ${isLit ? "is-lit" : ""}`}
+              >
+                <ToolIcon />
+                {tool.name}
+              </span>
+            );
+          })}
         </div>
       </div>
     </section>

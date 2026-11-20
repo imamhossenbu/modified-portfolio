@@ -5092,3 +5092,386 @@ pre,
     animation: none;
   }
 }
+
+/* =========================================================
+   FOOTER — dark slab with live clock and rising wordmark
+========================================================= */
+
+.foot {
+  --foot-bg: #0a0a0a;
+  --foot-fg: #fafafa;
+  --foot-dim: rgba(250, 250, 250, 0.55);
+  position: relative;
+  margin-top: clamp(40px, 6vw, 80px);
+  padding-top: clamp(44px, 6vw, 80px);
+  overflow: hidden;
+  border-radius: clamp(24px, 4vw, 48px) clamp(24px, 4vw, 48px) 0 0;
+  background: var(--foot-bg);
+  color: var(--foot-fg);
+}
+
+.dark .foot {
+  --foot-bg: #161616;
+}
+
+.foot-inner {
+  width: 100%;
+  max-width: 80rem;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.foot-top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.foot-lead {
+  max-width: 22ch;
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(1.5rem, 3.2vw, 2.6rem);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+}
+
+.foot-top-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--font-mono), monospace;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--foot-fg);
+  cursor: pointer;
+}
+
+.foot-top-btn svg {
+  width: 46px;
+  height: 46px;
+  padding: 13px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #ffffff;
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.foot-top-btn:hover svg {
+  transform: translateY(-6px);
+}
+
+.foot-grid {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 36px 24px;
+  margin-top: clamp(32px, 5vw, 64px);
+  padding-top: clamp(28px, 4vw, 44px);
+}
+
+.foot-line {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: rgba(250, 250, 250, 0.18);
+}
+
+.foot-col {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 9px;
+}
+
+.foot-label {
+  margin-bottom: 8px;
+  font-family: var(--font-mono), monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.foot-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  max-width: 100%;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+  color: var(--foot-fg);
+  background: linear-gradient(var(--accent), var(--accent)) no-repeat 0 100% / 0 1.5px;
+  transition: background-size 0.45s cubic-bezier(0.22, 1, 0.36, 1), color 0.3s ease;
+}
+
+.foot-link svg {
+  width: 14px;
+  height: 14px;
+  opacity: 0.5;
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.3s ease;
+}
+
+.foot-link:hover {
+  color: var(--accent);
+  background-size: 100% 1.5px;
+}
+
+.foot-link:hover svg {
+  opacity: 1;
+  transform: translate(2px, -2px);
+}
+
+.foot-text {
+  font-size: 14px;
+  color: var(--foot-dim);
+}
+
+.foot-clock {
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(1.5rem, 2.4vw, 2rem);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+.foot-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 6px;
+  font-family: var(--font-mono), monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--foot-dim);
+}
+
+.foot-status i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--ok);
+}
+
+/* The wordmark sits on the slab, so its fill has to match the slab */
+.foot .giant-name {
+  margin-top: clamp(36px, 6vw, 80px);
+  color: var(--foot-bg);
+  -webkit-text-stroke-color: rgba(250, 250, 250, 0.4);
+}
+
+.foot .giant-char:hover {
+  color: var(--accent);
+  -webkit-text-stroke-color: var(--accent);
+}
+
+.foot-copy {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 6px 20px;
+  max-width: 80rem;
+  margin: 0 auto;
+  padding: 18px 20px 22px;
+  font-family: var(--font-mono), monospace;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--foot-dim);
+}
+
+@media (min-width: 768px) {
+  .foot-inner,
+  .foot-copy {
+    padding-inline: 40px;
+  }
+
+  .foot-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+
+/* ---------- 03 Skills v4: a box of tools you can pick up and throw ---------- */
+
+.gravity-groups {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 18px;
+}
+
+.gravity-group,
+.gravity-shake {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 9px 15px;
+  border-radius: 999px;
+  border: 1px solid var(--panel-border);
+  font-family: var(--font-display), sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--foreground-muted);
+  cursor: pointer;
+  transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+.gravity-group sup {
+  font-family: var(--font-mono), monospace;
+  font-size: 10px;
+  color: var(--accent);
+}
+
+.gravity-group:hover,
+.gravity-shake:hover {
+  border-color: var(--foreground);
+  color: var(--foreground);
+}
+
+.gravity-group.is-active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #ffffff;
+}
+
+.gravity-group.is-active sup {
+  color: #ffffff;
+}
+
+.gravity-shake {
+  margin-left: auto;
+  font-family: var(--font-mono), monospace;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.gravity-shake svg {
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.gravity-shake:hover svg {
+  transform: rotate(-270deg);
+}
+
+.gravity {
+  position: relative;
+  height: 600px;
+  overflow: hidden;
+  border-radius: 24px;
+  border: 1px solid var(--panel-border);
+  background: var(--panel);
+  cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.gravity:active {
+  cursor: grabbing;
+}
+
+.gravity-hint {
+  position: absolute;
+  top: 18px;
+  left: 20px;
+  font-family: var(--font-mono), monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--foreground-faint);
+  pointer-events: none;
+}
+
+.gravity-pill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: var(--foreground);
+  color: var(--background);
+  font-family: var(--font-display), sans-serif;
+  font-size: 12.5px;
+  font-weight: 700;
+  line-height: 1;
+  white-space: nowrap;
+  opacity: 0;
+  will-change: transform;
+  transition: background 0.35s ease, color 0.35s ease, opacity 0.35s ease;
+}
+
+.gravity.is-live .gravity-pill {
+  opacity: 1;
+}
+
+.gravity-pill svg {
+  flex: none;
+  width: 17px;
+  height: 17px;
+  color: var(--accent);
+  transition: color 0.35s ease;
+}
+
+/* A group is selected: its pills go accent, the rest fade back */
+.gravity.has-active .gravity-pill {
+  opacity: 0.22;
+}
+
+.gravity.has-active .gravity-pill.is-lit {
+  opacity: 1;
+  background: var(--accent);
+  color: #ffffff;
+}
+
+.gravity-pill.is-lit svg {
+  color: #ffffff;
+}
+
+/* Reduced motion: no physics, just a tidy wrapped list */
+.gravity.is-static {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  gap: 10px;
+  height: auto;
+  padding: 54px 20px 24px;
+  cursor: default;
+}
+
+.gravity.is-static .gravity-pill {
+  position: static;
+  opacity: 1;
+}
+
+@media (min-width: 768px) {
+  .gravity {
+    height: 480px;
+  }
+
+  .gravity-pill {
+    gap: 10px;
+    padding: 12px 20px;
+    font-size: 15px;
+  }
+
+  .gravity-pill svg {
+    width: 20px;
+    height: 20px;
+  }
+}
