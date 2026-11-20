@@ -6685,3 +6685,145 @@ a.reach-value:hover svg {
     grid-template-columns: 1.3fr 1fr 1fr 1fr;
   }
 }
+
+/* ---------- 05 How I work: three numbers + a pipeline that fills on scroll ---------- */
+
+@media (min-width: 1024px) {
+  .stats-x.is-three {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.flow {
+  --node: 46px;
+  position: relative;
+  display: grid;
+  gap: 34px;
+  margin-top: clamp(40px, 6vw, 80px);
+  padding-left: calc(var(--node) + 22px);
+}
+
+/* The rail the steps hang on; its fill follows scroll progress */
+.flow-line {
+  position: absolute;
+  top: calc(var(--node) / 2);
+  bottom: calc(var(--node) / 2);
+  left: calc(var(--node) / 2 - 1px);
+  width: 2px;
+  background: var(--panel-border);
+}
+
+.flow-line span {
+  position: absolute;
+  inset: 0;
+  background: var(--accent);
+  transform: scaleY(var(--progress, 0));
+  transform-origin: center top;
+}
+
+.flow-step {
+  position: relative;
+}
+
+.flow-node {
+  position: absolute;
+  top: 0;
+  left: calc(-1 * (var(--node) + 22px));
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--node);
+  height: var(--node);
+  border-radius: 50%;
+  border: 2px solid var(--panel-border);
+  background: var(--background);
+  color: var(--foreground-faint);
+  transition:
+    background 0.45s ease,
+    border-color 0.45s ease,
+    color 0.45s ease,
+    transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.flow-node svg {
+  width: 19px;
+  height: 19px;
+}
+
+.flow-num {
+  font-family: var(--font-mono), monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--foreground-faint);
+  transition: color 0.45s ease;
+}
+
+.flow-step h3 {
+  margin-top: 6px;
+  font-size: clamp(1.3rem, 2.2vw, 1.75rem);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  color: var(--foreground-faint);
+  transition: color 0.45s ease;
+}
+
+.flow-step p {
+  max-width: 26rem;
+  margin-top: 8px;
+  font-size: 14.5px;
+  line-height: 1.7;
+  color: var(--foreground-muted);
+  opacity: 0.45;
+  transition: opacity 0.45s ease;
+}
+
+/* Reached */
+.flow-step.is-on .flow-node {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: #ffffff;
+  transform: scale(1.08);
+}
+
+.flow-step.is-on .flow-num {
+  color: var(--accent);
+}
+
+.flow-step.is-on h3 {
+  color: var(--foreground);
+}
+
+.flow-step.is-on p {
+  opacity: 1;
+}
+
+@media (min-width: 900px) {
+  .flow {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 32px;
+    padding-left: 0;
+    padding-top: calc(var(--node) + 26px);
+  }
+
+  .flow-line {
+    top: calc(var(--node) / 2 - 1px);
+    bottom: auto;
+    left: calc(var(--node) / 2);
+    right: calc(25% - var(--node) / 2 - 24px);
+    width: auto;
+    height: 2px;
+  }
+
+  .flow-line span {
+    transform: scaleX(var(--progress, 0));
+    transform-origin: left center;
+  }
+
+  .flow-node {
+    top: calc(-1 * (var(--node) + 26px));
+    left: 0;
+  }
+}
