@@ -185,18 +185,18 @@
 
 .dark {
   --background: #0f0e0d;
-  --foreground: #e7e9ee;
-  --foreground-muted: rgba(231, 233, 238, 0.64);
-  --foreground-faint: rgba(231, 233, 238, 0.44);
+  --foreground: #f1ede6;
+  --foreground-muted: rgba(241, 237, 230, 0.64);
+  --foreground-faint: rgba(241, 237, 230, 0.44);
 
   --panel: #181716;
   --panel-soft: rgba(24, 23, 22, 0.78);
-  --panel-border: rgba(231, 233, 238, 0.09);
-  --grid-line: rgba(231, 233, 238, 0.045);
+  --panel-border: rgba(241, 237, 230, 0.09);
+  --grid-line: rgba(241, 237, 230, 0.045);
 
   --glass-bg: rgba(20, 19, 18, 0.74);
   --glass-mobile-bg: rgba(15, 14, 13, 0.94);
-  --glass-border: rgba(231, 233, 238, 0.09);
+  --glass-border: rgba(241, 237, 230, 0.09);
   --glass-shadow: rgba(0, 0, 0, 0.4);
 
   --nav-text: #b9bfcc;
@@ -979,13 +979,13 @@ pre,
   white-space: nowrap;
   border-radius: 4px;
   padding: 9px 18px;
-  color: var(--signal);
+  color: var(--foreground);
   font-family: var(--font-jetbrains-mono), monospace;
   font-size: 13px;
   font-weight: 700;
   letter-spacing: 0.02em;
-  background: var(--signal-dim);
-  border: 1px solid rgba(47, 95, 216, 0.22);
+  background: var(--panel);
+  border: 1px solid var(--panel-border);
 }
 
 @keyframes marqueeMove {
@@ -2244,7 +2244,7 @@ pre,
   font-weight: 600;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: rgba(231, 233, 238, 0.6);
+  color: rgba(241, 237, 230, 0.6);
 }
 
 .preloader-title {
@@ -2627,8 +2627,6 @@ pre,
   align-items: flex-end;
   gap: 16px 40px;
   margin-top: clamp(22px, 4vh, 40px);
-  padding-top: 18px;
-  border-top: 1px dashed var(--panel-border);
 }
 
 .hero-x-spec dt {
@@ -2725,7 +2723,6 @@ pre,
   gap: clamp(6px, 1.2vw, 16px);
   padding: clamp(28px, 5vw, 64px) 0;
   overflow: hidden;
-  border-block: 1px solid var(--panel-border);
 }
 
 .vmarquee-row {
