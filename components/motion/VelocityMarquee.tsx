@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
-import { Star } from "lucide-react";
+import { Sparkle } from "lucide-react";
 
 const ROWS = [
   ["Full Stack Developer", "Next.js", "TypeScript", "Node.js", "NestJS"],
@@ -93,7 +93,7 @@ export default function VelocityMarquee() {
                   className={`vmarquee-item ${rowIndex === 1 ? "is-outline" : ""}`}
                 >
                   {label}
-                  <Star className="vmarquee-icon" fill="currentColor" />
+                  <Sparkle className="vmarquee-icon" fill="currentColor" />
                 </span>
               )),
             )}
