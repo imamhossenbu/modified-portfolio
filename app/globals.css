@@ -4099,6 +4099,22 @@ pre,
   color: var(--accent);
 }
 
+.proj-preview-title {
+  margin-top: 8px;
+  font-size: clamp(1.3rem, 2vw, 1.7rem);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.025em;
+  color: var(--foreground);
+}
+
+.proj-preview-desc {
+  margin-top: 6px;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--foreground-muted);
+}
+
 .proj-preview-meta ul {
   display: flex;
   flex-wrap: wrap;
@@ -4208,28 +4224,11 @@ pre,
     transition: color 0.35s ease;
   }
 
+  /* On desktop the row is just a title: its details sit under the preview,
+     so opening a row never changes the page height mid-scroll */
   .proj-row-body p,
-  .proj-row-links {
-    display: grid;
-    grid-template-rows: 0fr;
-    margin-top: 0;
-    overflow: hidden;
-    opacity: 0;
-    transition:
-      grid-template-rows 0.5s cubic-bezier(0.22, 1, 0.36, 1),
-      opacity 0.4s ease,
-      margin-top 0.5s ease;
-  }
-
-  .proj-row-links {
-    display: flex;
-    max-height: 0;
-    transition: max-height 0.5s ease, opacity 0.4s ease, margin-top 0.5s ease;
-  }
-
-  .proj-row-body p {
-    max-height: 0;
-    transition: max-height 0.5s ease, opacity 0.4s ease, margin-top 0.5s ease;
+  .proj-row-body .proj-row-links {
+    display: none;
   }
 
   .proj-row-arrow {
@@ -4257,18 +4256,6 @@ pre,
 
   .proj-row.is-active .proj-row-body h3 {
     color: var(--foreground);
-  }
-
-  .proj-row.is-active .proj-row-body p {
-    max-height: 80px;
-    margin-top: 6px;
-    opacity: 1;
-  }
-
-  .proj-row.is-active .proj-row-links {
-    max-height: 40px;
-    margin-top: 12px;
-    opacity: 1;
   }
 
   .proj-row.is-active .proj-row-arrow {
@@ -5211,6 +5198,7 @@ pre,
   align-items: center;
   gap: 6px;
   max-width: 100%;
+  font-size: clamp(13.5px, 3.6vw, 16px);
   font-weight: 600;
   overflow-wrap: anywhere;
   color: var(--foot-fg);
@@ -5647,5 +5635,141 @@ pre,
 @media (hover: none), (pointer: coarse) {
   .cursor-ring {
     display: none;
+  }
+}
+
+/* ---------- Project gallery: browser frame, thumbnails, phone view ---------- */
+
+.gallery {
+  display: grid;
+  gap: 28px;
+}
+
+.gallery-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px 20px;
+  margin-top: 14px;
+}
+
+.gallery-thumbs {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding: 2px;
+  scrollbar-width: none;
+}
+
+.gallery-thumbs::-webkit-scrollbar {
+  display: none;
+}
+
+.gallery-thumb {
+  position: relative;
+  flex: none;
+  width: clamp(76px, 12vw, 132px);
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  border-radius: 8px;
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  opacity: 0.5;
+  cursor: pointer;
+  transition: opacity 0.3s ease, outline-color 0.3s ease;
+}
+
+.gallery-thumb:hover {
+  opacity: 0.85;
+}
+
+.gallery-thumb.is-active {
+  opacity: 1;
+  outline-color: var(--accent);
+}
+
+.gallery-nav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+}
+
+.gallery-count {
+  margin-right: 8px;
+  font-family: var(--font-display), sans-serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--foreground);
+}
+
+.gallery-count i {
+  margin-left: 6px;
+  font-family: var(--font-mono), monospace;
+  font-size: 12px;
+  font-style: normal;
+  color: var(--foreground-faint);
+}
+
+.gallery-nav button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 1px solid var(--foreground);
+  color: var(--foreground);
+  cursor: pointer;
+  transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+.gallery-nav button:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #ffffff;
+}
+
+.phone-frame {
+  position: relative;
+  justify-self: center;
+  width: min(230px, 62vw);
+  padding: 9px;
+  border-radius: 38px;
+  background: #0a0a0a;
+  border: 1px solid var(--panel-border);
+}
+
+.phone-frame-notch {
+  position: absolute;
+  top: 17px;
+  left: 50%;
+  z-index: 2;
+  width: 64px;
+  height: 18px;
+  border-radius: 999px;
+  background: #0a0a0a;
+  transform: translateX(-50%);
+}
+
+.phone-frame-screen {
+  position: relative;
+  aspect-ratio: 390 / 844;
+  overflow: hidden;
+  border-radius: 30px;
+  background: var(--panel);
+}
+
+@media (min-width: 1024px) {
+  .gallery.has-phone {
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 44px;
+    align-items: start;
+  }
+
+  .gallery.has-phone .phone-frame {
+    width: 236px;
   }
 }

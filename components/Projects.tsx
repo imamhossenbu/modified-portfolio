@@ -132,6 +132,20 @@ export default function Projects() {
             {current && (
               <div className="proj-preview-meta" key={current.id}>
                 <p className="proj-preview-type">{current.type}</p>
+                <h3 className="proj-preview-title">{current.title}</h3>
+                <p className="proj-preview-desc">{current.shortDescription}</p>
+
+                <div className="proj-row-links">
+                  <Link href={`/projects/${current.slug}`}>
+                    Details
+                    <ArrowUpRight size={13} />
+                  </Link>
+                  <a href={current.live} target="_blank" rel="noopener noreferrer">
+                    {current.category === "mobile" ? "APK" : "Live"}
+                    <ExternalLink size={12} />
+                  </a>
+                </div>
+
                 <ul>
                   {current.tech.slice(0, 6).map((tech) => (
                     <li key={tech}>{tech}</li>

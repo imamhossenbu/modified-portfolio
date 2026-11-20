@@ -224,6 +224,10 @@ export default function Skills() {
     const { Engine, Bodies, Body, Composite, Mouse, MouseConstraint } = Matter;
     const bodies = bodiesRef.current;
 
+    // Pill elements and sizes are measured once per build, never per frame
+    let sprites: { el: HTMLElement; body: Matter.Body; w: number; h: number }[] = [];
+    let arenaWidth = 0;
+    let arenaHeight = 0;
     let engine: Matter.Engine | null = null;
     let mouse: MouseWithHandlers | null = null;
     let frame = 0;
@@ -252,15 +256,20 @@ export default function Skills() {
       const width = arena.clientWidth;
       const height = arena.clientHeight;
       lastWidth = width;
+      arenaWidth = width;
+      arenaHeight = height;
+      sprites = [];
 
       engine = Engine.create();
       engine.gravity.y = 1.1;
 
       const wall = { isStatic: true };
+      // Thick walls and a far-off ceiling: nothing can tunnel out, however hard it is thrown
       const walls = [
-        Bodies.rectangle(width / 2, height + 40, width * 2, 80, wall),
-        Bodies.rectangle(-40, 0, 80, height * 12, wall),
-        Bodies.rectangle(width + 40, 0, 80, height * 12, wall),
+        Bodies.rectangle(width / 2, height + 150, width * 3, 300, wall),
+        Bodies.rectangle(-150, 0, 300, height * 14, wall),
+        Bodies.rectangle(width + 150, 0, 300, height * 14, wall),
+        Bodies.rectangle(width / 2, -height * 6, width * 3, 300, wall),
       ];
 
       const pills = Array.from(
@@ -287,6 +296,7 @@ export default function Skills() {
         );
 
         bodies.set(el.dataset.name ?? String(index), body);
+        sprites.push({ el, body, w, h });
       });
 
       Composite.add(engine.world, [...walls, ...bodies.values()]);
@@ -316,18 +326,28 @@ export default function Skills() {
 
       Engine.update(engine, 1000 / 60);
 
-      arena.querySelectorAll<HTMLElement>(".gravity-pill").forEach((el) => {
-        const body = bodies.get(el.dataset.name ?? "");
-        if (!body) return;
+      sprites.forEach(({ el, body, w, h }) => {
+        // A pill that escapes (or whose maths blew up) is dropped back in from
+        // the top, at a random spot so returning pills never land on each other
+        const lost =
+          !Number.isFinite(body.position.x) ||
+          !Number.isFinite(body.position.y) ||
+          body.position.y > arenaHeight + 120 ||
+          body.position.x < -120 ||
+          body.position.x > arenaWidth + 120;
 
-        // Anything flung out of the box drops back in from the top
-        if (body.position.y > arena.clientHeight + 200) {
-          Body.setPosition(body, { x: arena.clientWidth / 2, y: -80 });
+        if (lost) {
+          Body.setPosition(body, {
+            x: random(80, Math.max(81, arenaWidth - 80)),
+            y: random(-420, -80),
+          });
           Body.setVelocity(body, { x: 0, y: 0 });
+          Body.setAngularVelocity(body, 0);
+          Body.setAngle(body, random(-0.4, 0.4));
         }
 
-        el.style.transform = `translate(${body.position.x - el.offsetWidth / 2}px, ${
-          body.position.y - el.offsetHeight / 2
+        el.style.transform = `translate(${body.position.x - w / 2}px, ${
+          body.position.y - h / 2
         }px) rotate(${body.angle}rad)`;
       });
     };
@@ -374,8 +394,8 @@ export default function Skills() {
         const body = bodiesRef.current.get(tool.name);
         if (!body) return;
 
-        Matter.Body.setVelocity(body, { x: random(-5, 5), y: random(-17, -10) });
-        Matter.Body.setAngularVelocity(body, random(-0.25, 0.25));
+        Matter.Body.setVelocity(body, { x: random(-4, 4), y: random(-14, -8) });
+        Matter.Body.setAngularVelocity(body, random(-0.2, 0.2));
       });
     },
     [tools],

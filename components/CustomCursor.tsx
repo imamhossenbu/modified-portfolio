@@ -100,9 +100,14 @@ export default function CustomCursor() {
     };
 
     // The page can move under a still pointer; keep the ring on its button
+    let scrollFrame = 0;
     const handleScroll = () => {
-      resolve(document.elementFromPoint(pointer.x, pointer.y));
-      follow();
+      if (scrollFrame || !shown) return;
+      scrollFrame = requestAnimationFrame(() => {
+        scrollFrame = 0;
+        resolve(document.elementFromPoint(pointer.x, pointer.y));
+        follow();
+      });
     };
 
     const handleDown = () => gsap.to(ring, { scale: 0.86, duration: 0.2 });
@@ -124,6 +129,7 @@ export default function CustomCursor() {
       window.removeEventListener("mousedown", handleDown);
       window.removeEventListener("mouseup", handleUp);
       document.documentElement.removeEventListener("mouseleave", handleLeave);
+      cancelAnimationFrame(scrollFrame);
       gsap.killTweensOf(ring);
     };
   }, []);

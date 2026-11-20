@@ -9,7 +9,6 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ThemeProvider from "@/provider/ThemeProvider";
 import CustomCursor from "@/components/CustomCursor";
-import BackgroundParticles from "@/components/BackgroundParticles";
 import SmoothScroll from "@/components/SmoothScroll";
 import FloatingCTA from "@/components/FloatingCTA";
 import AnimatedBackground from "@/components/AnimatedBackground";
@@ -55,7 +54,6 @@ export default function RootLayout({
             <Preloader />
             <CustomCursor />
             <Navbar />
-            <BackgroundParticles />
             <FloatingCTA/>
             {/* <AnimatedBackground /> */}
             <Toaster position="top-center" reverseOrder={false} />

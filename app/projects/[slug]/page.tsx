@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, ArrowUpRight, ExternalLink } from "lucide-react";
 import { SiGithub } from "react-icons/si";
 import { projectCategories, projects } from "@/data/projects";
-import BrowserFrame, { displayHost } from "@/components/BrowserFrame";
+import { projectShots } from "@/data/projectShots";
+import { displayHost } from "@/components/BrowserFrame";
+import ProjectGallery from "@/components/ProjectGallery";
 import RevealScope from "@/components/motion/RevealScope";
 
 type ProjectDetailsPageProps = {
@@ -49,6 +50,7 @@ export default async function ProjectDetailsPage({
   const next = projects[(index + 1) % projects.length];
   const isMobile = project.category === "mobile";
   const hasLive = Boolean(project.live) && project.live !== "#";
+  const extraShots = projectShots[project.slug];
 
   const categoryLabel =
     projectCategories.find((item) => item.value === project.category)?.label ??
@@ -130,16 +132,13 @@ export default async function ProjectDetailsPage({
         </header>
 
         <div className="detail-shot" data-reveal>
-          <BrowserFrame url={hasLive ? displayHost(project.live) : undefined}>
-            <Image
-              src={project.image}
-              alt={`${project.title} screenshot`}
-              fill
-              preload
-              sizes="(max-width: 1280px) 100vw, 1280px"
-              className={isMobile ? "object-contain" : "object-cover object-top"}
-            />
-          </BrowserFrame>
+          <ProjectGallery
+            title={project.title}
+            shots={[project.image, ...(extraShots?.desktop ?? [])]}
+            mobile={extraShots?.mobile}
+            url={hasLive ? displayHost(project.live) : undefined}
+            contain={isMobile}
+          />
         </div>
 
         <div className="detail-grid">
