@@ -2750,8 +2750,8 @@ pre,
 .vmarquee-item {
   display: inline-flex;
   align-items: center;
-  gap: clamp(18px, 3vw, 44px);
-  padding-right: clamp(18px, 3vw, 44px);
+  gap: clamp(12px, 1.6vw, 26px);
+  padding-right: clamp(28px, 5vw, 80px);
   font-family: var(--font-space-grotesk), sans-serif;
   font-size: clamp(2.4rem, 8vw, 7rem);
   font-weight: 700;
@@ -2767,12 +2767,11 @@ pre,
   -webkit-text-stroke: 1.5px var(--foreground-muted);
 }
 
-.vmarquee-star {
+.vmarquee-icon {
   flex: none;
-  width: 0.42em;
-  height: 0.42em;
-  fill: var(--accent);
-  animation: heroSpin 9s linear infinite;
+  width: 0.62em;
+  height: 0.62em;
+  color: var(--accent);
 }
 
 /* ---------- Scroll-lit statement ---------- */
@@ -2821,7 +2820,6 @@ pre,
 
 @media (prefers-reduced-motion: reduce) {
   .hero-x-badge-ring,
-  .vmarquee-star,
   .hero-x-status i::after,
   .hero-x-scroll span::after {
     animation: none;
