@@ -4,7 +4,15 @@ import { useEffect, useRef } from "react";
 import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { ArrowRight, Briefcase, Code2, Sparkles } from "lucide-react";
+import {
+  ArrowRight,
+  Briefcase,
+  Code2,
+  Globe,
+  Server,
+  Smartphone,
+  Sparkles,
+} from "lucide-react";
 import SectionHead from "@/components/SectionHead";
 import ScrollWords from "@/components/motion/ScrollWords";
 import { useReveal } from "@/components/motion/useReveal";
@@ -43,6 +51,30 @@ const focus = [
   { label: "Clean UI", icon: Sparkles },
   { label: "Projects", icon: Briefcase },
   { label: "Full Stack", icon: Code2 },
+];
+
+/* What the work covers, grounded in the stack and projects on this site. */
+const services = [
+  {
+    title: "Web applications",
+    text: "Responsive, fast full stack apps with Next.js, React and TypeScript.",
+    icon: Globe,
+  },
+  {
+    title: "Backend & APIs",
+    text: "REST APIs, real-time features and databases with Node.js, Express and NestJS.",
+    icon: Server,
+  },
+  {
+    title: "Mobile apps",
+    text: "Cross-platform apps built with Flutter, Dart and Firebase.",
+    icon: Smartphone,
+  },
+  {
+    title: "UI & motion",
+    text: "Clean interfaces, reusable components and smooth GSAP animation.",
+    icon: Sparkles,
+  },
 ];
 
 const facts = [
@@ -181,7 +213,17 @@ export default function About() {
           </div>
 
           <div className="about-id-bio">
+            <p className="sec-kicker" data-reveal>
+              Who I am
+            </p>
+
             <h3 data-reveal>Hi, I&apos;m Imam Hossen</h3>
+
+            <p className="about-id-lead" data-reveal>
+              I work full-time at Adsfixter building e-commerce SaaS products,
+              while completing my BSc in Computer Science &amp; Engineering at
+              the University of Barishal.
+            </p>
 
             <p data-reveal>
               I am a Full Stack Developer focused on creating responsive, fast,
@@ -204,6 +246,22 @@ export default function About() {
                 </li>
               ))}
             </ul>
+
+            <p className="sec-kicker about-do-kicker" data-reveal>
+              What I do
+            </p>
+
+            <div className="about-do">
+              {services.map(({ title, text, icon: Icon }, index) => (
+                <div key={title} className="about-do-item" data-reveal>
+                  <span className="row-line" data-line />
+                  <span className="about-do-num">0{index + 1}</span>
+                  <Icon className="about-do-icon" />
+                  <h4>{title}</h4>
+                  <p>{text}</p>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
 
@@ -220,14 +278,16 @@ export default function About() {
           <div ref={trackRef} className="edu-x-track">
             {education.map((item, index) => (
               <article key={item.degree} className="edu-x-card">
-                <span className="edu-x-year" aria-hidden="true">
-                  {item.start}
-                </span>
+                <div className="edu-x-top">
+                  <p className="edu-x-when">
+                    <i>0{index + 1}</i>
+                    {item.year}
+                  </p>
+                  <span className="edu-x-year" aria-hidden="true">
+                    {item.start}
+                  </span>
+                </div>
 
-                <p className="edu-x-when">
-                  <i>0{index + 1}</i>
-                  {item.year}
-                </p>
                 <h4>{item.degree}</h4>
                 <p className="edu-x-inst">{item.institute}</p>
                 <p className="edu-x-details">{item.details}</p>

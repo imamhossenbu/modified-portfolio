@@ -1,12 +1,8 @@
 "use client";
 
-import { useEffect, useRef } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useRef } from "react";
 import SectionHead from "@/components/SectionHead";
 import { useReveal } from "@/components/motion/useReveal";
-
-gsap.registerPlugin(ScrollTrigger);
 
 const experience = {
   role: "Full Stack Developer",
@@ -19,20 +15,25 @@ const experience = {
     {
       title: "E-commerce SaaS platform",
       text: "Developing a modern e-commerce SaaS platform focusing on feature scalability, dashboard metrics, and interactive controls.",
+      tags: ["Feature scalability", "Dashboard metrics", "Interactive controls"],
     },
     {
       title: "Digital commerce systems",
       text: "Engineered full-featured digital e-commerce web systems with secure database workflows and dynamic management panels.",
+      tags: ["Secure database workflows", "Dynamic management panels"],
     },
     {
       title: "Corporate websites",
       text: "Designed and optimized core corporate websites for company presence and marketing deployment.",
+      tags: ["Company presence", "Marketing deployment"],
     },
     {
       title: "Motion & UI architecture",
       text: "Crafted premium fluid animations and reusable UI component architectures using Next.js, Tailwind, and GSAP.",
+      tags: ["Next.js", "Tailwind", "GSAP"],
     },
   ],
+  nowTags: ["Scaling", "Security", "Real-time sync", "Automated testing"],
   now: "Currently focusing on scaling the SaaS platform, improving system security with proper server architecture, real-time sync systems, and standard automated testing workflows.",
   stats: [
     { label: "Role", value: "Full Stack" },
@@ -43,37 +44,7 @@ const experience = {
 
 export default function Experience() {
   const sectionRef = useRef<HTMLElement | null>(null);
-  const stackRef = useRef<HTMLDivElement | null>(null);
   useReveal(sectionRef);
-
-  // Each card sticks, and sinks back a little as the next one slides over it
-  useEffect(() => {
-    const stack = stackRef.current;
-    if (!stack) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-
-    const ctx = gsap.context(() => {
-      const cards = gsap.utils.toArray<HTMLElement>(".xp-card");
-
-      cards.forEach((card, index) => {
-        const next = cards[index + 1];
-        if (!next) return;
-
-        gsap.to(card.querySelector(".xp-card-inner"), {
-          scale: 1 - (cards.length - 1 - index) * 0.035,
-          ease: "none",
-          scrollTrigger: {
-            trigger: next,
-            start: "top bottom",
-            end: "top 22%",
-            scrub: true,
-          },
-        });
-      });
-    }, stack);
-
-    return () => ctx.revert();
-  }, []);
 
   return (
     <section id="experience" ref={sectionRef} className="sec">
@@ -114,38 +85,55 @@ export default function Experience() {
           </div>
         </div>
 
-        <div ref={stackRef} className="xp-stack">
+        {/* Layered cards: each sticks a step lower, so every title stays readable */}
+        <div className="xp-stack">
           {experience.points.map((point, index) => (
             <article
               key={point.title}
               className="xp-card"
-              style={{ top: `${96 + index * 14}px` }}
+              style={{ "--layer": index } as React.CSSProperties}
             >
               <div className={`xp-card-inner tone-${index % 3}`}>
-                <span className="xp-card-num">0{index + 1}</span>
-                <div>
+                <header className="xp-card-head">
+                  <span className="xp-card-num">0{index + 1}</span>
                   <h4>{point.title}</h4>
+                  <span className="xp-card-tag">What I worked on</span>
+                </header>
+
+                <div className="xp-card-body">
                   <p>{point.text}</p>
+                  <ul>
+                    {point.tags.map((tag) => (
+                      <li key={tag}>{tag}</li>
+                    ))}
+                  </ul>
                 </div>
-                <span className="xp-card-tag">What I worked on</span>
               </div>
             </article>
           ))}
 
           <article
             className="xp-card"
-            style={{ top: `${96 + experience.points.length * 14}px` }}
+            style={{ "--layer": experience.points.length } as React.CSSProperties}
           >
             <div className="xp-card-inner is-now">
-              <span className="xp-card-num">Now</span>
-              <div>
+              <header className="xp-card-head">
+                <span className="xp-card-num">Now</span>
                 <h4>What I&apos;m focused on</h4>
+                <span className="xp-card-tag">
+                  <i />
+                  In progress
+                </span>
+              </header>
+
+              <div className="xp-card-body">
                 <p>{experience.now}</p>
+                <ul>
+                  {experience.nowTags.map((tag) => (
+                    <li key={tag}>{tag}</li>
+                  ))}
+                </ul>
               </div>
-              <span className="xp-card-tag">
-                <i />
-                In progress
-              </span>
             </div>
           </article>
         </div>

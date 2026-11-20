@@ -5898,11 +5898,92 @@ pre,
   letter-spacing: 0.12em;
 }
 
+.about-id-bio > .sec-kicker {
+  margin-bottom: 12px;
+}
+
 .about-id-bio h3 {
-  margin-bottom: 18px;
-  font-size: clamp(1.25rem, 1.8vw, 1.5rem);
+  margin-bottom: 16px;
+  font-size: clamp(1.7rem, 3vw, 2.5rem);
   font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.035em;
   color: var(--foreground);
+}
+
+/* Lead paragraph: larger and darker than the body copy */
+.about-id-bio .about-id-lead {
+  max-width: 34rem;
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(1.1rem, 1.6vw, 1.35rem);
+  font-weight: 600;
+  line-height: 1.45;
+  letter-spacing: -0.015em;
+  color: var(--foreground);
+}
+
+.about-id-bio .about-do-kicker {
+  margin-top: 40px;
+  margin-bottom: 0;
+}
+
+.about-do {
+  display: grid;
+  gap: 0 32px;
+  margin-top: 14px;
+}
+
+.about-do-item {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto auto 1fr;
+  gap: 4px 12px;
+  align-items: center;
+  padding: 18px 0;
+}
+
+.about-do-num {
+  font-family: var(--font-mono), monospace;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--foreground-faint);
+}
+
+.about-do-icon {
+  width: 18px;
+  height: 18px;
+  color: var(--accent);
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.about-do-item h4 {
+  font-family: var(--font-display), sans-serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--foreground);
+  transition: color 0.3s ease;
+}
+
+.about-id-bio .about-do-item p {
+  grid-column: 1 / -1;
+  margin: 2px 0 0;
+  font-size: 14px;
+  line-height: 1.65;
+}
+
+.about-do-item:hover h4 {
+  color: var(--accent);
+}
+
+.about-do-item:hover .about-do-icon {
+  transform: rotate(-12deg) scale(1.2);
+}
+
+@media (min-width: 640px) {
+  .about-do {
+    grid-template-columns: 1fr 1fr;
+  }
 }
 
 .about-id-bio p {
@@ -5953,20 +6034,24 @@ pre,
   transition: background 0.4s ease, color 0.4s ease, border-color 0.4s ease;
 }
 
-/* The start year, oversized, sitting behind the text */
+.edu-x-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+/* The start year sits in its own corner, never behind the text */
 .edu-x-year {
-  position: absolute;
-  right: -0.04em;
-  bottom: -0.2em;
   font-family: var(--font-display), sans-serif;
-  font-size: clamp(6rem, 15vw, 12rem);
+  font-size: clamp(2.6rem, 5vw, 4.4rem);
   font-weight: 700;
-  line-height: 1;
-  letter-spacing: -0.06em;
-  color: var(--foreground);
-  opacity: 0.06;
-  pointer-events: none;
-  transition: opacity 0.4s ease, color 0.4s ease;
+  line-height: 0.85;
+  letter-spacing: -0.05em;
+  color: var(--panel);
+  -webkit-text-stroke: 2px var(--foreground-faint);
+  paint-order: stroke fill;
+  transition: color 0.4s ease, -webkit-text-stroke-color 0.4s ease;
 }
 
 .edu-x-when {
@@ -5988,7 +6073,7 @@ pre,
 .edu-x-card h4 {
   position: relative;
   max-width: 18ch;
-  margin-top: clamp(28px, 5vw, 64px);
+  margin-top: clamp(22px, 3.4vw, 44px);
   font-family: var(--font-display), sans-serif;
   font-size: clamp(1.35rem, 2.4vw, 2rem);
   font-weight: 700;
@@ -6032,7 +6117,7 @@ pre,
 
 .edu-x-card:hover .edu-x-year {
   color: var(--accent);
-  opacity: 0.9;
+  -webkit-text-stroke-color: var(--accent);
 }
 
 .edu-x-progress {
@@ -6054,7 +6139,22 @@ pre,
   .about-id {
     grid-template-columns: 380px 1fr;
     gap: 90px;
-    align-items: center;
+    align-items: start;
+  }
+
+  /* The ID card stays put while the bio scrolls past it */
+  .idcard-wrap {
+    position: sticky;
+    top: 100px;
+  }
+
+  /* Short enough to fit under the navbar on laptop screens */
+  .idcard-photo {
+    aspect-ratio: 1 / 0.72;
+  }
+
+  .about-id-bio {
+    padding-bottom: 40px;
   }
 
   .edu-x-hint {
@@ -6070,7 +6170,7 @@ pre,
 
   .edu-x-card {
     width: min(48vw, 640px);
-    min-height: 340px;
+    min-height: 300px;
   }
 
   .edu-x-progress {
@@ -6087,25 +6187,35 @@ pre,
 }
 
 .xp-stack {
+  --layer-step: 52px;
   display: grid;
-  gap: 18px;
+  /* Every card is as tall as the tallest one, so each layer fully covers
+     the one beneath it and only the header strips are left showing */
+  grid-auto-rows: 1fr;
+  gap: 20px;
+  /* Room to scroll with the whole stack assembled before it lets go */
+  padding-bottom: 26vh;
 }
 
+/* Each card sticks one step lower than the one before it, so the stack
+   reads as layers and every header strip stays in view */
 .xp-card {
   position: sticky;
+  top: calc(92px + var(--layer, 0) * var(--layer-step));
+  display: flex;
 }
 
 .xp-card-inner {
-  display: grid;
-  gap: 18px;
-  min-height: 250px;
-  padding: clamp(22px, 3.4vw, 44px);
-  border-radius: 24px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: clamp(280px, 40vh, 360px);
+  overflow: hidden;
+  border-radius: 22px;
   border: 1px solid var(--panel-border);
   background: var(--panel);
   color: var(--foreground);
-  transform-origin: center top;
-  will-change: transform;
+  box-shadow: 0 -14px 30px -22px rgba(0, 0, 0, 0.45);
 }
 
 .xp-card-inner.tone-1 {
@@ -6121,17 +6231,27 @@ pre,
 }
 
 .xp-card-inner.is-now {
-  border-style: dashed;
-  border-color: var(--foreground);
+  border: 1px dashed var(--foreground);
   background: var(--background);
 }
 
+/* Header strip: the part that stays visible once the next card slides over */
+.xp-card-head {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  height: var(--layer-step);
+  padding: 0 clamp(16px, 2.4vw, 30px);
+}
+
 .xp-card-num {
+  flex: none;
+  min-width: 2.2em;
   font-family: var(--font-display), sans-serif;
-  font-size: clamp(2.4rem, 6vw, 4.6rem);
+  font-size: 1.5rem;
   font-weight: 700;
-  line-height: 0.9;
-  letter-spacing: -0.05em;
+  line-height: 1;
+  letter-spacing: -0.04em;
   color: var(--accent);
 }
 
@@ -6139,28 +6259,24 @@ pre,
   color: #ffffff;
 }
 
-.xp-card-inner h4 {
+.xp-card-head h4 {
+  flex: 1;
+  overflow: hidden;
   font-family: var(--font-display), sans-serif;
-  font-size: clamp(1.3rem, 2.4vw, 2rem);
+  font-size: clamp(1.02rem, 1.7vw, 1.35rem);
   font-weight: 700;
-  line-height: 1.1;
-  letter-spacing: -0.03em;
-}
-
-.xp-card-inner p {
-  max-width: 42rem;
-  margin-top: 10px;
-  line-height: 1.75;
-  opacity: 0.78;
+  letter-spacing: -0.02em;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .xp-card-tag {
-  display: inline-flex;
+  display: none;
   align-items: center;
   gap: 8px;
-  align-self: end;
+  flex: none;
   font-family: var(--font-mono), monospace;
-  font-size: 11px;
+  font-size: 10.5px;
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -6174,6 +6290,41 @@ pre,
   background: var(--ok);
 }
 
+.xp-card-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 22px;
+  padding: 10px clamp(16px, 2.4vw, 30px) clamp(20px, 2.6vw, 30px);
+}
+
+.xp-card-body p {
+  max-width: 46rem;
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(1.15rem, 2.1vw, 1.7rem);
+  font-weight: 600;
+  line-height: 1.35;
+  letter-spacing: -0.02em;
+}
+
+.xp-card-body ul {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  gap: 8px;
+}
+
+.xp-card-body li {
+  padding: 7px 14px;
+  border-radius: 999px;
+  border: 1px solid currentColor;
+  font-family: var(--font-mono), monospace;
+  font-size: 11.5px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
 @media (min-width: 768px) {
   .xp-head {
     grid-template-columns: 1fr 1fr;
@@ -6181,9 +6332,20 @@ pre,
     align-items: end;
   }
 
-  .xp-card-inner {
-    grid-template-columns: 180px 1fr auto;
-    align-items: start;
-    min-height: 280px;
+  .xp-stack {
+    --layer-step: 60px;
+  }
+
+  .xp-card-tag {
+    display: inline-flex;
+  }
+
+  .xp-card-num {
+    font-size: 1.9rem;
+  }
+
+  .xp-card-body {
+    padding-top: 18px;
+    padding-left: calc(clamp(16px, 2.4vw, 30px) + 2.2em * 1.9 + 14px);
   }
 }
