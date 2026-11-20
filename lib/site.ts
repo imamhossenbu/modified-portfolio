@@ -6,7 +6,7 @@ export const site = {
   role: "Full Stack Developer",
   title: "Imam Hossen — Full Stack Developer",
   description:
-    "Imam Hossen is a Full Stack Developer from Barishal, Bangladesh, building responsive, fast and user-friendly web and mobile apps with Next.js, TypeScript, Node.js and Flutter.",
+    "Imam Hossen — Full Stack Developer in Barishal, Bangladesh. Fast, responsive web and mobile apps with Next.js, TypeScript, Node.js and Flutter.",
   email: "imam62310@gmail.com",
   phone: "+8801624994532",
   location: { city: "Barishal", country: "Bangladesh", countryCode: "BD" },

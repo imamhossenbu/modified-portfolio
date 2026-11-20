@@ -243,6 +243,7 @@ export default function Navbar() {
     <>
       <header ref={headerRef} className="nav-x-header">
         <nav
+          aria-label="Primary"
           className={`nav-x ${compact ? "is-compact" : ""} ${
             overFooter ? "is-over-footer" : ""
           } ${isOpen ? "is-open" : ""}`}

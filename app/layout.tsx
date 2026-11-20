@@ -141,6 +141,9 @@ export default function RootLayout({
         />
         <ThemeProvider>
           <SmoothScroll>
+            <a href="#main" className="skip-link">
+              Skip to content
+            </a>
             <Preloader />
             <CustomCursor />
             <Navbar />

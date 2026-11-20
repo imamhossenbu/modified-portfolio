@@ -5,6 +5,7 @@ import { ArrowLeft, ArrowUpRight, ExternalLink } from "lucide-react";
 import { SiGithub } from "react-icons/si";
 import { projectCategories, projects } from "@/data/projects";
 import { projectShots } from "@/data/projectShots";
+import { site } from "@/lib/site";
 import { displayHost } from "@/components/BrowserFrame";
 import ProjectGallery from "@/components/ProjectGallery";
 import RevealScope from "@/components/motion/RevealScope";
@@ -26,7 +27,7 @@ export async function generateMetadata({
   if (!project) return {};
 
   const url = `/projects/${project.slug}`;
-  const description = project.description.replace(/\*\*/g, "");
+  const description = toMetaDescription(project.description);
 
   return {
     title: `${project.title} — ${project.type}`,
@@ -47,6 +48,13 @@ export async function generateMetadata({
       images: [project.image],
     },
   };
+}
+
+/** Plain text, cut at a word boundary to the ~155 characters search results show. */
+function toMetaDescription(text: string, max = 155) {
+  const plain = text.replace(/\*\*/g, "").replace(/\s+/g, " ").trim();
+  if (plain.length <= max) return plain;
+  return `${plain.slice(0, plain.lastIndexOf(" ", max - 1)).replace(/[,.;:—-]+$/, "")}…`;
 }
 
 /** Project copy uses **double asterisks** for emphasis; render them as bold. */
@@ -96,8 +104,48 @@ export default async function ProjectDetailsPage({
       ? "Live / Download"
       : "Live Preview";
 
+  const pageUrl = `${site.url}/projects/${project.slug}`;
+
+  // Tells search engines what this page is and where it sits in the site
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "CreativeWork",
+        "@id": `${pageUrl}#project`,
+        name: project.title,
+        headline: `${project.title} — ${project.type}`,
+        description: project.description.replace(/\*\*/g, ""),
+        url: pageUrl,
+        image: `${site.url}${project.image}`,
+        genre: project.type,
+        keywords: project.tech.join(", "),
+        author: { "@id": `${site.url}/#person` },
+        creator: { "@id": `${site.url}/#person` },
+        ...(hasLive && !isMobile ? { sameAs: project.live } : {}),
+      },
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "Home", item: site.url },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: "Projects",
+            item: `${site.url}/#projects`,
+          },
+          { "@type": "ListItem", position: 3, name: project.title, item: pageUrl },
+        ],
+      },
+    ],
+  };
+
   return (
-    <main className="detail">
+    <main id="main" className="detail">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <RevealScope className="sec-inner">
         <Link href="/#projects" className="detail-back" data-reveal>
           <ArrowLeft size={16} />
@@ -178,7 +226,7 @@ export default async function ProjectDetailsPage({
 
             {project.tech?.length > 0 && (
               <div data-reveal>
-                <p className="sec-kicker">Technical Stack</p>
+                <h2 className="sec-kicker">Technical Stack</h2>
                 <ul className="detail-stack">
                   {project.tech.map((tech) => (
                     <li key={tech}>{tech}</li>
@@ -189,9 +237,9 @@ export default async function ProjectDetailsPage({
           </aside>
 
           <section>
-            <p className="sec-kicker" data-reveal>
+            <h2 className="sec-kicker" data-reveal>
               Key Features
-            </p>
+            </h2>
 
             {project.features.map((feature, featureIndex) => (
               <div key={feature} className="exp-x-point" data-reveal>

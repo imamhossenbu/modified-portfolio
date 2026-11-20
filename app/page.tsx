@@ -9,7 +9,7 @@ import VelocityMarquee from "@/components/motion/VelocityMarquee";
 
 export default function Home() {
   return (
-    <main>
+    <main id="main">
       <Hero />
       <VelocityMarquee />
       <About />
