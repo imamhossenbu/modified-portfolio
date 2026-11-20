@@ -23,12 +23,30 @@ export async function generateMetadata({
   const { slug } = await params;
   const project = projects.find((item) => item.slug === slug);
 
-  return project
-    ? {
-        title: `${project.title} | Imam Hossen`,
-        description: project.shortDescription,
-      }
-    : {};
+  if (!project) return {};
+
+  const url = `/projects/${project.slug}`;
+  const description = project.description.replace(/\*\*/g, "");
+
+  return {
+    title: `${project.title} — ${project.type}`,
+    description,
+    keywords: [project.title, project.type, ...project.tech],
+    alternates: { canonical: url },
+    openGraph: {
+      type: "article",
+      url,
+      title: `${project.title} — ${project.type}`,
+      description,
+      images: [{ url: project.image, alt: `${project.title} screenshot` }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${project.title} — ${project.type}`,
+      description,
+      images: [project.image],
+    },
+  };
 }
 
 /** Project copy uses **double asterisks** for emphasis; render them as bold. */

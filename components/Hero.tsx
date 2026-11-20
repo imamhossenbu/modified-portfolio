@@ -178,7 +178,7 @@ export default function Hero() {
         </div>
 
         <h1 className="hero-x-title">
-          <span className="sr-only">Imam Hossen</span>
+          <span className="sr-only">Imam Hossen — Full Stack Developer</span>
 
           <span className="hero-x-line hero-x-line-1">
             <Chars text="IMAM" />

@@ -97,16 +97,13 @@ export default function Insights() {
         <SectionHead
           index="05"
           label="How I Work"
-          align="center"
           title="From first idea to launch"
           description="A quick overview of my development journey, and the steps a project goes through with me."
         />
 
         <div ref={statsRef} className="stats-x is-three">
-          {stats.map((item, index) => (
+          {stats.map((item) => (
             <div key={item.label} className="stats-x-item" data-reveal>
-              <span className="row-line" data-line />
-              <span className="stats-x-num">0{index + 1}</span>
 
               <p className="stats-x-value">
                 {startCount ? <CountUp end={item.value} duration={2.4} /> : "0"}

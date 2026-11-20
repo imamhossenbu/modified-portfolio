@@ -1,7 +1,15 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { ArrowUpRight, Check, Copy, Mail, MapPin, Phone, Send } from "lucide-react";
+import {
+  ArrowUpRight,
+  Check,
+  Copy,
+  Mail,
+  MapPin,
+  Phone,
+  Send,
+} from "lucide-react";
 import { FaFacebook, FaGithub, FaLinkedinIn } from "react-icons/fa";
 import toast from "react-hot-toast";
 import SectionHead from "@/components/SectionHead";
@@ -91,7 +99,11 @@ export default function Contact() {
 
         {/* The form is written as a letter: fill in the blanks and send */}
         <form onSubmit={handleSubmit} className="letter">
-          <input type="hidden" name="subject" value={`Project enquiry: ${topic}`} />
+          <input
+            type="hidden"
+            name="subject"
+            value={`Project enquiry: ${topic}`}
+          />
 
           <p className="letter-line" data-reveal>
             Hello Imam, my name is{" "}
@@ -102,7 +114,12 @@ export default function Contact() {
             and I&apos;m looking for help with
           </p>
 
-          <div className="letter-topics" data-reveal role="radiogroup" aria-label="Project type">
+          <div
+            className="letter-topics"
+            data-reveal
+            role="radiogroup"
+            aria-label="Project type"
+          >
             {TOPICS.map((item) => (
               <button
                 key={item}
@@ -121,10 +138,17 @@ export default function Contact() {
             You can reach me at{" "}
             <label className="letter-blank is-wide">
               <span className="sr-only">Your email</span>
-              <input type="email" name="email" placeholder="your email address" required />
+              <input
+                type="email"
+                name="email"
+                placeholder="your email address"
+                required
+              />
             </label>
-            <span className="letter-dot">.</span> Here&apos;s a little more about
-            it:
+          </p>
+
+          <p className="letter-line" data-reveal>
+            Here&apos;s a little more about it:
           </p>
 
           <label className="letter-message" data-reveal>
@@ -138,7 +162,11 @@ export default function Contact() {
           </label>
 
           <div className="letter-foot" data-reveal>
-            <button type="submit" className="btn-x is-accent" disabled={loading}>
+            <button
+              type="submit"
+              className="btn-x is-accent"
+              disabled={loading}
+            >
               <span
                 className="btn-x-label"
                 data-text={loading ? "Sending…" : "Send Message"}

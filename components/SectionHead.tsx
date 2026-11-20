@@ -5,7 +5,7 @@ type SectionHeadProps = {
   label: string;
   title: string;
   description?: string;
-  /** Stack and centre the header instead of the default left-hand layout. */
+  /** Headers are centred by default; "left" puts index and title side by side. */
   align?: "left" | "center";
 };
 
@@ -15,7 +15,7 @@ export default function SectionHead({
   label,
   title,
   description,
-  align = "left",
+  align = "center",
 }: SectionHeadProps) {
   return (
     <header className={`sec-head ${align === "center" ? "is-center" : ""}`}>

@@ -2,158 +2,142 @@
 
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
-import { MessageCircleMore, X, Phone } from "lucide-react";
-import { SiWhatsapp, SiMessenger } from "react-icons/si";
+import { ArrowUpRight, Check, Copy, MessageCircle, Phone, X } from "lucide-react";
+import { SiMessenger, SiWhatsapp } from "react-icons/si";
+import toast from "react-hot-toast";
 
-const contactButtons = [
+const EMAIL = "imam62310@gmail.com";
+
+const CHANNELS = [
   {
     name: "WhatsApp",
+    detail: "Chat on WhatsApp",
     href: "https://wa.me/8801624994532",
     icon: SiWhatsapp,
-    bg: "bg-[#25D366]",
+    color: "#25D366",
+    external: true,
   },
   {
     name: "Messenger",
+    detail: "Message on Facebook",
     href: "https://m.me/imamhossainbu",
     icon: SiMessenger,
-    bg: "bg-[#0084FF]",
+    color: "#0084FF",
+    external: true,
   },
   {
     name: "Call",
+    detail: "+880 1624-994532",
     href: "tel:+8801624994532",
     icon: Phone,
-    bg: "bg-[var(--accent)]",
+    color: "#ff4d00",
+    external: false,
   },
 ];
 
+/**
+ * "Let's talk" launcher: a dark pill in the corner that unfolds into a small
+ * card listing every way to reach out, revealed in a circle from the button.
+ */
 export default function FloatingCTA() {
   const [open, setOpen] = useState(false);
-
-  const wrapperRef = useRef<HTMLDivElement | null>(null);
-  const mainBtnRef = useRef<HTMLButtonElement | null>(null);
+  const [copied, setCopied] = useState(false);
+  const wrapRef = useRef<HTMLDivElement | null>(null);
+  const panelRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    const floatAnim = gsap.to(mainBtnRef.current, {
-      y: -5,
-      repeat: -1,
-      yoyo: true,
-      duration: 1.7,
-      ease: "sine.inOut",
-    });
+    if (!open) return;
+
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        panelRef.current,
+        { clipPath: "circle(0% at 100% 100%)" },
+        { clipPath: "circle(150% at 100% 100%)", duration: 0.7, ease: "power3.out" },
+      );
+      gsap.fromTo(
+        ".talk-row, .talk-head, .talk-copy",
+        { y: 16, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.5, stagger: 0.06, delay: 0.12, ease: "power3.out" },
+      );
+    }, panelRef);
+
+    const handleOutside = (e: MouseEvent) => {
+      if (wrapRef.current && !wrapRef.current.contains(e.target as Node)) setOpen(false);
+    };
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+
+    document.addEventListener("mousedown", handleOutside);
+    document.addEventListener("keydown", handleKey);
 
     return () => {
-      floatAnim.kill();
+      ctx.revert();
+      document.removeEventListener("mousedown", handleOutside);
+      document.removeEventListener("keydown", handleKey);
     };
-  }, []);
-
-  useEffect(() => {
-    if (open) {
-      gsap.fromTo(
-        ".floating-contact-item",
-        {
-          opacity: 0,
-          y: 22,
-          scale: 0.65,
-        },
-        {
-          opacity: 1,
-          y: 0,
-          scale: 1,
-          stagger: 0.08,
-          duration: 0.42,
-          ease: "back.out(1.8)",
-        },
-      );
-    }
   }, [open]);
 
-  useEffect(() => {
-    function handleClickOutside(event: MouseEvent) {
-      if (
-        wrapperRef.current &&
-        !wrapperRef.current.contains(event.target as Node)
-      ) {
-        setOpen(false);
-      }
+  const copyEmail = async () => {
+    try {
+      await navigator.clipboard.writeText(EMAIL);
+      setCopied(true);
+      toast.success("Email copied");
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      toast.error("Could not copy. Please copy it manually.");
     }
-
-    document.addEventListener("mousedown", handleClickOutside);
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
+  };
 
   return (
-    <div
-      ref={wrapperRef}
-      className="fixed bottom-5 right-5 z-50 flex flex-col items-center gap-4 sm:bottom-8 sm:right-8"
-    >
+    <div ref={wrapRef} className="talk">
       {open && (
-        <div className="flex flex-col items-center gap-3">
-          {contactButtons.map((item) => {
-            const Icon = item.icon;
+        <div ref={panelRef} className="talk-panel" role="dialog" aria-label="Contact options">
+          <div className="talk-head">
+            <p>Let&apos;s talk</p>
+            <span>Pick whichever is easiest for you.</span>
+          </div>
 
-            return (
-              <a
-                key={item.name}
-                href={item.href}
-                target={item.name === "Call" ? "_self" : "_blank"}
-                rel="noopener noreferrer"
-                aria-label={item.name}
-                className={`
-                  floating-contact-item group relative flex h-14 w-14 items-center justify-center
-                  rounded-full ${item.bg}
-                  text-white transition-all duration-300
-                  hover:-translate-y-1 hover:scale-110 active:scale-95
-                  shadow-none
-                `}
-              >
-                <span className="absolute inset-0 rounded-full bg-white/15 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+          {CHANNELS.map(({ name, detail, href, icon: Icon, color, external }) => (
+            <a
+              key={name}
+              href={href}
+              target={external ? "_blank" : undefined}
+              rel="noopener noreferrer"
+              className="talk-row"
+              style={{ "--c": color } as React.CSSProperties}
+            >
+              <span className="talk-row-icon">
+                <Icon />
+              </span>
+              <span className="talk-row-text">
+                <b>{name}</b>
+                <i>{detail}</i>
+              </span>
+              <ArrowUpRight className="talk-row-arrow" />
+            </a>
+          ))}
 
-                <Icon size={22} className="relative z-10" />
-
-                <span
-                  className="
-                    pointer-events-none absolute right-[68px] top-1/2 -translate-y-1/2
-                    whitespace-nowrap rounded-full bg-[var(--panel)] px-3 py-1.5
-                    text-xs font-medium text-[var(--foreground)] opacity-0
-                    transition-all duration-300 group-hover:right-[74px] group-hover:opacity-100
-                    border border-[var(--panel-border)] shadow-none
-                  "
-                >
-                  {item.name}
-                </span>
-              </a>
-            );
-          })}
+          <button type="button" onClick={copyEmail} className="talk-copy">
+            {copied ? <Check size={14} /> : <Copy size={14} />}
+            <span>{copied ? "Copied" : EMAIL}</span>
+          </button>
         </div>
       )}
 
       <button
-        ref={mainBtnRef}
-        onClick={() => setOpen((prev) => !prev)}
-        aria-label="Open contact options"
-        className="
-          group relative flex h-16 w-16 items-center justify-center overflow-hidden
-          rounded-full bg-[var(--accent)]
-          text-white transition-all duration-300 hover:scale-110 active:scale-95
-          shadow-none
-        "
+        type="button"
+        onClick={() => setOpen((value) => !value)}
+        className={`talk-btn ${open ? "is-open" : ""}`}
+        aria-label={open ? "Close contact options" : "Open contact options"}
+        aria-expanded={open}
       >
-        <span className="absolute inset-0 rounded-full bg-white/20 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-
-        {!open && (
-          <span className="absolute inset-0 rounded-full border border-[var(--accent)]/40 animate-ping" />
-        )}
-
-        <span className="relative z-10 flex h-12 w-12 items-center justify-center rounded-full bg-white/15 backdrop-blur-md">
-          {open ? (
-            <X className="h-6 w-6 stroke-[2.5]" />
-          ) : (
-            <MessageCircleMore className="h-6 w-6 stroke-[2.5]" />
-          )}
+        <span className="talk-btn-icon">
+          <MessageCircle />
+          <X />
         </span>
+        <span className="talk-btn-label">{open ? "Close" : "Let's talk"}</span>
+        <i className="talk-dot" />
       </button>
     </div>
   );
