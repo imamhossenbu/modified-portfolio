@@ -14,6 +14,10 @@ import {
   TestTube2,
   Zap,
   Smartphone,
+  Layers,
+  Network,
+  HardDrive,
+  KeyRound,
 } from "lucide-react";
 import {
   SiNextdotjs,
@@ -51,6 +55,8 @@ import {
   SiGooglecolab,
   SiFlutter,
   SiDart,
+  SiMaterialdesign,
+  SiAndroid,
 } from "react-icons/si";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -75,6 +81,12 @@ const skillCategories = [
     skills: [
       { name: "Flutter", icon: SiFlutter },
       { name: "Dart", icon: SiDart },
+      { name: "Provider", icon: Layers },
+      { name: "Material 3", icon: SiMaterialdesign },
+      { name: "MVVM", icon: Network },
+      { name: "SharedPreferences", icon: HardDrive },
+      { name: "Secure Storage", icon: KeyRound },
+      { name: "Android", icon: SiAndroid },
       { name: "Firebase", icon: SiFirebase },
       { name: "REST API", icon: Server },
     ],
@@ -165,6 +177,12 @@ const SYMBOLS: Record<string, string> = {
   GSAP: "Gs",
   Flutter: "Fl",
   Dart: "Dt",
+  Provider: "Pv",
+  "Material 3": "M3",
+  MVVM: "Mv",
+  SharedPreferences: "Sp",
+  "Secure Storage": "Ss",
+  Android: "An",
   Firebase: "Fb",
   "REST API": "Api",
   "Node.js": "Nd",
