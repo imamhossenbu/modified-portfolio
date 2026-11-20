@@ -2,32 +2,11 @@
 
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
-import { Code2, Globe, Layers, Smartphone } from "lucide-react";
-import {
-  SiFlutter,
-  SiGreensock,
-  SiNestjs,
-  SiNextdotjs,
-  SiNodedotjs,
-  SiTypescript,
-} from "react-icons/si";
+import { Star } from "lucide-react";
 
-/* Every label is paired with the icon of the thing it names. */
 const ROWS = [
-  [
-    { label: "Full Stack Developer", icon: Code2 },
-    { label: "Next.js", icon: SiNextdotjs },
-    { label: "TypeScript", icon: SiTypescript },
-    { label: "Node.js", icon: SiNodedotjs },
-    { label: "NestJS", icon: SiNestjs },
-  ],
-  [
-    { label: "Web Apps", icon: Globe },
-    { label: "Mobile Apps", icon: Smartphone },
-    { label: "Flutter", icon: SiFlutter },
-    { label: "SaaS Products", icon: Layers },
-    { label: "GSAP Motion", icon: SiGreensock },
-  ],
+  ["Full Stack Developer", "Next.js", "TypeScript", "Node.js", "NestJS"],
+  ["Web Apps", "Mobile Apps", "Flutter", "SaaS Products", "GSAP Motion"],
 ];
 
 /**
@@ -108,13 +87,13 @@ export default function VelocityMarquee() {
         <div key={rowIndex} className="vmarquee-row">
           <div className="vmarquee-track">
             {[0, 1, 2, 3].map((copy) =>
-              row.map(({ label, icon: Icon }) => (
+              row.map((label) => (
                 <span
                   key={`${copy}-${label}`}
                   className={`vmarquee-item ${rowIndex === 1 ? "is-outline" : ""}`}
                 >
-                  <Icon className="vmarquee-icon" />
                   {label}
+                  <Star className="vmarquee-icon" fill="currentColor" />
                 </span>
               )),
             )}

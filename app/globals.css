@@ -2741,8 +2741,8 @@ pre,
 .vmarquee-item {
   display: inline-flex;
   align-items: center;
-  gap: clamp(12px, 1.6vw, 26px);
-  padding-right: clamp(28px, 5vw, 80px);
+  gap: clamp(18px, 3vw, 44px);
+  padding-right: clamp(18px, 3vw, 44px);
   font-family: var(--font-space-grotesk), sans-serif;
   font-size: clamp(2.4rem, 8vw, 7rem);
   font-weight: 700;
@@ -2760,8 +2760,8 @@ pre,
 
 .vmarquee-icon {
   flex: none;
-  width: 0.62em;
-  height: 0.62em;
+  width: 0.4em;
+  height: 0.4em;
   color: var(--accent);
 }
 
