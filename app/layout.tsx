@@ -16,6 +16,7 @@ import ScrollProgress from "@/components/ScrollProgress";
 import FloatingCTA from "@/components/FloatingCTA";
 import AnimatedBackground from "@/components/AnimatedBackground";
 import { Toaster } from "react-hot-toast";
+import Preloader from "@/components/motion/Preloader";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -59,6 +60,7 @@ export default function RootLayout({
       <body className="min-h-full">
         <ThemeProvider>
           <SmoothScroll>
+            <Preloader />
             <ScrollProgress />
             <CustomCursor />
             <Navbar />

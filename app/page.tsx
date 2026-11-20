@@ -6,11 +6,14 @@ import Experience from "@/components/Experience";
 import Testimonials from "@/components/Testimonials";
 import Insights from "@/components/Insights";
 import Contact from "@/components/Contact";
+import VelocityMarquee from "@/components/motion/VelocityMarquee";
 
 export default function Home() {
   return (
     <main className="space-y-10">
       <Hero />
+
+      <VelocityMarquee />
 
       <section id="about" >
         <About />

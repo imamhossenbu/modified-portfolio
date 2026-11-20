@@ -1,4 +1,5 @@
 import { Mail } from "lucide-react";
+import GiantName from "@/components/motion/GiantName";
 import { FaFacebook, FaGithub, FaLinkedinIn } from "react-icons/fa";
 
 const SOCIAL_LINKS = [
@@ -68,6 +69,8 @@ export default function Footer() {
           © {new Date().getFullYear()} Imam Hossen — All rights reserved.
         </p>
       </div>
+
+      <GiantName />
     </footer>
   );
 }

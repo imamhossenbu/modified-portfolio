@@ -3,6 +3,8 @@
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import Magnetic from "@/components/motion/Magnetic";
+import RevealText from "@/components/motion/RevealText";
 import { Mail, MapPin, Send, Phone } from "lucide-react";
 import { FaFacebook, FaGithub, FaLinkedinIn } from "react-icons/fa";
 import toast from "react-hot-toast";
@@ -74,9 +76,10 @@ export default function Contact() {
             Contact
           </p>
 
-          <h2 className="text-4xl font-bold text-[var(--foreground)] md:text-5xl">
-            Let&apos;s build something together
-          </h2>
+          <RevealText
+            className="text-4xl font-bold text-[var(--foreground)] md:text-5xl"
+            text="Let's build something together"
+          />
 
           <p className="hero-description mx-auto mt-5 max-w-2xl leading-8">
             Have a project idea, website, dashboard, landing page, or full stack
@@ -190,14 +193,16 @@ export default function Contact() {
               required
             />
 
-            <button
-              type="submit"
-              className="contact-submit-btn shadow-none"
-              disabled={loading}
-            >
-              {loading ? "Sending..." : "Send Message"}
-              <Send size={18} />
-            </button>
+            <Magnetic strength={0.25}>
+              <button
+                type="submit"
+                className="contact-submit-btn shadow-none"
+                disabled={loading}
+              >
+                {loading ? "Sending..." : "Send Message"}
+                <Send size={18} />
+              </button>
+            </Magnetic>
           </form>
         </div>
       </div>

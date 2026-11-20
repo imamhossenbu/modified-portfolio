@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import RevealText from "@/components/motion/RevealText";
 import {
   Code2,
   Database,
@@ -236,9 +237,10 @@ export default function Skills() {
             My Skills
           </p>
 
-          <h2 className="text-3xl font-bold text-[var(--foreground)] md:text-4xl">
-            Technologies I work with
-          </h2>
+          <RevealText
+            className="text-3xl font-bold text-[var(--foreground)] md:text-4xl"
+            text="Technologies I work with"
+          />
 
           <p className="hero-description mx-auto mt-5 max-w-2xl leading-8">
             I use modern frontend, backend, programming, database, data, and

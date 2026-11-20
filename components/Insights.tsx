@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import CountUp from "react-countup";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import RevealText from "@/components/motion/RevealText";
 import { Briefcase, Clock, Code2, Users } from "lucide-react";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -85,9 +86,10 @@ export default function Insights() {
             Insights
           </p>
 
-          <h2 className="text-4xl font-bold text-[var(--foreground)] md:text-5xl">
-            My work in numbers
-          </h2>
+          <RevealText
+            className="text-4xl font-bold text-[var(--foreground)] md:text-5xl"
+            text="My work in numbers"
+          />
 
           <p className="hero-description mx-auto mt-5 max-w-2xl leading-8">
             A quick overview of my development journey, project work, and

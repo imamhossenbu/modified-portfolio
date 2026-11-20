@@ -1,530 +1,318 @@
-// "use client";
-
-// import { useEffect, useRef } from "react";
-// import Image from "next/image";
-// import gsap from "gsap";
-// import { ReactTyped } from "react-typed";
-// import { Mail, Download } from "lucide-react";
-// import { FaGithub, FaLinkedinIn, FaFacebook } from "react-icons/fa";
-
-// export default function Hero() {
-//   const heroRef = useRef<HTMLElement | null>(null);
-//   const titleRef = useRef<HTMLDivElement | null>(null);
-//   const imageRef = useRef<HTMLDivElement | null>(null);
-//   const cardRef = useRef<HTMLDivElement | null>(null);
-//   const socialsRef = useRef<HTMLDivElement | null>(null);
-
-//   useEffect(() => {
-//     const ctx = gsap.context(() => {
-//       const tl = gsap.timeline();
-
-//       tl.fromTo(
-//         titleRef.current,
-//         { x: -70, opacity: 0, filter: "blur(10px)" },
-//         {
-//           x: 0,
-//           opacity: 1,
-//           filter: "blur(0px)",
-//           duration: 1,
-//           ease: "power4.out",
-//         },
-//       )
-//         .fromTo(
-//           imageRef.current,
-//           { y: 80, opacity: 0, scale: 0.88, rotate: -4 },
-//           {
-//             y: 0,
-//             opacity: 1,
-//             scale: 1,
-//             rotate: 0,
-//             duration: 1.1,
-//             ease: "back.out(1.4)",
-//           },
-//           "-=0.55",
-//         )
-//         .fromTo(
-//           cardRef.current,
-//           { x: 70, opacity: 0, filter: "blur(10px)" },
-//           {
-//             x: 0,
-//             opacity: 1,
-//             filter: "blur(0px)",
-//             duration: 1,
-//             ease: "power4.out",
-//           },
-//           "-=0.75",
-//         )
-//         .fromTo(
-//           socialsRef.current,
-//           { y: 30, opacity: 0 },
-//           {
-//             y: 0,
-//             opacity: 1,
-//             duration: 0.8,
-//             ease: "power3.out",
-//           },
-//           "-=0.45",
-//         );
-
-//       gsap.to(".hero-float-icon", {
-//         y: -16,
-//         duration: 2.2,
-//         repeat: -1,
-//         yoyo: true,
-//         ease: "sine.inOut",
-//         stagger: 0.25,
-//       });
-
-//       gsap.to(".hero-image-glow", {
-//         scale: 1.08,
-//         opacity: 0.75,
-//         duration: 2.8,
-//         repeat: -1,
-//         yoyo: true,
-//         ease: "sine.inOut",
-//       });
-//     }, heroRef);
-
-//     return () => ctx.revert();
-//   }, []);
-
-//   return (
-//     <section
-//       id="home"
-//       ref={heroRef}
-//       className="hero-section relative flex items-center overflow-visible px-5 py-28 md:px-10 lg:px-12"
-//     >
-//       <div className="hero-bg-orb hero-orb-one" />
-//       <div className="hero-bg-orb hero-orb-two" />
-
-//       <div className="mx-auto grid w-full max-w-7xl items-center gap-12 lg:grid-cols-[1fr_1.05fr_0.9fr]">
-//         <div ref={titleRef} className="z-10 text-center lg:text-left">
-//           <p className="mono-text designation-text mb-4 inline-flex rounded-full border border-[var(--accent-dim)] bg-[var(--panel-soft)] px-4 py-2 text-sm font-semibold text-[var(--accent)] backdrop-blur-md">
-//             Full Stack Developer
-//           </p>
-
-//           <h1 className="mb-5 text-4xl font-bold leading-tight text-[var(--foreground)] md:text-5xl">
-//             Hi, I&apos;m <br />
-//             <span className="gradient-text">Imam Hossen</span>
-//           </h1>
-
-//           <h2 className="hero-subtitle hero-typed-heading mb-6 text-2xl font-semibold md:text-3xl">
-//             <span>I build </span>
-
-//             <span className="hero-typed-text hero-typed-fixed">
-//               <ReactTyped
-//                 strings={[
-//                   "Modern Websites",
-//                   "Full Stack Apps",
-//                   "Clean UI Designs",
-//                   "Scalable Web Solutions",
-//                 ]}
-//                 typeSpeed={70}
-//                 backSpeed={40}
-//                 backDelay={1200}
-//                 loop
-//               />
-//             </span>
-//           </h2>
-
-//           <p className="hero-description mx-auto mb-8 max-w-xl text-base leading-8 lg:mx-0">
-//             I create responsive, fast, and user-friendly web applications using
-//             Next.js, TypeScript, Tailwind CSS, and modern backend technologies.
-//           </p>
-
-//           <div className="flex flex-wrap justify-center gap-4 lg:justify-start">
-//             <a
-//               href="#projects"
-//               className="primary-btn rounded-full px-7 py-3 text-sm font-bold shadow-none"
-//             >
-//               View Projects
-//             </a>
-//             <a
-//               href="#contact"
-//               className="hero-contact-btn rounded-full px-7 py-3 text-sm font-bold shadow-none"
-//             >
-//               Contact Me
-//             </a>
-//           </div>
-
-//           <div
-//             ref={socialsRef}
-//             className="mt-10 flex justify-center gap-4 lg:justify-start"
-//           >
-//             <a
-//               href="https://github.com/imamhossenbu"
-//               target="_blank"
-//               className="hero-social-link shadow-none"
-//               aria-label="Github"
-//             >
-//               <FaGithub size={18} />
-//             </a>
-
-//             <a
-//               href="https://www.linkedin.com/in/imam-hossen-ub"
-//               target="_blank"
-//               className="hero-social-link shadow-none"
-//               aria-label="LinkedIn"
-//             >
-//               <FaLinkedinIn size={18} />
-//             </a>
-
-//             <a
-//               href="mailto:imam62310@gmail.com"
-//               target="_blank"
-//               className="hero-social-link shadow-none"
-//               aria-label="Email"
-//             >
-//               <Mail size={18} />
-//             </a>
-//             <a
-//               href="https://www.facebook.com/imamhossainbu"
-//               target="_blank"
-//               className="hero-social-link shadow-none"
-//               aria-label="Facebook"
-//             >
-//               <FaFacebook size={18} />
-//             </a>
-//           </div>
-//         </div>
-
-//         <div ref={imageRef} className="hero-image-wrapper">
-//           <div className="hero-orbit">
-//             <span className="orbit-dot orbit-dot-one" />
-//             <span className="orbit-dot orbit-dot-two" />
-//             <span className="orbit-dot orbit-dot-three" />
-
-//             <div className="hero-image-inner">
-//               <Image
-//                 src="/images/imam.jpeg"
-//                 alt="Imam Hossen"
-//                 fill
-//                 priority
-//                 className="object-cover"
-//               />
-//             </div>
-//           </div>
-//         </div>
-
-//         <div ref={cardRef} className="z-10">
-//           <div className="soft-card rounded-4xl p-6 shadow-none">
-//             <div className="mb-5 h-1 w-14 rounded-full bg-gradient-to-r from-[var(--accent)] to-[var(--accent-soft)]" />
-
-//             <h3 className="mb-4 text-2xl font-bold text-[var(--foreground)]">
-//               Available for Projects
-//             </h3>
-
-//             <p className="hero-card-description mb-6 leading-7">
-//               I help businesses and individuals build professional web apps,
-//               portfolios, dashboards, and modern digital products.
-//             </p>
-
-//             <div className="space-y-4">
-//               <div className="hero-info-row shadow-none">
-//                 <span>Role</span>
-//                 <strong>Full Stack Developer</strong>
-//               </div>
-
-//               <div className="hero-info-row shadow-none">
-//                 <span>Focus</span>
-//                 <strong>Next.js + TypeScript</strong>
-//               </div>
-
-//               <div className="hero-info-row shadow-none">
-//                 <span>Status</span>
-//                 <strong className="text-[var(--accent)]">Open to Work</strong>
-//               </div>
-//             </div>
-
-//             <a
-//               href="/resume.pdf"
-//               download="Imam-Hossen-CV.pdf"
-//               className="mt-7 inline-flex w-full items-center justify-center gap-2 rounded-full primary-btn px-6 py-3 text-sm font-bold shadow-none"
-//             >
-//               <Download size={18} />
-//               Download CV
-//             </a>
-//           </div>
-//         </div>
-//       </div>
-//     </section>
-//   );
-// }
-
 "use client";
 
 import { useEffect, useRef } from "react";
 import Image from "next/image";
 import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ReactTyped } from "react-typed";
-import { Mail, Download } from "lucide-react";
+import { ArrowDownRight, ArrowUpRight, Download, Mail } from "lucide-react";
 import { FaGithub, FaLinkedinIn, FaFacebook } from "react-icons/fa";
+import Magnetic from "@/components/motion/Magnetic";
+import { PRELOADER_EVENT } from "@/components/motion/Preloader";
+
+gsap.registerPlugin(ScrollTrigger);
+
+const SOCIALS = [
+  { label: "Github", href: "https://github.com/imamhossenbu", icon: FaGithub },
+  {
+    label: "LinkedIn",
+    href: "https://www.linkedin.com/in/imam-hossen-ub",
+    icon: FaLinkedinIn,
+  },
+  { label: "Email", href: "mailto:imam62310@gmail.com", icon: Mail },
+  {
+    label: "Facebook",
+    href: "https://www.facebook.com/imamhossainbu",
+    icon: FaFacebook,
+  },
+];
+
+const SPECS = [
+  { label: "Role", value: "Full Stack Developer" },
+  { label: "Focus", value: "Next.js + TypeScript" },
+  { label: "Status", value: "Open to Work", accent: true },
+];
+
+function Chars({ text }: { text: string }) {
+  return (
+    <span className="hero-x-word" aria-hidden="true">
+      {text.split("").map((char, index) => (
+        <span key={index} className="hero-x-char-wrap">
+          <span className="hero-x-char">{char}</span>
+        </span>
+      ))}
+    </span>
+  );
+}
 
 export default function Hero() {
   const heroRef = useRef<HTMLElement | null>(null);
-  const titleRef = useRef<HTMLDivElement | null>(null);
-  const imageRef = useRef<HTMLDivElement | null>(null);
-  const ringRef = useRef<HTMLDivElement | null>(null);
-  const cardRef = useRef<HTMLDivElement | null>(null);
-  const socialsRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    const ctx = gsap.context(() => {
-      const tl = gsap.timeline();
+    const hero = heroRef.current;
+    if (!hero) return;
 
-      tl.fromTo(
-        titleRef.current,
-        { x: -70, opacity: 0, filter: "blur(10px)" },
-        {
-          x: 0,
-          opacity: 1,
-          filter: "blur(0px)",
-          duration: 1,
-          ease: "power4.out",
-        },
-      )
+    const reduceMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+    if (reduceMotion) return;
+
+    let removeListeners = () => {};
+
+    const ctx = gsap.context(() => {
+      /* ---------- Intro: plays once the preloader curtain lifts ---------- */
+      const intro = gsap.timeline({
+        paused: true,
+        defaults: { ease: "power4.out" },
+      });
+
+      intro
         .fromTo(
-          imageRef.current,
-          { y: 80, opacity: 0, scale: 0.88, rotate: -4 },
-          {
-            y: 0,
-            opacity: 1,
-            scale: 1,
-            rotate: 0,
-            duration: 1.1,
-            ease: "back.out(1.4)",
-          },
-          "-=0.55",
+          ".hero-x-char",
+          { yPercent: 112 },
+          { yPercent: 0, duration: 1.15, stagger: 0.045 },
         )
         .fromTo(
-          cardRef.current,
-          { x: 70, opacity: 0, filter: "blur(10px)" },
+          ".hero-x-pill-bg",
+          { clipPath: "inset(0% 100% 0% 0% round 999px)" },
           {
-            x: 0,
+            clipPath: "inset(0% 0% 0% 0% round 999px)",
+            duration: 1.2,
+            ease: "power4.inOut",
+          },
+          0.15,
+        )
+        .fromTo(
+          ".hero-x-pill-img",
+          { yPercent: 55, opacity: 0 },
+          { yPercent: 0, opacity: 1, duration: 1.3, ease: "power4.out" },
+          0.6,
+        )
+        .fromTo(
+          ".hero-x-badge",
+          { scale: 0, rotate: -120 },
+          { scale: 1, rotate: 0, duration: 1.1, ease: "back.out(1.6)" },
+          0.55,
+        )
+        .fromTo(
+          ".hero-x-rule",
+          { scaleX: 0 },
+          { scaleX: 1, duration: 1.2, ease: "power3.inOut" },
+          0.4,
+        )
+        .fromTo(
+          ".hero-x-fade",
+          { y: 36, opacity: 0, filter: "blur(8px)" },
+          {
+            y: 0,
             opacity: 1,
             filter: "blur(0px)",
-            duration: 1,
-            ease: "power4.out",
-          },
-          "-=0.75",
-        )
-        .fromTo(
-          socialsRef.current,
-          { y: 30, opacity: 0 },
-          {
-            y: 0,
-            opacity: 1,
-            duration: 0.8,
+            duration: 0.9,
+            stagger: 0.09,
             ease: "power3.out",
           },
-          "-=0.45",
+          0.55,
         );
 
-      gsap.to(".hero-float-icon", {
-        y: -16,
-        duration: 2.2,
-        repeat: -1,
-        yoyo: true,
-        ease: "sine.inOut",
-        stagger: 0.25,
-      });
+      const play = () => intro.play();
+      const fallback = gsap.delayedCall(4.5, play);
 
-      gsap.to(".hero-image-glow", {
-        scale: 1.08,
-        opacity: 0.75,
-        duration: 2.8,
-        repeat: -1,
-        yoyo: true,
-        ease: "sine.inOut",
-      });
+      if (document.documentElement.dataset.preloader === "done") {
+        play();
+      } else {
+        window.addEventListener(PRELOADER_EVENT, play, { once: true });
+      }
 
-      // Continuous full rotation loop for the ring around the circular photo
-      gsap.to(ringRef.current, {
-        rotate: 360,
-        duration: 10,
-        repeat: -1,
+      /* ---------- Scroll: the two name lines slide apart ---------- */
+      const scrub = {
+        trigger: hero,
+        start: "top top",
+        end: "bottom top",
+        scrub: 0.6,
+      };
+
+      gsap.to(".hero-x-line-1", { xPercent: -9, ease: "none", scrollTrigger: scrub });
+      gsap.to(".hero-x-line-2", { xPercent: 9, ease: "none", scrollTrigger: scrub });
+      gsap.to(".hero-x-bottom", {
+        y: -50,
+        opacity: 0,
         ease: "none",
-        transformOrigin: "50% 50%",
+        scrollTrigger: { ...scrub, end: "60% top" },
       });
-    }, heroRef);
 
-    return () => ctx.revert();
+      /* ---------- Cursor parallax on portrait ---------- */
+      const canHover = window.matchMedia(
+        "(hover: hover) and (pointer: fine)",
+      ).matches;
+
+      if (canHover) {
+        const imgX = gsap.quickTo(".hero-x-pill-img", "x", { duration: 0.8, ease: "power3.out" });
+
+        const handleMove = (e: MouseEvent) => {
+          const rect = hero.getBoundingClientRect();
+          const px = (e.clientX - rect.left) / rect.width - 0.5;
+
+          imgX(px * -18);
+        };
+
+        hero.addEventListener("mousemove", handleMove);
+        removeListeners = () => hero.removeEventListener("mousemove", handleMove);
+      }
+
+      return () => {
+        fallback.kill();
+        window.removeEventListener(PRELOADER_EVENT, play);
+      };
+    }, hero);
+
+    return () => {
+      removeListeners();
+      ctx.revert();
+    };
   }, []);
 
   return (
-    <section
-      id="home"
-      ref={heroRef}
-      className="hero-section relative flex items-center overflow-visible px-5 py-28 md:px-10 lg:px-12"
-    >
-      <div className="hero-bg-orb hero-orb-one" />
-      <div className="hero-bg-orb hero-orb-two" />
+    <section id="home" ref={heroRef} className="hero-x">
+      <div className="hero-x-inner">
+        <div className="hero-x-top">
+          <span className="hero-x-fade hero-x-status">
+            <i />
+            Open to work
+          </span>
+          <span className="hero-x-fade">Full Stack Developer</span>
+          <span className="hero-x-fade">Barishal, Bangladesh</span>
+        </div>
 
-      <div className="mx-auto grid w-full max-w-7xl items-center gap-12 lg:grid-cols-[1fr_1.05fr_0.9fr]">
-        <div ref={titleRef} className="z-10 text-center lg:text-left">
-          <p className="mono-text designation-text mb-4 inline-flex rounded-full border border-[var(--accent-dim)] bg-[var(--panel-soft)] px-4 py-2 text-sm font-semibold text-[var(--accent)] backdrop-blur-md">
-            Full Stack Developer
-          </p>
+        <h1 className="hero-x-title">
+          <span className="sr-only">Imam Hossen</span>
 
-          <h1 className="mb-5 text-4xl font-bold leading-tight text-[var(--foreground)] md:text-5xl">
-            Hi, I&apos;m <br />
-            <span className="gradient-text">Imam Hossen</span>
-          </h1>
-
-          <h2 className="hero-subtitle hero-typed-heading mb-6 text-2xl font-semibold md:text-3xl">
-            <span>I build </span>
-
-            <span className="hero-typed-text hero-typed-fixed">
-              <ReactTyped
-                strings={[
-                  "Modern Websites",
-                  "Full Stack Apps",
-                  "Clean UI Designs",
-                  "Scalable Web Solutions",
-                ]}
-                typeSpeed={70}
-                backSpeed={40}
-                backDelay={1200}
-                loop
-              />
+          <span className="hero-x-line hero-x-line-1">
+            <Chars text="IMAM" />
+            <span className="hero-x-pill">
+              <span className="hero-x-pill-bg" />
+              <span className="hero-x-pill-clip">
+                <span className="hero-x-pill-img">
+                  <Image
+                    src="/images/imam1.png"
+                    alt="Portrait of Imam Hossen"
+                    fill
+                    preload
+                    sizes="(max-width: 768px) 45vw, 340px"
+                    className="object-contain object-bottom"
+                  />
+                </span>
+              </span>
             </span>
-          </h2>
+          </span>
 
-          <p className="hero-description mx-auto mb-8 max-w-xl text-base leading-8 lg:mx-0">
-            I create responsive, fast, and user-friendly web applications using
-            Next.js, TypeScript, Tailwind CSS, and modern backend technologies.
-          </p>
-
-          <div className="flex flex-wrap justify-center gap-4 lg:justify-start">
-            <a
-              href="#projects"
-              className="primary-btn rounded-full px-7 py-3 text-sm font-bold shadow-none"
-            >
-              View Projects
+          <span className="hero-x-line hero-x-line-2">
+            <Chars text="HOSSEN" />
+            <a href="#contact" className="hero-x-badge" aria-label="Contact me">
+              <svg viewBox="0 0 100 100" className="hero-x-badge-ring">
+                <defs>
+                  <path
+                    id="hero-badge-circle"
+                    d="M50,50 m-38,0 a38,38 0 1,1 76,0 a38,38 0 1,1 -76,0"
+                  />
+                </defs>
+                <text>
+                  <textPath href="#hero-badge-circle" textLength="232">
+                    OPEN TO WORK • AVAILABLE FOR PROJECTS •
+                  </textPath>
+                </text>
+              </svg>
+              <span className="hero-x-badge-core">
+                <ArrowDownRight />
+              </span>
             </a>
-            <a
-              href="#contact"
-              className="hero-contact-btn rounded-full px-7 py-3 text-sm font-bold shadow-none"
-            >
-              Contact Me
-            </a>
-          </div>
+          </span>
+        </h1>
 
-          <div
-            ref={socialsRef}
-            className="mt-10 flex justify-center gap-4 lg:justify-start"
-          >
-            <a
-              href="https://github.com/imamhossenbu"
-              target="_blank"
-              className="hero-social-link shadow-none"
-              aria-label="Github"
-            >
-              <FaGithub size={18} />
-            </a>
+        <span className="hero-x-rule" aria-hidden="true" />
 
-            <a
-              href="https://www.linkedin.com/in/imam-hossen-ub"
-              target="_blank"
-              className="hero-social-link shadow-none"
-              aria-label="LinkedIn"
-            >
-              <FaLinkedinIn size={18} />
-            </a>
+        <div className="hero-x-bottom">
+          <div className="hero-x-copy">
+            <h2 className="hero-x-fade hero-x-typed">
+              <span>I build </span>
+              <span className="hero-typed-text">
+                <ReactTyped
+                  strings={[
+                    "Modern Websites",
+                    "Full Stack Apps",
+                    "Clean UI Designs",
+                    "Scalable Web Solutions",
+                  ]}
+                  typeSpeed={70}
+                  backSpeed={40}
+                  backDelay={1200}
+                  loop
+                />
+              </span>
+            </h2>
 
-            <a
-              href="mailto:imam62310@gmail.com"
-              target="_blank"
-              className="hero-social-link shadow-none"
-              aria-label="Email"
-            >
-              <Mail size={18} />
-            </a>
-            <a
-              href="https://www.facebook.com/imamhossainbu"
-              target="_blank"
-              className="hero-social-link shadow-none"
-              aria-label="Facebook"
-            >
-              <FaFacebook size={18} />
-            </a>
-          </div>
-        </div>
-
-        <div ref={imageRef} className="hero-image-wrapper relative">
-          <div className="hero-orbit relative flex items-center justify-center">
-            <span className="orbit-dot orbit-dot-one" />
-            <span className="orbit-dot orbit-dot-two" />
-            <span className="orbit-dot orbit-dot-three" />
-
-            {/* Rotating dashed gradient ring, looping forever */}
-            <div
-              ref={ringRef}
-              className="pointer-events-none absolute -z-10"
-              style={{
-                width: "112%",
-                height: "112%",
-                borderRadius: "9999px",
-                border: "2px dashed var(--accent)",
-                opacity: 0.55,
-              }}
-            />
-
-            <div
-              className="hero-image-inner overflow-hidden"
-              style={{ borderRadius: "9999px" }}
-            >
-              <Image
-                src="/images/imam.jpeg"
-                alt="Imam Hossen"
-                fill
-                priority
-                className="object-cover"
-              />
-            </div>
-          </div>
-        </div>
-
-        <div ref={cardRef} className="z-10">
-          <div className="soft-card rounded-4xl p-6 shadow-none">
-            <div className="mb-5 h-1 w-14 rounded-full bg-gradient-to-r from-[var(--accent)] to-[var(--accent-soft)]" />
-
-            <h3 className="mb-4 text-2xl font-bold text-[var(--foreground)]">
-              Available for Projects
-            </h3>
-
-            <p className="hero-card-description mb-6 leading-7">
-              I help businesses and individuals build professional web apps,
-              portfolios, dashboards, and modern digital products.
+            <p className="hero-x-fade hero-description">
+              I create responsive, fast, and user-friendly web applications
+              using Next.js, TypeScript, Tailwind CSS, and modern backend
+              technologies.
             </p>
+          </div>
 
-            <div className="space-y-4">
-              <div className="hero-info-row shadow-none">
-                <span>Role</span>
-                <strong>Full Stack Developer</strong>
-              </div>
+          <div className="hero-x-actions">
+            <div className="hero-x-fade hero-x-cta">
+              <Magnetic>
+                <a href="#projects" className="hero-x-btn is-primary">
+                  <span>View Projects</span>
+                  <ArrowUpRight size={18} />
+                </a>
+              </Magnetic>
 
-              <div className="hero-info-row shadow-none">
-                <span>Focus</span>
-                <strong>Next.js + TypeScript</strong>
-              </div>
+              <Magnetic>
+                <a href="#contact" className="hero-x-btn">
+                  <span>Contact Me</span>
+                </a>
+              </Magnetic>
 
-              <div className="hero-info-row shadow-none">
-                <span>Status</span>
-                <strong className="text-[var(--accent)]">Open to Work</strong>
-              </div>
+              <a
+                href="/resume.pdf"
+                download="Imam-Hossen-CV.pdf"
+                className="hero-x-cv"
+              >
+                <Download size={16} />
+                Download CV
+              </a>
             </div>
 
-            <a
-              href="/resume.pdf"
-              download="Imam-Hossen-CV.pdf"
-              className="mt-7 inline-flex w-full items-center justify-center gap-2 rounded-full primary-btn px-6 py-3 text-sm font-bold shadow-none"
-            >
-              <Download size={18} />
-              Download CV
-            </a>
+            <div className="hero-x-fade hero-x-socials">
+              {SOCIALS.map(({ label, href, icon: Icon }) => (
+                <Magnetic key={label} strength={0.5}>
+                  <a
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hero-social-link"
+                    aria-label={label}
+                  >
+                    <Icon size={18} />
+                  </a>
+                </Magnetic>
+              ))}
+            </div>
           </div>
         </div>
+
+        <dl className="hero-x-specs">
+          {SPECS.map((spec) => (
+            <div key={spec.label} className="hero-x-fade hero-x-spec">
+              <dt>{spec.label}</dt>
+              <dd className={spec.accent ? "is-accent" : ""}>{spec.value}</dd>
+            </div>
+          ))}
+
+          <a href="#about" className="hero-x-fade hero-x-scroll">
+            Scroll
+            <span />
+          </a>
+        </dl>
       </div>
     </section>
   );

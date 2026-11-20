@@ -6,6 +6,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import RevealText from "@/components/motion/RevealText";
 import { ExternalLink } from "lucide-react";
 import { projectCategories, projects } from "@/data/projects";
 import Link from "next/link";
@@ -86,9 +87,10 @@ export default function Projects() {
           <p className="mono-text mb-3 text-sm font-semibold uppercase tracking-[0.25em] text-[var(--accent)]">
             My Projects
           </p>
-          <h2 className="project-section-title text-3xl font-bold text-[var(--foreground)] md:text-4xl">
-            Selected work by category
-          </h2>
+          <RevealText
+            className="project-section-title text-3xl font-bold text-[var(--foreground)] md:text-4xl"
+            text="Selected work by category"
+          />
           <p className="hero-description mx-auto mt-4 max-w-2xl text-base leading-7">
             Here are some projects organized by frontend, full stack, mobile
             app, landing page, and AI-based work.

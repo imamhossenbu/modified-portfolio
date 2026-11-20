@@ -3,6 +3,8 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import ScrollWords from "@/components/motion/ScrollWords";
+import RevealText from "@/components/motion/RevealText";
 import { GraduationCap, Code2, Briefcase, Sparkles } from "lucide-react";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -110,10 +112,17 @@ export default function About() {
             About Me
           </p>
 
-          <h2 className="text-3xl font-bold text-[var(--foreground)] md:text-4xl">
-            Building clean, modern and useful web experiences
-          </h2>
+          <RevealText
+            className="text-3xl font-bold text-[var(--foreground)] md:text-4xl"
+            text="Building clean, modern and useful web experiences"
+          />
         </div>
+
+        <ScrollWords
+          className="mx-auto mb-16 max-w-5xl md:mb-24"
+          highlight={["responsive,", "fast,", "user-friendly", "clean", "scalable"]}
+          text="I'm a Full Stack Developer building responsive, fast, and user-friendly web applications — clean code, smooth interfaces, and scalable products from the first pixel to production."
+        />
 
         <div className="grid items-start gap-8 lg:grid-cols-[1.05fr_0.95fr]">
           <div className="about-animate soft-card self-start rounded-[2rem] p-7 md:p-9">

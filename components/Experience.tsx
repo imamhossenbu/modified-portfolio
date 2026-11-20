@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import RevealText from "@/components/motion/RevealText";
 import {
   BriefcaseBusiness,
   CalendarDays,
@@ -100,9 +101,10 @@ export default function Experience() {
             Experience
           </p>
 
-          <h2 className="text-3xl font-bold text-[var(--foreground)] md:text-4xl">
-            My working journey
-          </h2>
+          <RevealText
+            className="text-3xl font-bold text-[var(--foreground)] md:text-4xl"
+            text="My working journey"
+          />
 
           <p className="hero-description mx-auto mt-5 max-w-2xl leading-8">
             A focused overview of my hands-on development work, production SaaS
