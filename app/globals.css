@@ -2486,8 +2486,9 @@ pre,
 }
 
 .hero-x-line-2 .hero-x-char {
-  color: transparent;
-  -webkit-text-stroke: clamp(1px, 0.012em, 3px) var(--foreground);
+  color: var(--background);
+  -webkit-text-stroke: clamp(2px, 0.024em, 6px) var(--foreground);
+  paint-order: stroke fill;
 }
 
 .hero-x-line-2 .hero-x-char-wrap:hover .hero-x-char {
@@ -2829,8 +2830,9 @@ pre,
 }
 
 .vmarquee-item.is-outline {
-  color: transparent;
-  -webkit-text-stroke: 1.5px var(--foreground-muted);
+  color: var(--background);
+  -webkit-text-stroke: 3px var(--foreground-muted);
+  paint-order: stroke fill;
 }
 
 .vmarquee-icon {
@@ -2870,8 +2872,9 @@ pre,
   line-height: 0.86;
   letter-spacing: -0.05em;
   white-space: nowrap;
-  color: transparent;
-  -webkit-text-stroke: 1px var(--foreground-faint);
+  color: var(--background);
+  -webkit-text-stroke: 2px var(--foreground-faint);
+  paint-order: stroke fill;
   user-select: none;
 }
 
@@ -3089,8 +3092,9 @@ pre,
   font-size: clamp(1.6rem, 2.6vw, 2.2rem);
   font-weight: 700;
   line-height: 1;
-  color: transparent;
-  -webkit-text-stroke: 1px var(--foreground-faint);
+  color: var(--background);
+  -webkit-text-stroke: 2px var(--foreground-faint);
+  paint-order: stroke fill;
   transition: color 0.35s ease, -webkit-text-stroke-color 0.35s ease;
 }
 
@@ -3211,8 +3215,9 @@ pre,
   font-size: clamp(1.3rem, 2vw, 1.7rem);
   font-weight: 700;
   line-height: 1;
-  color: transparent;
-  -webkit-text-stroke: 1px var(--accent);
+  color: var(--background);
+  -webkit-text-stroke: 2px var(--accent);
+  paint-order: stroke fill;
   transition: color 0.35s ease;
 }
 
