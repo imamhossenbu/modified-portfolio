@@ -31,8 +31,8 @@ Personal portfolio of Imam Hossen, a Full Stack Developer based in Barishal, Ban
 You need Node.js 20 or newer.
 
 ```bash
-git clone https://github.com/imamhossenbu/imam-portfolio.git
-cd imam-portfolio
+git clone https://github.com/imamhossenbu/modified-portfolio.git
+cd modified-portfolio
 npm install
 npm run dev
 ```
