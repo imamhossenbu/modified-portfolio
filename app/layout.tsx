@@ -115,7 +115,9 @@ const jsonLd = {
       "@type": "WebSite",
       "@id": `${site.url}/#website`,
       url: site.url,
-      name: site.title,
+      // Google reads this as the site name shown above each search result
+      name: site.name,
+      alternateName: site.title,
       description: site.description,
       inLanguage: "en",
       publisher: { "@id": `${site.url}/#person` },
