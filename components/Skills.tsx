@@ -1,6 +1,13 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  useSyncExternalStore,
+} from "react";
 import gsap from "gsap";
 import Matter from "matter-js";
 import { RotateCcw } from "lucide-react";
@@ -190,6 +197,14 @@ type MouseWithHandlers = Matter.Mouse & {
   mousewheel: EventListener;
 };
 
+const REDUCED_MOTION = "(prefers-reduced-motion: reduce)";
+
+const subscribeReducedMotion = (onChange: () => void) => {
+  const query = window.matchMedia(REDUCED_MOTION);
+  query.addEventListener("change", onChange);
+  return () => query.removeEventListener("change", onChange);
+};
+
 const random = (min: number, max: number) => min + Math.random() * (max - min);
 
 export default function Skills() {
@@ -199,6 +214,13 @@ export default function Skills() {
   const tabsRef = useRef<HTMLDivElement | null>(null);
   const indicatorRef = useRef<HTMLSpanElement | null>(null);
   const [active, setActive] = useState<number | null>(null);
+  // Arena state lives in React so re-renders (tab switches) can't wipe its class
+  const [live, setLive] = useState(false);
+  const reducedMotion = useSyncExternalStore(
+    subscribeReducedMotion,
+    () => window.matchMedia(REDUCED_MOTION).matches,
+    () => false,
+  );
   useReveal(sectionRef);
 
   // The dark pill slides to the selected tab
@@ -253,10 +275,8 @@ export default function Skills() {
     const arena = arenaRef.current;
     if (!arena) return;
 
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      arena.classList.add("is-static");
-      return;
-    }
+    // Reduced motion: no physics, the CSS lays the pills out as a static list
+    if (reducedMotion) return;
 
     const { Engine, Bodies, Body, Composite, Mouse, MouseConstraint } = Matter;
     const bodies = bodiesRef.current;
@@ -353,7 +373,7 @@ export default function Skills() {
         }),
       );
 
-      arena.classList.add("is-live");
+      setLive(true);
       built = true;
     };
 
@@ -419,9 +439,9 @@ export default function Skills() {
         Engine.clear(engine);
       }
       bodies.clear();
-      arena.classList.remove("is-live");
+      setLive(false);
     };
-  }, []);
+  }, [reducedMotion]);
 
   /** Toss pills into the air: one group, or everything when no group is given. */
   const kick = useCallback(
@@ -488,7 +508,11 @@ export default function Skills() {
 
         <div
           ref={arenaRef}
-          className={`gravity ${active !== null ? "has-active" : ""}`}
+          className={`gravity ${
+            reducedMotion ? "is-static" : live ? "is-live" : ""
+          } ${
+            active !== null ? "has-active" : ""
+          }`}
           data-reveal
         >
           <p className="gravity-hint">Grab one and throw it</p>
